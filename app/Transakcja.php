@@ -7,6 +7,7 @@ use App\Events\WyplataPieniedzy;
 use Illuminate\Database\Eloquent\Model;
 use App\Events\Przelew;
 use Illuminate\Support\Carbon;
+use MichaelAChrisco\ReadOnly\ReadOnlyTrait;
 
 /**
  *
@@ -19,6 +20,8 @@ use Illuminate\Support\Carbon;
  */
 class Transakcja extends Model
 {
+    use ReadOnlyTrait;
+
     /**
      * @var string
      */

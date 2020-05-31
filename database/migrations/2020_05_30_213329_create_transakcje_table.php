@@ -19,24 +19,24 @@ class CreateTransakcjeTable extends Migration
                        SELECT 
                             nr_rachunku, 
                             event_class as typ,
-                            JSON_EXTRACT(event_properties, "$.nrRachunkuDocelowego") as nr_rachunku_powiazanego, 
-                            JSON_EXTRACT(event_properties, "$.kwota") as kwota,
-                            JSON_EXTRACT(event_properties, "$.tytul") as tytul_przelewu,
+                            event_properties->>"$.nrRachunkuDocelowego" as nr_rachunku_powiazanego, 
+                            event_properties->>"$.kwota" as kwota,
+                            event_properties->>"$.tytul" as tytul_przelewu,
                             stored_events.created_at as "data"
-                        from stored_events 
+                       from stored_events 
                             inner join rachunki on aggregate_uuid = rachunki.uuid
-                        WHERE JSON_EXTRACT(event_properties, "$.kwota") IS NOT NULL
-                        UNION
-                        SELECT 
-                            JSON_EXTRACT(event_properties, "$.nrRachunkuDocelowego") as nr_rachunku, 
+                       WHERE event_properties->>"$.kwota" IS NOT NULL
+                       UNION
+                       SELECT 
+                            event_properties->>"$.nrRachunkuDocelowego" as nr_rachunku, 
                             "Przelew przychodzacy" as typ,
                             nr_rachunku as nr_rachunku_powiazanego, 
-                            JSON_EXTRACT(event_properties, "$.kwota") as kwota,
-                            JSON_EXTRACT(event_properties, "$.tytul") as tytul_przelewu,
+                            event_properties->>"$.kwota" as kwota,
+                            event_properties->>"$.tytul" as tytul_przelewu,
                             stored_events.created_at as "data"
-                        from stored_events 
+                       from stored_events 
                             inner join rachunki on aggregate_uuid = rachunki.uuid
-                        WHERE JSON_EXTRACT(event_properties, "$.kwota") IS NOT NULL and JSON_EXTRACT(event_properties, "$.nrRachunkuDocelowego") is not null'
+                       WHERE event_properties->>"$.kwota" IS NOT NULL and event_properties->>"$.nrRachunkuDocelowego" is not null'
         );
 
     }

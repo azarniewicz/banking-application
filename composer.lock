@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05f6c74116b620597f7f808b6afbe017",
+    "content-hash": "39a1d72c70a6876154b0506a23c8a300",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -103,6 +103,47 @@
                 "math"
             ],
             "time": "2020-04-15T15:59:35+00:00"
+        },
+        {
+            "name": "calebporzio/parental",
+            "version": "v0.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/calebporzio/parental.git",
+                "reference": "6cdbcc7c62e9bb8dcf817a7ac451e8b2d851a00f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/calebporzio/parental/zipball/6cdbcc7c62e9bb8dcf817a7ac451e8b2d851a00f",
+                "reference": "6cdbcc7c62e9bb8dcf817a7ac451e8b2d851a00f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "~5.6.0|~5.7.0|~5.8.0|^6.0.0|^7.0.0",
+                "illuminate/events": "~5.6.0|~5.7.0|~5.8.0|^6.0.0|^7.0.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.6.0|~3.7.0|~3.8.0|^4.0|^5.0",
+                "phpunit/phpunit": "^7.0|^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Parental\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Caleb Porzio",
+                    "email": "calebporzio@gmail.com"
+                }
+            ],
+            "description": "A simple eloquent trait that allows relationships to be accessed through child models.",
+            "time": "2020-03-03T13:45:17+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1073,6 +1114,51 @@
                 "storage"
             ],
             "time": "2020-05-18T15:13:39+00:00"
+        },
+        {
+            "name": "michaelachrisco/readonly",
+            "version": "0.33",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/michaelachrisco/ReadOnlyTraitLaravel.git",
+                "reference": "4a48ae9fba8dfc096f73e451f05d984faac8ace8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/michaelachrisco/ReadOnlyTraitLaravel/zipball/4a48ae9fba8dfc096f73e451f05d984faac8ace8",
+                "reference": "4a48ae9fba8dfc096f73e451f05d984faac8ace8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "illuminate/database": ">=5.2.0",
+                "kahlan/kahlan": "^2.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MichaelAChrisco\\ReadOnly\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Chrisco",
+                    "email": "michaelachrisco@gmail.com"
+                }
+            ],
+            "description": "Readonly Models for Laravel 5",
+            "keywords": [
+                "Read-Only",
+                "eloquent",
+                "laravel"
+            ],
+            "time": "2018-12-18T05:27:22+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4729,6 +4815,63 @@
             "time": "2020-01-17T21:11:47+00:00"
         },
         {
+            "name": "nanigans/single-table-inheritance",
+            "version": "0.8.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jonspalmer/single-table-inheritance.git",
+                "reference": "427d308ffc40dc127f1f55ca2e88e35c39bd8439"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jonspalmer/single-table-inheritance/zipball/427d308ffc40dc127f1f55ca2e88e35c39bd8439",
+                "reference": "427d308ffc40dc127f1f55ca2e88e35c39bd8439",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": ">= 5.2",
+                "illuminate/support": ">= 5.2",
+                "php": ">= 5.5.9"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*|~1.0",
+                "orchestra/database": "3.2.*|3.5.*|3.6.*",
+                "orchestra/testbench": "3.2.*|3.5.*|3.6.*",
+                "phpunit/phpunit": "~4.8|~5.2|~6.0|~7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nanigans\\SingleTableInheritance\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Palmer",
+                    "email": "jpalmer@nanigans.com"
+                }
+            ],
+            "description": "Single Table Inheritance Trait",
+            "keywords": [
+                "eloquent",
+                "inheritance",
+                "laravel",
+                "model",
+                "single",
+                "table"
+            ],
+            "time": "2019-11-21T12:05:13+00:00"
+        },
+        {
             "name": "nunomaduro/collision",
             "version": "v4.2.0",
             "source": {
@@ -6225,7 +6368,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2.5"
+        "php": "^7.2.5",
+        "ext-json": "*"
     },
     "platform-dev": []
 }

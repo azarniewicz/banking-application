@@ -23,12 +23,10 @@ class RachunekProjector implements Projector
      */
     public function onRachunekCreated(StworzenieRachunku $event, string $aggregateUuid): void
     {
-        // TODO associate user using $event->idKlienta
-
-        Rachunek::create([
+        $rachunek = Rachunek::create([
             'uuid'        => $aggregateUuid,
             'nr_rachunku' => $event->numerRachunku
-        ]);
+        ])->klienci()->attach($event->idKlienta);
     }
 
     /**

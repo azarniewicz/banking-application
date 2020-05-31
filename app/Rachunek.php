@@ -21,10 +21,15 @@ class Rachunek extends Model
         return $this->hasMany(Transakcja::class, 'nr_rachunku', 'nr_rachunku');
     }
 
+    public function klienci()
+    {
+        return $this->belongsToMany(Klient::class);
+    }
+
     /**
      * @param  string  $uuid
      *
-     * @return static
+     * @return static|null
      */
     public static function uuid(string $uuid): self
     {

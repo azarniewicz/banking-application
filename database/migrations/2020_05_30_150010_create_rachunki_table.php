@@ -18,7 +18,7 @@ class CreateRachunkiTable extends Migration
             $table->uuid('uuid')->index();
             $table->string('nr_rachunku')->unique();
             $table->double('saldo')->default(0);
-            $table->string('typ')->nullable();
+            $table->string('typ')->nullable()->default('standard');
             $table->timestamps();
         });
     }

@@ -38,10 +38,10 @@ class RachunekAggregateRootTest extends TestCase
     public function przelew()
     {
         $uuid1 = $this->getNewUuid();
-        $rachunek = \RachunekFactory::createRachunekFromAggregate($uuid1, 1000);
+        $rachunek = \RachunekFactory::createRachunekUsingAggregate($uuid1, 1000);
 
         $uuid2 = $this->getNewUuid();
-        \RachunekFactory::createRachunekFromAggregate($uuid2);
+        \RachunekFactory::createRachunekUsingAggregate($uuid2);
         $rachunek_docelowy = Rachunek::uuid($uuid2);
 
         $rachunek->przelej($rachunek_docelowy->nr_rachunku, 'testowy przelew', 1000)->persist();
@@ -54,10 +54,10 @@ class RachunekAggregateRootTest extends TestCase
     public function nie_mozna_przelac_wiecej_niz_jest_na_koncie()
     {
         $uuid1 = $this->getNewUuid();
-        $rachunek = \RachunekFactory::createRachunekFromAggregate($uuid1, 1000);
+        $rachunek = \RachunekFactory::createRachunekUsingAggregate($uuid1, 1000);
 
         $uuid2 = $this->getNewUuid();
-        \RachunekFactory::createRachunekFromAggregate($uuid2);
+        \RachunekFactory::createRachunekUsingAggregate($uuid2);
         $rachunek_docelowy = Rachunek::uuid($uuid2);
 
         try {
@@ -75,7 +75,7 @@ class RachunekAggregateRootTest extends TestCase
     public function nie_mozna_zrobic_przelewu_na_ten_sam_rachunek()
     {
         $uuid1 = $this->getNewUuid();
-        $rachunek = \RachunekFactory::createRachunekFromAggregate($uuid1, 1000);
+        $rachunek = \RachunekFactory::createRachunekUsingAggregate($uuid1, 1000);
 
         try {
             $rachunek->przelej($rachunek->nrRachunku, 'testowy przelew', 1000)->persist();
@@ -91,7 +91,7 @@ class RachunekAggregateRootTest extends TestCase
     public function nie_mozna_przelac_pieniedzy_na_nieistniejacy_rachunek()
     {
         $uuid1 = $this->getNewUuid();
-        $rachunek = \RachunekFactory::createRachunekFromAggregate($uuid1, 1000);
+        $rachunek = \RachunekFactory::createRachunekUsingAggregate($uuid1, 1000);
 
         try {
             $rachunek->przelej('123-123-123', 'testowy przelew', 1000)->persist();
@@ -107,7 +107,7 @@ class RachunekAggregateRootTest extends TestCase
     public function wplata_trafia_na_konto()
     {
         $uuid = $this->getNewUuid();
-        $aggregate = \RachunekFactory::createRachunekFromAggregate($uuid);
+        $aggregate = \RachunekFactory::createRachunekUsingAggregate($uuid);
 
         $aggregate->wplac(1000)->persist();
 
@@ -118,7 +118,7 @@ class RachunekAggregateRootTest extends TestCase
     public function wyplata_jest_sciagana_z_konta()
     {
         $uuid = $this->getNewUuid();
-        $aggregate = \RachunekFactory::createRachunekFromAggregate($uuid, 1000);
+        $aggregate = \RachunekFactory::createRachunekUsingAggregate($uuid, 1000);
 
         $aggregate->wyplac(1000)->persist();
 
@@ -129,7 +129,7 @@ class RachunekAggregateRootTest extends TestCase
     public function nie_mozna_pobrac_wiecej_niz_jest_na_koncie()
     {
         $uuid = $this->getNewUuid();
-        $aggregate = \RachunekFactory::createRachunekFromAggregate($uuid, 1000);
+        $aggregate = \RachunekFactory::createRachunekUsingAggregate($uuid, 1000);
 
         try {
             $aggregate->wyplac(2000)->persist();

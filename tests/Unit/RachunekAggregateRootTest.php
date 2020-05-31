@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 
 use App\Exceptions\BrakWystarczajacychSrodkow;
@@ -12,16 +12,12 @@ use Faker\Provider\pl_PL\Payment;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
+use Tests\RefreshDatabaseWithViews;
 use Tests\TestCase;
 
 class RachunekAggregateRootTest extends TestCase
 {
-    // TODO change to trait
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->artisan('migrate:fresh --drop-views');
-    }
+    use RefreshDatabaseWithViews;
 
     /** @test */
     public function tworzy_rachunek()

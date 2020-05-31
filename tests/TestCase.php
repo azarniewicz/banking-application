@@ -14,4 +14,17 @@ abstract class TestCase extends BaseTestCase
         return Str::uuid()->toString();
     }
 
+    /**
+     * Boot the testing helper traits.
+     *
+     * @return void
+     */
+    protected function setUpTraits()
+    {
+        $uses = parent::setUpTraits();
+        if (isset($uses[RefreshDatabaseWithViews::class])) {
+            $this->migrateFreshWithViews();
+        }
+    }
+
 }

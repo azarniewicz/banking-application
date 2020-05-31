@@ -1,18 +1,16 @@
 <?php
 
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Rachunek;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\RefreshDatabaseWithViews;
 use Tests\TestCase;
 
 class TransakcjaTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->artisan('migrate:fresh --drop-views');
-    }
+    use RefreshDatabaseWithViews;
 
     /** @test */
     public function wplaty_sa_wyswietlane()

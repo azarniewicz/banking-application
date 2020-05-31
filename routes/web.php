@@ -23,9 +23,8 @@ Auth::routes(['register'=>false]);
 Route::group([
     'middleware' => 'auth'
 ],function(){
-    Route::get('/', function () {
-        return view('start');
-    });
+    Route::get('/', 'KlientController@index');
+
     Route::get('/przelew', function () {
         return view('przelew');
     });

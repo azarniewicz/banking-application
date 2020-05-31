@@ -9,7 +9,7 @@ Nr klienta: <span>123456</span> Ostatnie logowanie: <span>05/22/2020</span>Aktua
         </div>
         <div class="col-md-12 maine">
 
-            <span class="powitanie" >Witaj, <span style="color:#30333b;font-weight: bolder;">Mirosław Bonk</span></span>
+            <span class="powitanie" >Witaj, <span style="color:#30333b;font-weight: bolder;">{{ auth()->user()->pelne_imie }}</span></span>
         </div>
     </div>
 </div>
@@ -18,20 +18,15 @@ Nr klienta: <span>123456</span> Ostatnie logowanie: <span>05/22/2020</span>Aktua
         <div class="col-md-12 infobox">
             Informacje o koncie
 
-            <p class="inftext">TYP RACHUNKU: <span class="tresc">STANDARD</span></p>
+            <p class="inftext">TYP RACHUNKU: <span class="tresc">{{ $rachunek->typ }}</span></p>
             <div class="dropdown-divider"></div>
-            <p class="inftext">Saldo dostępne: <span class="tresc">55zł</span></p>
+            <p class="inftext">Saldo:<span class="tresc">{{ $rachunek->saldo }}</span></p>
             <div class="dropdown-divider"></div>
-            <p class="inftext">Saldo bieżące:<span class="tresc">225zł</span></p>
-            <div class="dropdown-divider"></div>
-            <p class="inftext">Numer rachunku:<span class="tresc">00 0000 0000 0000 0000 0000 0000 0000</span></p>
+            <p class="inftext">Numer rachunku:<span class="tresc">{{ $rachunek->nr_rachunku }}</span></p>
             <div class="dropdown-divider"></div>
             <p class="inftext">Numer karty:<span class="tresc">00 000 00000 000000</span></p>
             <div class="dropdown-divider"></div>
-            <p class="inftext">Limit dzienny:<span class="tresc">500zł</span></p>
-            <div class="dropdown-divider"></div>
-            <p class="inftext">Limit miesięczny<span class="tresc">3000zł</span></p>
-
+            <p class="inftext">Limit dzienny:<span class="tresc">{{ $klient->limit_dzienny }}</span></p>
         </div>
         <div class="col-md-12 infobox">
             Ostatnie transakcje
@@ -39,37 +34,20 @@ Nr klienta: <span>123456</span> Ostatnie logowanie: <span>05/22/2020</span>Aktua
                   <thead>
                     <tr>
                       <th scope="col">DATA</th>
-                      <th scope="col">DANE</th>
+                      <th scope="col">TYP</th>
                       <th scope="col">KWOTA</th>
-                      <th scope="col">SALDO PO TRANSAKCJI</th>
+                      <th scope="col">TYTUŁ</th>
                     </tr>
                   </thead>
                   <tbody>
+                  @foreach($ostatnieTransakcje as $transakcja)
                     <tr>
-                      <th scope="row">22/05/2020</th>
-                      <td>LOTTO SP. Z O.O</td>
-                      <td>+ 42zł</td>
-                      <td>55zł</td>
+                      <th scope="row">{{ $transakcja->data }}</th>
+                      <th scope="row">{{ $transakcja->typ }}</th>
+                      <td>{{ $transakcja->kwota }}zł</td>
+                      <td>{{ $transakcja->tytul }}</td>
                     </tr>
-                    <tr>
-                      <th scope="row">21/05/2020</th>
-                      <td>LIDL POLSKA</td>
-                      <td>- 100,21zł</td>
-                      <td>13zł</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">19/05/2020</th>
-                      <td>MEBLE BOCIEK</td>
-                      <td>- 465,30zł</td>
-                      <td>141,21zł</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">18/05/2020</th>
-                      <td>Mirosław Szyper</td>
-                      <td>+ 50zł</td>
-                      <td>606,51zł</td>
-                    </tr>
-                  </tbody>
+                  @endforeach
              </table>
             <a href="{{url('historia')}}"><button type="button" class="btn btn-dark">Zobacz więcej..</button></a>
 

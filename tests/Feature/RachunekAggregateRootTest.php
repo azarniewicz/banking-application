@@ -10,26 +10,24 @@ use App\Exceptions\RachunekNieIstnieje;
 use App\Rachunek;
 use Faker\Provider\pl_PL\Payment;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class RachunekAggregateRootTest extends TestCase
 {
-    use DatabaseMigrations;
-
-
-    public function getNewUuid()
+    // TODO change to trait
+    protected function setUp(): void
     {
-        return Str::uuid()->toString();
+        parent::setUp();
+        $this->artisan('migrate:fresh --drop-views');
     }
 
     /** @test */
     public function tworzy_rachunek()
     {
         $uuid = $this->getNewUuid();
-        \App\RachunekAggregateRoot::retrieve($uuid)
-                                  ->utworzRachunekKlienta(1, Payment::bankAccountNumber())
-                                  ->persist();
+        \RachunekFactory::createRachunekUsingAggregate($uuid, 1000);
 
         $this->assertNotNull(Rachunek::uuid($uuid));
     }

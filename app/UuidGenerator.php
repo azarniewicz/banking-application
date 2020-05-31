@@ -11,7 +11,7 @@ class UuidGenerator
     public static function generuj()
     {
         $uuid = Str::uuid()->toString();
-        if (Rachunek::where('uuid', $uuid)->count()) {
+        if (Rachunek::whereUuid($uuid)->exists()) {
             return self::generuj();
         }
 

@@ -29,7 +29,7 @@ class Rachunek extends Model
     /**
      * @param  string  $uuid
      *
-     * @return static|null
+     * @return static
      */
     public static function uuid(string $uuid): self
     {

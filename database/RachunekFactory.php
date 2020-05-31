@@ -5,12 +5,13 @@ use Faker\Provider\pl_PL\Payment;
 
 class RachunekFactory
 {
-    public static function createRachunekUsingAggregate(string $uuid, int $nrKlienta = 1, float $kwota = 0)
+    public static function createRachunekUsingAggregate(string $uuid, float $kwota = 0, int $nrKlienta = 1)
     {
-        $aggregate = RachunekAggregateRoot::retrieve($uuid)
-                                          ->utworzRachunekKlienta($nrKlienta, Payment::bankAccountNumber());
+        $aggregate = RachunekAggregateRoot::retrieve($uuid);
 
-        if ($kwota !== 0) {
+        $aggregate->utworzRachunekKlienta($nrKlienta, Payment::bankAccountNumber());
+
+        if ($kwota != 0) {
             $aggregate->wplac($kwota);
         }
 

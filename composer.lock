@@ -4703,30 +4703,33 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "1.3.1",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
-                "reference": "f69bbde7d7a75d6b2862d9ca8fab1cd28014b4be"
+                "reference": "6c6a7c533469873deacf998237e7649fc6b36223"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/f69bbde7d7a75d6b2862d9ca8fab1cd28014b4be",
-                "reference": "f69bbde7d7a75d6b2862d9ca8fab1cd28014b4be",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/6c6a7c533469873deacf998237e7649fc6b36223",
+                "reference": "6c6a7c533469873deacf998237e7649fc6b36223",
                 "shasum": ""
             },
             "require": {
                 "hamcrest/hamcrest-php": "~2.0",
                 "lib-pcre": ">=7.0",
-                "php": ">=5.6.0"
+                "php": "^7.3.0"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.7.10|~6.5|~7.0|~8.0"
+                "phpunit/phpunit": "^8.0.0 || ^9.0.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3.x-dev"
+                    "dev-master": "1.4.x-dev"
                 }
             },
             "autoload": {
@@ -4764,7 +4767,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2019-12-26T09:49:15+00:00"
+            "time": "2020-05-19T14:25:16+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -4813,63 +4816,6 @@
                 "object graph"
             ],
             "time": "2020-01-17T21:11:47+00:00"
-        },
-        {
-            "name": "nanigans/single-table-inheritance",
-            "version": "0.8.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jonspalmer/single-table-inheritance.git",
-                "reference": "427d308ffc40dc127f1f55ca2e88e35c39bd8439"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jonspalmer/single-table-inheritance/zipball/427d308ffc40dc127f1f55ca2e88e35c39bd8439",
-                "reference": "427d308ffc40dc127f1f55ca2e88e35c39bd8439",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": ">= 5.2",
-                "illuminate/support": ">= 5.2",
-                "php": ">= 5.5.9"
-            },
-            "require-dev": {
-                "mockery/mockery": "0.9.*|~1.0",
-                "orchestra/database": "3.2.*|3.5.*|3.6.*",
-                "orchestra/testbench": "3.2.*|3.5.*|3.6.*",
-                "phpunit/phpunit": "~4.8|~5.2|~6.0|~7.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.9.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Nanigans\\SingleTableInheritance\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jon Palmer",
-                    "email": "jpalmer@nanigans.com"
-                }
-            ],
-            "description": "Single Table Inheritance Trait",
-            "keywords": [
-                "eloquent",
-                "inheritance",
-                "laravel",
-                "model",
-                "single",
-                "table"
-            ],
-            "time": "2019-11-21T12:05:13+00:00"
         },
         {
             "name": "nunomaduro/collision",

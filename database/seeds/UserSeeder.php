@@ -41,9 +41,9 @@ class UserSeeder extends Seeder
             'typ'      => 'klient'
         ])->klient()->save(factory(Klient::class)->make());
 
-        $rachunekA = RachunekFactory::createRachunekUsingAggregate(UuidGenerator::generuj(), $userA->id);
+        $rachunekA = RachunekFactory::createRachunekUsingAggregate(UuidGenerator::generuj(), 0, $userA->id);
 
-        $rachunekB = RachunekFactory::createRachunekUsingAggregate(UuidGenerator::generuj(), $userB->id);
+        $rachunekB = RachunekFactory::createRachunekUsingAggregate(UuidGenerator::generuj(), 0, $userB->id);
 
         $this->command->getOutput()->progressStart(10000);
 

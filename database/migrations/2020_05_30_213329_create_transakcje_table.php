@@ -26,7 +26,7 @@ class CreateTransakcjeTable extends Migration
                             stored_events.created_at as "data"
                        from stored_events 
                             inner join rachunki on aggregate_uuid = rachunki.uuid
-                       WHERE event_properties->>"$.kwota" IS NOT NULL
+                       WHERE event_properties->>"$.kwota" IS NOT NULL and event_properties->>"$.nrRachunkuDocelowego" IS NOT NULL
                        UNION
                        SELECT 
                             event_properties->>"$.nrRachunkuDocelowego" as nr_rachunku, 

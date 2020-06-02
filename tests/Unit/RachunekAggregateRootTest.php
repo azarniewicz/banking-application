@@ -25,7 +25,7 @@ class RachunekAggregateRootTest extends TestCase
         $uuid = $this->getNewUuid();
         \RachunekFactory::createRachunekUsingAggregate($uuid, 1000);
 
-        $this->assertNotNull(Rachunek::uuid($uuid));
+        $this->assertNotNull(Rachunek::find($uuid));
     }
 
     /** @test */
@@ -36,7 +36,7 @@ class RachunekAggregateRootTest extends TestCase
 
         $uuid2 = $this->getNewUuid();
         \RachunekFactory::createRachunekUsingAggregate($uuid2);
-        $rachunek_docelowy = Rachunek::uuid($uuid2);
+        $rachunek_docelowy = Rachunek::find($uuid2);
 
         $rachunek->przelej($rachunek_docelowy->nr_rachunku, 'testowy przelew', 1000)->persist();
 
@@ -52,7 +52,7 @@ class RachunekAggregateRootTest extends TestCase
 
         $uuid2 = $this->getNewUuid();
         \RachunekFactory::createRachunekUsingAggregate($uuid2);
-        $rachunek_docelowy = Rachunek::uuid($uuid2);
+        $rachunek_docelowy = Rachunek::find($uuid2);
 
         try {
             $rachunek->przelej($rachunek_docelowy->nr_rachunku, 'testowy przelew', 2000)->persist();
@@ -105,7 +105,7 @@ class RachunekAggregateRootTest extends TestCase
 
         $aggregate->wplac(1000)->persist();
 
-        $this->assertEquals(1000, Rachunek::uuid($uuid)->saldo);
+        $this->assertEquals(1000, Rachunek::find($uuid)->saldo);
     }
 
     /** @test */
@@ -116,7 +116,7 @@ class RachunekAggregateRootTest extends TestCase
 
         $aggregate->wyplac(1000)->persist();
 
-        $this->assertEquals(0, Rachunek::uuid($uuid)->saldo);
+        $this->assertEquals(0, Rachunek::find($uuid)->saldo);
     }
 
     /** @test */
@@ -128,7 +128,7 @@ class RachunekAggregateRootTest extends TestCase
         try {
             $aggregate->wyplac(2000)->persist();
         } catch (BrakWystarczajacychSrodkow $e) {
-            $this->assertEquals(1000, Rachunek::uuid($uuid)->saldo);
+            $this->assertEquals(1000, Rachunek::find($uuid)->saldo);
             return;
         }
 

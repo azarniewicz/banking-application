@@ -14,8 +14,7 @@ class CreateRachunkiTable extends Migration
     public function up()
     {
         Schema::create('rachunki', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('uuid')->index();
+            $table->uuid('id')->index();
             $table->string('nr_rachunku')->unique();
             $table->double('saldo')->default(0);
             $table->string('typ')->nullable()->default('standard');

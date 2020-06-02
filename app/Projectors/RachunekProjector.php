@@ -4,6 +4,7 @@ namespace App\Projectors;
 
 use App\Events\Przelew;
 use App\Events\StworzenieRachunku;
+use App\Events\TransakcjaZakonczona;
 use App\Events\WplataPieniedzy;
 use App\Events\WyplataPieniedzy;
 use App\Rachunek;
@@ -18,6 +19,8 @@ class RachunekProjector implements Projector
 {
     use ProjectsEvents;
 
+
+
     /**
      * @param  StworzenieRachunku  $event
      * @param  string              $aggregateUuid
@@ -25,7 +28,7 @@ class RachunekProjector implements Projector
     public function onRachunekCreated(StworzenieRachunku $event, string $aggregateUuid): void
     {
         Rachunek::create([
-            'uuid'        => $aggregateUuid,
+            'id'          => $aggregateUuid,
             'nr_rachunku' => $event->numerRachunku
         ])->klienci()->attach($event->idKlienta);
     }
@@ -37,11 +40,11 @@ class RachunekProjector implements Projector
      */
     public function onWplataPieniedzy(WplataPieniedzy $event, StoredEvent $storedEvent, string $aggregateUuid): void
     {
-        $rachunek = Rachunek::uuid($aggregateUuid);
+        $rachunek = Rachunek::find($aggregateUuid);
 
         $rachunek->dodajDoSalda($event->kwota);
 
-        $this->zapiszSaldoPoTransakcji($storedEvent, $rachunek);
+        event(new TransakcjaZakonczona($storedEvent, $rachunek));
     }
 
     /**
@@ -50,11 +53,11 @@ class RachunekProjector implements Projector
      */
     public function onWyplataPieniedzy(WyplataPieniedzy $event, StoredEvent $storedEvent, string $aggregateUuid): void
     {
-        $rachunek = Rachunek::uuid($aggregateUuid);
+        $rachunek = Rachunek::find($aggregateUuid);
 
         $rachunek->odejmijZSalda($event->kwota);
 
-        $this->zapiszSaldoPoTransakcji($storedEvent, $rachunek);
+        event(new TransakcjaZakonczona($storedEvent, $rachunek));
     }
 
     /**
@@ -63,7 +66,7 @@ class RachunekProjector implements Projector
      */
     public function onPrzelew(Przelew $event, StoredEvent $storedEvent, string $aggregateUuid): void
     {
-        $rachunek = Rachunek::uuid($aggregateUuid);
+        $rachunek = Rachunek::find($aggregateUuid);
 
         // TODO tylko przelewy wewnetrzne?
         $rachunekDocelowy = Rachunek::numer($event->nrRachunkuDocelowego);
@@ -73,24 +76,6 @@ class RachunekProjector implements Projector
         $rachunekDocelowy->dodajDoSalda($event->kwota);
         DB::commit();
 
-        $this->zapiszSaldoPoTransakcji($storedEvent, $rachunek, $rachunekDocelowy);
-    }
-
-    /**
-     * @param  StoredEvent    $storedEvent
-     * @param  Rachunek       $rachunek
-     * @param  Rachunek|null  $rachunekDocelowy
-     */
-    private function zapiszSaldoPoTransakcji(StoredEvent $storedEvent,
-                                             Rachunek $rachunek,
-                                             Rachunek $rachunekDocelowy = null): void
-    {
-        if (!Projectionist::isReplaying()) {
-            $storedEvent->meta_data['saldo_po_transakcji'] = $rachunek->saldo;
-            if ($rachunekDocelowy) {
-                $storedEvent->meta_data['saldo_rachunku_docelowego_po_transakcji'] = $rachunekDocelowy->saldo;
-            }
-            (resolve(StoredEventRepository::class))->update($storedEvent);
-        }
+        event(new TransakcjaZakonczona($storedEvent, $rachunek, $rachunekDocelowy));
     }
 }

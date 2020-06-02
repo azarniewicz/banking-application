@@ -1,6 +1,6 @@
 ## Setup
 
-`php artisan migrate:fresh --drop-views --seed`
+`php artisan migrate:fresh --seed`
 
 Użytkownicy:
 1. jan@kowalski.com

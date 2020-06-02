@@ -16,7 +16,6 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "michaelachrisco/readonly": "^0.33.0",
         "spatie/laravel-event-sourcing": "^3.1"
     },
     "require-dev": {

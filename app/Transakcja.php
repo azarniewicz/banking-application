@@ -7,7 +7,6 @@ use App\Events\WyplataPieniedzy;
 use Illuminate\Database\Eloquent\Model;
 use App\Events\Przelew;
 use Illuminate\Support\Carbon;
-use MichaelAChrisco\ReadOnly\ReadOnlyTrait;
 
 /**
  *
@@ -20,29 +19,12 @@ use MichaelAChrisco\ReadOnly\ReadOnlyTrait;
  */
 class Transakcja extends Model
 {
-    use ReadOnlyTrait;
-
     /**
      * @var string
      */
     protected $table = 'transakcje';
 
-    /**
-     * @param $value
-     *
-     * @return string
-     */
-    public function getTypAttribute($value): ?string
-    {
-        switch ($value) {
-            case Przelew::class:
-                return 'Przelew wychodzący';
-            case WplataPieniedzy::class:
-                return 'Wpłata';
-            case WyplataPieniedzy::class:
-                return 'Wypłata';
-            default:
-                return $value;
-        }
-    }
+    public $timestamps = false;
+
+    protected $guarded = ['id'];
 }

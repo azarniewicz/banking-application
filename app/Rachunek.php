@@ -12,15 +12,26 @@ class Rachunek extends Model
     protected $table = 'rachunki';
 
     /**
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
      * @var array
      */
     public $guarded = [];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function transakcje()
     {
-        return $this->hasMany(Transakcja::class, 'nr_rachunku', 'nr_rachunku');
+        return $this->hasMany(Transakcja::class, 'id_rachunku');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function klienci()
     {
         return $this->belongsToMany(Klient::class);
@@ -33,7 +44,7 @@ class Rachunek extends Model
      */
     public static function uuid(string $uuid): self
     {
-        return static::where('uuid', $uuid)->first();
+        return static::where('id', $uuid)->first();
     }
 
     /**

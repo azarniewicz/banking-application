@@ -12,7 +12,7 @@ class CreateSnapshotsTable extends Migration
             $table->increments('id');
             $table->uuid('aggregate_uuid');
             $table->unsignedInteger('aggregate_version');
-            $table->json('state');
+            $table->string('state');
 
             $table->timestamps();
 

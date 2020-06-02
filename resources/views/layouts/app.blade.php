@@ -10,10 +10,8 @@
 	<meta name="author" content="Żukowski, Żarniewicz, Męczyński">
 	<meta http-equiv="X-Ua-Compatible" content="IE=edge">
 
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/app.css">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
-    <link rel="stylesheet" href="css/f.css">
 </head>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

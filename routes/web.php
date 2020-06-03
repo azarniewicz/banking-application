@@ -16,7 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/test','HomeController@test');
 
+
+
+
+
 Auth::routes(['register'=>false]);
+
+
+
 
 
 
@@ -26,30 +33,45 @@ Route::group([
     Route::get('/', 'KlientController@index');
 
     Route::get('/przelew', function () {
-        return view('przelew');
+        return view('uzytkownik/przelew');
     });
     Route::get('/historia', function () {
-        return view('historia');
+        return view('uzytkownik/historia');
     });
     Route::get('/staliodbiorcy', function () {
-        return view('staliodbiorcy');
+        return view('uzytkownik/staliodbiorcy');
     });
     Route::get('/planowanetransakcje', function () {
-        return view('planowanetransakcje');
+        return view('uzytkownik/planowanetransakcje');
     });
     Route::get('/kredyty', function () {
-        return view('kredyty');
+        return view('uzytkownik/kredyty');
     });
     Route::get('/mojedane', function () {
-        return view('mojedane');
+        return view('uzytkownik/mojedane');
     });
     Route::get('/raty', function () {
-        return view('raty');
+        return view('uzytkownik/raty');
     });
     Route::get('/ustawienia', function () {
-        return view('ustawienia');
+        return view('uzytkownik/ustawienia');
     });
+
+
     Route::post('/wyloguj','\App\Http\Controllers\Auth\LoginController@wyloguj');
+
+
+
+});
+
+
+Route::get('/adminpanel/login','AdministratorController@showLogin');
+Route::post('/adminpanel/login','AdministratorController@login');
+
+Route::group([
+    'middleware'=>'auth:administrator'
+],function(){
+    Route::get('/adminpanel','AdministratorController@index');
 
 });
 

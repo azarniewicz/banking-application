@@ -12,6 +12,6 @@ class KlientController extends Controller
         $rachunek = $klient->rachunek;
         $ostatnieTransakcje = $rachunek->transakcje()->orderBy('data', 'desc')->take(5)->get();
 
-        return view('start', compact(['rachunek', 'klient', 'ostatnieTransakcje']));
+        return view('uzytkownik/start', compact(['rachunek', 'klient', 'ostatnieTransakcje']));
     }
 }

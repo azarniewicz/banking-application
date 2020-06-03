@@ -35,17 +35,19 @@ class Administrator extends Authenticatable
 
     public function login(array $data,$filled) : bool
     {
-        return Auth::guard('administrator')->attempt([
+        return $this->getGuard()->attempt([
             'email'=>$data['email'],
             'password'=>$data['password']
         ],$filled);
     }
-
+    private function getGuard(){
+        return Auth::guard('administrator');
+    }
     public function scopeCheckAuth(){
-        return Auth::guard('administrator')->check();
+        return $this->getGuard()->check();
     }
     public function scopeGetAdmin() : self
     {
-        return Auth::guard('administrator')->user();
+        return $this->getGuard()->user();
     }
 }

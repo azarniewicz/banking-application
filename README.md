@@ -1,5 +1,10 @@
 ## Setup
 
+`npm install`
+
+`npm run watch` - dla plików css i js
+
+
 `php artisan migrate:fresh --seed`
 
 Użytkownicy:

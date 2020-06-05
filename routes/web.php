@@ -69,13 +69,16 @@ Route::group([
 Route::group([
     'middleware'=>'auth:before:administrator'
 ],function(){
+
     Route::get('/adminpanel/login','AdministratorController@showLogin');
     Route::post('/adminpanel/login','AdministratorController@login');
+
 });
 
 Route::group([
     'middleware'=>'auth:administrator'
 ],function(){
     Route::get('/adminpanel','AdministratorController@index');
+    Route::post('/user','UserController@store');
 });
 

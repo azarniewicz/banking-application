@@ -8,7 +8,7 @@ class KlientController extends Controller
 {
     public function index()
     {
-        $klient = auth()->user()->klient;
+        $klient = auth()->user();
         $rachunek = $klient->rachunek;
         $ostatnieTransakcje = $rachunek->transakcje()->orderBy('data', 'desc')->take(5)->get();
 

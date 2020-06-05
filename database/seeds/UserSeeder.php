@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $this->setUpFaker();
+         $this->setUpFaker();
 
         $userA = factory(User::class)->create([
             'email'    => 'jan@kowalski.com',
@@ -27,8 +27,7 @@ class UserSeeder extends Seeder
             'nazwisko' => 'Kowalski',
             'pin'      => '1234',
             'password' => Hash::make('tajne'),
-            'name'     => 'Jan',
-            'typ'      => 'klient'
+            'typ'      => 'klient',
         ])->klient()->save(factory(Klient::class)->make());
 
         $userB = factory(User::class)->create([
@@ -37,7 +36,6 @@ class UserSeeder extends Seeder
             'nazwisko' => 'Kowalska',
             'pin'      => '1234',
             'password' => Hash::make('tajne'),
-            'name'     => 'Janina',
             'typ'      => 'klient'
         ])->klient()->save(factory(Klient::class)->make());
 

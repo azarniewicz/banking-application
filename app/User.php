@@ -6,6 +6,7 @@ use Faker\Provider\pl_PL\Payment;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable
@@ -27,7 +28,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'imie','nazwisko','typ','pin',
+        'email', 'password','is_reset_password','pesel','numer_telefonu','ulica_i_numer_domu','kod_pocztowy','miasto','seria_i_numer_dowodu'
     ];
 
     /**
@@ -52,9 +54,22 @@ class User extends Authenticatable
     {
         return $this->imie . ' ' . $this->nazwisko;
     }
-
     public function klient()
     {
         return $this->hasOne(Klient::class, 'id_uzytkownika');
+    }
+    public function store(array $data)
+    {
+
+        $data['is_reset_password'] = 1;
+        $data['password'] = Hash::make($data['password']);
+        $base = $this->create($data);
+
+        $aggregate = RachunekAggregateRoot::retrieve(UuidGenerator::generuj());
+        $aggregate->utworzRachunekKlienta($base->id, Payment::bankAccountNumber());
+
+        $aggregate->persist();
+
+        return $base;
     }
 }

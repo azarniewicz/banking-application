@@ -1,13 +1,14 @@
 <?php
 
 use App\RachunekAggregateRoot;
+use App\UuidGenerator;
 use Faker\Provider\pl_PL\Payment;
 
 class RachunekFactory
 {
     public static function createRachunekUsingAggregate(string $uuid, float $kwota = 0, int $nrKlienta = 1)
     {
-        $aggregate = RachunekAggregateRoot::retrieve($uuid);
+        $aggregate = RachunekAggregateRoot::retrieve(UuidGenerator::generuj());
 
         $aggregate->utworzRachunekKlienta($nrKlienta, Payment::bankAccountNumber());
 

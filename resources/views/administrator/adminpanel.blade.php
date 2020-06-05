@@ -11,7 +11,7 @@
 	<meta http-equiv="X-Ua-Compatible" content="IE=edge">
 
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="main.css">
+	<link rel="stylesheet" href="{{asset('css/app.css')}}">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
 	<link rel="stylesheet" href="css/f.css">
 
@@ -49,64 +49,6 @@
 </head>
 
 <body>
-
-	<header>
-
-		<nav class="navbar navbar-dark bg-bank navbar-expand-lg">
-
-			<a class="navbar-brand" href="index.html">DEMO BANKU</a>
-
-			<button class="navbar-toggler logo" type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="Przełącznik nawigacji">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="mainmenu">
-
-				<ul class="navbar-nav mr-auto">
-
-					<li class="nav-item">
-						<a class="nav-link" href="index.html"><i class="fas fa-home"></i> Start </a>
-					</li>
-
-                   <li class="nav-item">
-						<a class="nav-link" href="przelew.html"><i class="fas fa-coins"></i> Przelew </a>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link" href="historia.html"><i class="fas fa-list"></i> Historia </a>
-					</li>
-
-					<li class="nav-item dropdown">
-						<span class="nav-link dropdown-toggle" href="uslugi.html" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"><i class="fas fa-layer-group"></i> Usługi </span>
-
-						<div class="dropdown-menu submenu" aria-labelledby="submenu">
-
-							<a class="dropdown-item" href="staliodbiorcy.html"> Stali odbiorcy </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="planowanetransakcje.html"> Planowane transakcje </a>
-                            <div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="kredyty.html"> Kredyty </a>
-						</div>
-					</li>
-
-                    <li class="nav-item dropdown active">
-						<span class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"><i class="far fa-user-circle"></i> Konto </span>
-
-						<div class="dropdown-menu submenu" aria-labelledby="submenu">
-
-							<a class="dropdown-item" href="mojedane.html"> Moje dane </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="ustawienia.html"> Ustawienia </a>
-                            <div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="raty.html"> Moje raty </a>
-                            <div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="adminpanel.html"> Wyloguj </a>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</nav>
-
-	</header>
 	<main>
       <div class="container">
         <div class="row">
@@ -124,56 +66,64 @@
                <a class="nav-link " data-toggle="tab" href="#uzyt" aria-selected="false">UŻYTKOWNICY</a>
              </li>
            </ul>
+           @if($errors->any())
+              @include('/layouts/error',['errors'=>$errors->all()])
+           @endif
            <div class="tab-content">
 
                 <!-- REJESTRACJA UŻYTKOWNIKÓW -->
             <div class="tab-pane fade active show" id="rejkont">
                 <div class="col-md-12 przelew-form">
 
-                    <form>
+                <form action="{{ action('UserController@store') }}"  method="post">
 
-
+                    @csrf
                     <div class="col-md-6 mgg">
 
                         <div class="form-group">
-    <input type="text" name="name" class="form-control" placeholder="Imię" value="Jan"/>
+    <input type="text" name="imie" class="form-control" placeholder="Imię"/>
                         </div>
 
 	                    <div class="form-group">
-    <input type="text" name="surname" class="form-control" placeholder="Nazwisko" value="Kowalski"/>
+    <input type="text" name="nazwisko" class="form-control" placeholder="Nazwisko"/>
                         </div>
 
+                        <div class="form-group">
+                            <input type="text" name="email" class="form-control" placeholder="Email"/>
+                                                </div>
+
+
 	                    <div class="form-group">
-    <input type="text" name="pesel" class="form-control" placeholder="Pesel" value="00000000"/>
+    <input type="text" name="pesel" class="form-control" placeholder="Pesel"/>
                         </div>
                         <div class="form-group">
-    <input type="text" name="nrdowodu" class="form-control" placeholder="Seria i numer dowodu" value="AGF 000000"/>
+    <input type="text" name="seria_i_numer_dowodu" class="form-control" placeholder="Seria i numer dowodu"/>
                         </div>
 
 	                    <div class="form-group">
-    <input type="text" name="nrtel" class="form-control" placeholder="Numer telefonu" value="555 555 555"/>
+    <input type="text" name="numer_telefonu" class="form-control" placeholder="Numer telefonu" />
                         </div>
 
 	                    <div class="form-group">
-    <input type="text" name="city" class="form-control" placeholder="Miasto" value="Jelenia Góra"/>
+    <input type="text" name="miasto" class="form-control" placeholder="Miasto"/>
                         </div>
 
 	                    <div class="form-group">
-    <input type="text" name="street" class="form-control" placeholder="Ulica i numer domu" value="Babia 6"/>
+    <input type="text" name="ulica_i_numer_domu" class="form-control" placeholder="Ulica i numer domu"/>
                         </div>
 
 	                    <div class="form-group">
-    <input type="text" name="postalcode" class="form-control" placeholder="Kod pocztowy" value="44-333"/>
+    <input type="text" name="kod_pocztowy" class="form-control" placeholder="Kod pocztowy" />
                         </div>
                         <div class="form-group">
-    <input type="text" name="pinkonta" class="form-control" placeholder="PIN do konta" value=""/>
+    <input type="text" name="pin" class="form-control" placeholder="PIN do konta"/>
                         </div>
                        <div class="form-group">
-    <input type="text" name="pinkonta" class="form-control" placeholder="Tymczasowe hasło" value=""/>
+    <input type="text" name="password" class="form-control" placeholder="Tymczasowe hasło"/>
                         </div>
 
                         <div class="form-group">
-    <input type="submit" name="btnSubmit" class="btnContact" value="ZAREJESTRUJ" />
+    <input type="submit" name="btnSubmit" class="btnContact" value="ZAREJESTRUJ"/>
                         </div>
                     </div>
 

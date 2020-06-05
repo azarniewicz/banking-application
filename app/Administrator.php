@@ -43,7 +43,8 @@ class Administrator extends Authenticatable
     private function getGuard(){
         return Auth::guard('administrator');
     }
-    public function scopeCheckAuth(){
+    public function scopeCheckAuth() : bool
+    {
         return $this->getGuard()->check();
     }
     public function scopeGetAdmin() : self

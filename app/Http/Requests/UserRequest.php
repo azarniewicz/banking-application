@@ -31,7 +31,7 @@ class UserRequest extends FormRequest
             'password'=>'required',
             'pesel'=>'required',
             'seria_i_numer_dowodu'=>'required',
-            'numer_telefonu'=>'required',
+            'nr_telefonu'=>'required',
             'miasto'=>'required',
         ];
     }
@@ -45,7 +45,7 @@ class UserRequest extends FormRequest
             'password.required'  => 'Hasło jest wymagane',
             'pesel.required'  => 'Pesel jest wymagane',
             'seria_i_numer_dowodu.required'  => 'Seria i numer dowodu jest wymagane',
-            'numer_telefonu.required'  => 'Nazwisko jest wymagane',
+            'nr_telefonu.required'  => 'Numer telefonu jest wymagany',
             'miasto.required'  => 'Miasto jest wymagane',
 
         ];

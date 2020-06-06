@@ -26,13 +26,20 @@ Auth::routes(['register'=>false]);
 
 
 
-
 Route::group([
     'middleware' => 'auth'
 ],function(){
     Route::get('/', 'HomeController@index');
 
     Route::get('/start', 'KlientController@index');
+
+    Route::get('/uzytkownik/resetpassword','UserController@resetPassword');
+
+    Route::post('/uzytkownik/changepassword','UserController@changePassword');
+
+    Route::get('/uzytkownik/getusersfilter/{name}','UserController@getUsersFilter');
+
+    Route::post('/administrator/edituser','AdministratorController@editUser');
 
     Route::get('/przelew', function () {
         return view('uzytkownik/przelew');

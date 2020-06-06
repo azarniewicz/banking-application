@@ -22,7 +22,10 @@ class CreateUzytkownicyTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password',200);
             $table->string('typ',100);
+            $table->tinyInteger('is_zablokowana')->default(0);
+            $table->tinyInteger('is_reset_pin')->default(0);
             $table->tinyInteger('is_reset_password');
+
             $table->timestamps();
         });
     }

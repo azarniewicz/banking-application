@@ -12,6 +12,7 @@ class Klient extends User
 
     public function rachunki()
     {
+
         return $this->belongsToMany(
             Rachunek::class,
             'klient_rachunek',

@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
             'nazwisko' => 'Kowalska',
             'pin'      => '1234',
             'password' => Hash::make('tajne'),
-            'typ'      => 'klient'
+            'typ'      => 'klient',
         ])->klient()->save(factory(Klient::class)->make());
 
         $rachunekA = RachunekFactory::createRachunekUsingAggregate(UuidGenerator::generuj(), 0, $userA->id);

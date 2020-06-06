@@ -13,17 +13,13 @@ class AdministratorMiddleware
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Closure                  $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        $checkAuth = Administrator::checkAuth();
-        if($checkAuth){
-           return $next($request);
-        }
-        else{
-            return redirect()->to('/adminpanel/login');
-        }
+        abort_if(!(auth()->user()->isAdmin()), 404);
+        return $next($request);
     }
 }

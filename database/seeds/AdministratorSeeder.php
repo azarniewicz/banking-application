@@ -1,9 +1,10 @@
 <?php
 
 use App\Administrator;
+use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+
 class AdministratorSeeder extends Seeder
 {
     /**
@@ -13,14 +14,13 @@ class AdministratorSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('administracja')->insert([
+        factory(User::class)->create([
             'email'    => 'adam.zuczek@gmail.com',
             'imie'     => 'Adam',
             'nazwisko' => 'Żuczek',
+            'pin'      => '1234',
             'password' => Hash::make('tajne'),
-            'stanowisko'=>'Prezes',
-            'pin'=>'1234'
-        ]);
-
+            'typ'      => 'administrator',
+        ])->admin()->save(factory(Administrator::class)->make(['stanowisko' => 'Prezes']));
     }
 }

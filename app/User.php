@@ -3,11 +3,9 @@
 namespace App;
 
 use Faker\Provider\pl_PL\Payment;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -18,7 +16,7 @@ class User extends Authenticatable
     protected $childColumn = 'typ';
 
     protected $childTypes = [
-//        'admin' => App\Admin::class,
+        'administrator'  => Administrator::class,
         'klient' => Klient::class,
     ];
 
@@ -28,8 +26,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'imie','nazwisko','typ','pin',
-        'email', 'password','is_reset_password','pesel','numer_telefonu','ulica_i_numer_domu','kod_pocztowy','miasto','seria_i_numer_dowodu'
+        'imie', 'nazwisko', 'typ', 'pin',
+        'email', 'password', 'is_reset_password', 'pesel', 'numer_telefonu', 'ulica_i_numer_domu', 'kod_pocztowy',
+        'miasto', 'seria_i_numer_dowodu'
     ];
 
     /**
@@ -54,16 +53,33 @@ class User extends Authenticatable
     {
         return $this->imie . ' ' . $this->nazwisko;
     }
+
     public function klient()
     {
         return $this->hasOne(Klient::class, 'id_uzytkownika');
     }
+
+    public function isKlient()
+    {
+        return $this->klient()->exists();
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(Administrator::class, 'id_uzytkownika');
+    }
+
+    public function isAdmin()
+    {
+        return $this->admin()->exists();
+    }
+
     public function store(array $data)
     {
 
         $data['is_reset_password'] = 1;
-        $data['password'] = Hash::make($data['password']);
-        $base = $this->create($data);
+        $data['password']          = Hash::make($data['password']);
+        $base                      = $this->create($data);
 
         $aggregate = RachunekAggregateRoot::retrieve(UuidGenerator::generuj());
         $aggregate->utworzRachunekKlienta($base->id, Payment::bankAccountNumber());

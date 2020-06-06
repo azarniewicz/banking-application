@@ -34,7 +34,7 @@ class Rachunek extends Model
      */
     public function klienci()
     {
-        return $this->belongsToMany(Klient::class);
+        return $this->belongsToMany(Klient::class, 'klient_rachunek', 'id_rachunku', 'id_uzytkownika');
     }
 
     /**

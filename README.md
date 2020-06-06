@@ -1,5 +1,7 @@
 ## Setup
 
+`composer install`
+
 `npm install`
 
 `npm run watch` - dla plików css i js

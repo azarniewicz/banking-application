@@ -45,10 +45,7 @@ class Kernel extends HttpKernel
         ],
         'auth:administrator'=>[
             \App\Http\Middleware\AdministratorMiddleware::class,
-        ],
-        'auth:before:administrator'=>[
-            \App\Http\Middleware\BeforeAdministratorMiddleware::class,
-        ],
+        ]
     ];
 
     /**

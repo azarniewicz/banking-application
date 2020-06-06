@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Administrator;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Parental\Tests\Models\Admin;
 
 class HomeController extends Controller
 {
@@ -21,12 +23,16 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
-        return view('home');
+        if (auth()->user()->isAdmin()) {
+            return redirect('adminpanel');
+        }
+
+        return redirect('start');
     }
+
     public function test(){
         User::create([
             'email'=>'milosz981998@gmail.com',

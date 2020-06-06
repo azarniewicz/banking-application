@@ -9,11 +9,9 @@ use App\Events\WplataPieniedzy;
 use App\Events\WyplataPieniedzy;
 use App\Rachunek;
 use Illuminate\Support\Facades\DB;
-use Spatie\EventSourcing\Facades\Projectionist;
 use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
 use Spatie\EventSourcing\StoredEvent;
-use Spatie\EventSourcing\StoredEventRepository;
 
 class RachunekProjector implements Projector
 {
@@ -49,6 +47,7 @@ class RachunekProjector implements Projector
 
     /**
      * @param  WyplataPieniedzy  $event
+     * @param  StoredEvent       $storedEvent
      * @param  string            $aggregateUuid
      */
     public function onWyplataPieniedzy(WyplataPieniedzy $event, StoredEvent $storedEvent, string $aggregateUuid): void
@@ -61,8 +60,9 @@ class RachunekProjector implements Projector
     }
 
     /**
-     * @param  Przelew  $event
-     * @param  string   $aggregateUuid
+     * @param  Przelew      $event
+     * @param  StoredEvent  $storedEvent
+     * @param  string       $aggregateUuid
      */
     public function onPrzelew(Przelew $event, StoredEvent $storedEvent, string $aggregateUuid): void
     {

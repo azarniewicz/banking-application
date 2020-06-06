@@ -12,7 +12,12 @@ class Klient extends User
 
     public function rachunki()
     {
-        return $this->belongsToMany(Rachunek::class, 'klient_rachunek', 'user_id', 'rachunek_id');
+        return $this->belongsToMany(
+            Rachunek::class,
+            'klient_rachunek',
+            'id_uzytkownika',
+            'id_rachunku'
+        );
     }
 
     public function getRachunekAttribute()
@@ -22,6 +27,6 @@ class Klient extends User
 
     public function klient()
     {
-        return $this->hasOne(Klient::class);
+        return $this->hasOne(Klient::class, 'id_uzytkownika');
     }
 }

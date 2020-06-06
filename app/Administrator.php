@@ -2,23 +2,17 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Auth;
-class Administrator extends Authenticatable
+
+class Administrator extends User
 {
-    use Notifiable;
+    use \Parental\HasParent;
 
     protected $guard = 'admin';
 
-    protected $primaryKey = 'id_admin';
-
     protected $table = 'administracja';
 
-
     public $timestamps = false;
-
 
     public function getAuthPassword()
     {
@@ -33,22 +27,8 @@ class Administrator extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function login(array $data,$filled) : bool
+    public function user()
     {
-        return $this->getGuard()->attempt([
-            'email'=>$data['email'],
-            'password'=>$data['password']
-        ],$filled);
-    }
-    private function getGuard(){
-        return Auth::guard('administrator');
-    }
-    public function scopeCheckAuth() : bool
-    {
-        return $this->getGuard()->check();
-    }
-    public function scopeGetAdmin() : self
-    {
-        return $this->getGuard()->user();
+        return $this->hasOne(User::class, 'id_uzytkownika');
     }
 }

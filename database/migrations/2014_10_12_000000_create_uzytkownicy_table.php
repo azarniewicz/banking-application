@@ -15,7 +15,6 @@ class CreateUzytkownicyTable extends Migration
     {
         Schema::create('uzytkownicy', function (Blueprint $table) {
             $table->id();
-            $table->string('name',100);
             $table->string('imie',100);
             $table->string('nazwisko',100);
             $table->string('pin',20);
@@ -23,14 +22,7 @@ class CreateUzytkownicyTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password',200);
             $table->string('typ',100);
-            $table->string('pesel',20);
-            $table->string('seria_i_numer_dowodu',50);
-            $table->string('numer_telefonu',20);
-            $table->string('ulica_i_numer_domu',100);
-            $table->string('miasto',100);
-            $table->string('kod_pocztowy',30);
             $table->tinyInteger('is_reset_password');
-            $table->rememberToken();
             $table->timestamps();
         });
     }

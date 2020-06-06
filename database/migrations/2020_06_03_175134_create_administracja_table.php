@@ -14,14 +14,8 @@ class CreateAdministracjaTable extends Migration
     public function up()
     {
         Schema::create('administracja', function (Blueprint $table) {
-            $table->increments('id_admin');
-            $table->string('email');
-            $table->string('password');
-            $table->string('pin',4);
-            $table->string('imie');
-            $table->string('nazwisko');
+            $table->increments('id_uzytkownika');
             $table->string('stanowisko');
-            $table->string('remember_token');
         });
     }
 

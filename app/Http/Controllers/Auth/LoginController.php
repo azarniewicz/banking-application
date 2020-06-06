@@ -37,6 +37,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('wyloguj');
     }
+
     public function wyloguj(){
         \Auth::logout();
         return redirect()->to("/login");

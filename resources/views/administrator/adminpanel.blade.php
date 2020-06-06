@@ -52,8 +52,15 @@
 	<main>
       <div class="container">
         <div class="row">
-          <section class="col-md-12 infobox">
-                PANEL ADMINISTRATORA - {{$administrator->nazwisko." ".$administrator->imie}}
+          <section class="col-md-12 infobox text-left">
+
+              PANEL ADMINISTRATORA - {{$administrator->nazwisko." ".$administrator->imie}}
+
+              <form action="{{ url('wyloguj') }}" method="post" class="float-right">
+                  @csrf
+                  <button type="submit" class="btn btn-primary " >WYLOGUJ</button>
+              </form>
+
            <ul class="nav nav-tabs navsset ">
 
              <li class="nav-item">

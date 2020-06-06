@@ -30,7 +30,9 @@ Auth::routes(['register'=>false]);
 Route::group([
     'middleware' => 'auth'
 ],function(){
-    Route::get('/', 'KlientController@index');
+    Route::get('/', 'HomeController@index');
+
+    Route::get('/start', 'KlientController@index');
 
     Route::get('/przelew', function () {
         return view('uzytkownik/przelew');
@@ -64,16 +66,6 @@ Route::group([
 
 });
 
-
-
-Route::group([
-    'middleware'=>'auth:before:administrator'
-],function(){
-
-    Route::get('/adminpanel/login','AdministratorController@showLogin');
-    Route::post('/adminpanel/login','AdministratorController@login');
-
-});
 
 Route::group([
     'middleware'=>'auth:administrator'

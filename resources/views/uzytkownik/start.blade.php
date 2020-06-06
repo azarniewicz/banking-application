@@ -36,6 +36,7 @@ Nr klienta: <span>123456</span> Ostatnie logowanie: <span>05/22/2020</span>Aktua
                       <th scope="col">DATA</th>
                       <th scope="col">TYP</th>
                       <th scope="col">KWOTA</th>
+                      <th scope="col">SALDO PO TRANSAKCJI</th>
                       <th scope="col">TYTUŁ</th>
                     </tr>
                   </thead>
@@ -45,6 +46,7 @@ Nr klienta: <span>123456</span> Ostatnie logowanie: <span>05/22/2020</span>Aktua
                       <th scope="row">{{ $transakcja->data }}</th>
                       <th scope="row">{{ $transakcja->typ }}</th>
                       <td>{{ $transakcja->kwota }}zł</td>
+                      <td>{{ $transakcja->saldo_po_transakcji }}zł</td>
                       <td>{{ $transakcja->tytul }}</td>
                     </tr>
                   @endforeach

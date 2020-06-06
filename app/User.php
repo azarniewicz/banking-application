@@ -88,4 +88,9 @@ class User extends Authenticatable
 
         return $base;
     }
+
+    public function getRachunekKlienta()
+    {
+        return $this->klient->rachunek;
+    }
 }

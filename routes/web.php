@@ -34,9 +34,10 @@ Route::group([
 
     Route::get('/start', 'KlientController@index');
 
-    Route::get('/przelew', function () {
-        return view('uzytkownik/przelew');
-    });
+    Route::get('/przelew', 'TransakcjaController@index');
+
+    Route::post('/przelew', 'TransakcjaController@store');
+
     Route::get('/historia', function () {
         return view('uzytkownik/historia');
     });

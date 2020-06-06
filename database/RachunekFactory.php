@@ -8,7 +8,7 @@ class RachunekFactory
 {
     public static function createRachunekUsingAggregate(string $uuid, float $kwota = 0, int $nrKlienta = 1)
     {
-        $aggregate = RachunekAggregateRoot::retrieve(UuidGenerator::generuj());
+        $aggregate = RachunekAggregateRoot::retrieve($uuid);
 
         $aggregate->utworzRachunekKlienta($nrKlienta, Payment::bankAccountNumber());
 
@@ -16,6 +16,8 @@ class RachunekFactory
             $aggregate->wplac($kwota);
         }
 
-        return $aggregate->persist();
+        $aggregate->persist();
+
+        return $aggregate;
     }
 }

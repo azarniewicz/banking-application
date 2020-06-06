@@ -4,10 +4,13 @@
 namespace App\Http\Controllers;
 
 
-use App\Klient;
-
 class KlientController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         abort_if((!auth()->user()->isKlient()), 403);

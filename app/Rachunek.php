@@ -72,4 +72,11 @@ class Rachunek extends Model
     {
         $this->update(['saldo' => $this->saldo -= $kwota]);
     }
+
+    public function scopeDostepneDoPrzelewow()
+    {
+        return self::whereHas('klienci', function ($query) {
+            $query->where('klient_rachunek.id_uzytkownika', '<>', auth()->user()->id);
+        });
+    }
 }

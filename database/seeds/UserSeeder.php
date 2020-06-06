@@ -43,9 +43,10 @@ class UserSeeder extends Seeder
 
         $rachunekB = RachunekFactory::createRachunekUsingAggregate(UuidGenerator::generuj(), 0, $userB->id);
 
-        $this->command->getOutput()->progressStart(10000);
+        $iterator = range(1, 10);
+        $this->command->getOutput()->progressStart(count($iterator));
 
-        foreach (range(1, 10) as $i) {
+        foreach ($iterator as $i) {
             $this->command->getOutput()->progressAdvance();
             $rachunekA->wplac($this->faker->numberBetween(1000, 2000));
             $rachunekA->przelej($rachunekB->nrRachunku, $this->faker->word, $this->faker->numberBetween(1, 500));

@@ -22,6 +22,14 @@
     <div id="app">
         @include('layouts.navbar')
         <main>
+            @if($errors->any())
+                <div class="alert alert-danger text-sm-center" role="alert">
+                    @foreach($errors->all() as $error)
+                        <span class="w-100">{{ $error }}</span>
+                        <br>
+                    @endforeach
+                </div>
+            @endif
             @yield('content')
         </main>
         <footer>

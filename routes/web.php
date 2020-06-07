@@ -43,9 +43,9 @@ Route::group([
     Route::get('/staliodbiorcy', function () {
         return view('uzytkownik/staliodbiorcy');
     });
-    Route::get('/planowanetransakcje', function () {
-        return view('uzytkownik/planowanetransakcje');
-    });
+
+    Route::get('/planowanetransakcje', 'TransakcjaController@createPlanowana');
+
     Route::get('/kredyty', function () {
         return view('uzytkownik/kredyty');
     });

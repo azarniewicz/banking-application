@@ -24,7 +24,7 @@ class TransakcjaRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'numer_rachunku' => [
                 'required',
                 'regex:$[A-Za-z]{2}[0-9]{26}\z$',
@@ -35,9 +35,15 @@ class TransakcjaRequest extends FormRequest
             'tytul'          => 'required',
             'odbiorca'       => 'required',
             'typ'            => [
-                'in:' . Transakcja::ekspres . ',' . Transakcja::standard,
+                'in:' . Transakcja::ekspres . ',' . Transakcja::standard . ',' . Transakcja::planowana,
                 'required'
             ]
         ];
+
+        if ($this->request->has('data_wykonania')) {
+            $rules['data_wykonania'] = 'required|date|after:today';
+        }
+
+        return $rules;
     }
 }

@@ -32,6 +32,7 @@ class TransakcjaController extends Controller
 
     public function index()
     {
+        // TODO paginacja?
         $transakcje = auth()->user()
                             ->getRachunekKlienta()
                             ->transakcje()
@@ -47,17 +48,23 @@ class TransakcjaController extends Controller
         return view('uzytkownik/przelew');
     }
 
+    public function createPlanowana()
+    {
+        return view('uzytkownik/planowanetransakcje');
+    }
+
     public function store(TransakcjaRequest $request)
     {
         try {
-            $this->rachunekAggregateRoot->zablokujSrodki($request->get('kwota'))->persist();
+//            $this->rachunekAggregateRoot->zablokujSrodki($request->get('kwota'))->persist();
 
             $transakcja = Transakcja::makeFrom([
                 'nr_rachunku'             => $this->rachunekAggregateRoot->nrRachunku,
                 'nr_rachunku_powiazanego' => $request->get('numer_rachunku'),
                 'kwota'                   => $request->get('kwota'),
                 'tytul'                   => $request->get('tytul'),
-                'odbiorca'                => $request->get('odbiorca')
+                'odbiorca'                => $request->get('odbiorca'),
+                'data_wykonania'          => $request->get('data_wykonania', null),
             ], $request->get('typ'));
 
             $transakcja->wykonaj();

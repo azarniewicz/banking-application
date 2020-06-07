@@ -21,13 +21,16 @@ use Illuminate\Support\Carbon;
  * @property float  $kwota
  * @property string $tytul
  * @property string $odbiorca
- * @property Carbon $data
+ * @property Carbon $data_zlecenia
+ * @property Carbon $data_wykonania
  */
 class Transakcja extends Model
 {
     public const ekspres = 'ekspres';
 
     public const standard = 'standard';
+
+    public const planowana = 'planowana';
 
     /**
      * @var string
@@ -97,6 +100,8 @@ class Transakcja extends Model
                 return self::make($attributes);
             case self::ekspres:
                 return TransakcjaEkspresowa::make($attributes);
+            case self::planowana:
+                return TransakcjaPlanowana::make($attributes);
         }
 
         throw new NieznanyTypTransakcji('System nie obsługuje podanego typu transakcji: ' . $typ);

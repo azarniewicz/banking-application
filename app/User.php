@@ -28,7 +28,7 @@ class User extends Authenticatable
     protected $fillable = [
         'imie', 'nazwisko', 'typ', 'pin',
         'email', 'password', 'is_reset_password', 'pesel', 'nr_telefonu', 'ulica_nr', 'kod_pocztowy',
-        'miasto', 'seria_i_numer_dowodu','is_zablokowana'
+        'miasto', 'seria_i_numer_dowodu','is_zablokowana','is_reset_pin'
     ];
 
     /**
@@ -86,8 +86,9 @@ class User extends Authenticatable
         return $this;
     }
     public function setResetPassword(){
-        $this->is_reset_password = 1;
-        $this->save();
+        $this->update([
+            'is_reset_password'=>1
+        ]);
         return $this;
     }
     public function edit(array $data) : self{
@@ -109,6 +110,13 @@ class User extends Authenticatable
     public function setResetPin() : self{
         $this->update([
             'is_reset_pin'=>1,
+        ]);
+        return $this;
+    }
+    public function changePin($pin) : self{
+        $this->update([
+            'pin'=>$pin,
+            'is_reset_pin'=>0
         ]);
         return $this;
     }

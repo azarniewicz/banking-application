@@ -6,7 +6,7 @@ use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\User;
 use App\RachunekAggregateRoot;
-
+use Illuminate\Support\Facades\Validator;
 class UserController extends  Controller
 {
     private $user;
@@ -20,12 +20,32 @@ class UserController extends  Controller
     private function validatePassword($password,$repeatPassword){
         return $password === $repeatPassword;
     }
+    private function validatePin($pin){
+        $validator = Validator::make(['pin'=>$pin], [
+            'pin' => 'required|digits_between:4,6',
+        ],[
+            'pin.numeric'=>'Pole pin musi być liczbą',
+            'pin.digits_between'=>'Pole pin nie może być krótsze niż 4 znaki i dłuższe niż 6 znaków'
+        ]);
+
+        return $validator;
+    }
     public function setResetPassword($id){
         $this->user->findOrFail($id)
             ->setResetPassword();
     }
     public function getUsersFilter($name){
         return response()->json(['data'=>$this->user->getUsersFilter($name)->get()]);
+    }
+    public function changePin(Request $request){
+        $validator = $this->validatePin($request->pin);
+        if($validator->fails()){
+            return redirect()
+                ->back()
+                    ->withErrors($validator);
+        }
+        auth()->user()->changePin($request->pin);
+        return redirect()->to("/");
     }
     public function changePassword(Request $request){
         if($this->validatePassword($request->password,$request->repeat_password)){
@@ -35,6 +55,9 @@ class UserController extends  Controller
         return redirect()
             ->back()
                 ->withErrors(['Podane hasła różnią się']);
+    }
+    public function resetPin(){
+        return view('/uzytkownik/resetpin');
     }
     public function store(UserRequest $request){
         $user = $this->user->store($request->all());

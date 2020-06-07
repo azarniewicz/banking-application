@@ -41,15 +41,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        if($user->is_zablokowana){
-            \Auth::logout();
-            return redirect()
-                ->back()->withErrors(['Twoje konto zostało zablokowane']);
-        }
-        if($user->is_reset_password){
-            return redirect()
-                ->to('/uzytkownik/resetpassword');
-        }
+
     }
 
     public function wyloguj(){

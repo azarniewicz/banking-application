@@ -25,9 +25,11 @@ Auth::routes(['register'=>false]);
 
 
 
+Route::post('/uzytkownik/changepin','UserController@changePin')->middleware('auth');
+Route::get('/uzytkownik/resetpin','UserController@resetPin')->middleware('auth');
 
 Route::group([
-    'middleware' => 'auth'
+    'middleware' => ['auth','user:settings']
 ],function(){
     Route::get('/', 'HomeController@index');
 

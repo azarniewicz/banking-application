@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
         return [
             'imie'=>'required',
             'nazwisko'=>'required',
-            'pin'=>'required',
+            'pin'=>'required|min:4|max:6|numeric',
             'email'=>'required',
             'password'=>'required',
             'pesel'=>'required',
@@ -38,6 +38,9 @@ class UserRequest extends FormRequest
 
     public function messages(){
         return [
+            'pin.numeric'=>'Pole pin musi być liczbą',
+            'pin.min'=>'Pole pin nie może być krótsze niż 4 znaki',
+            'pin.max'=>'Pole pin nie może być dłuższe niż 6 znaków',
             'imie.required' => 'Imię jest wymagane',
             'nazwisko.required'  => 'Nazwisko jest wymagane',
             'pin.required'  => 'Pin jest wymagane',

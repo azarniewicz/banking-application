@@ -13,7 +13,7 @@ use Illuminate\Support\Carbon;
 
 /**
  *
- * @property string $id_rachunku
+ * @property string $nr_rachunku
  * @property string $typ
  * @property string $nr_rachunku_powiazanego
  * @property float  $kwota

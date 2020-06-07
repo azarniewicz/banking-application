@@ -23,7 +23,7 @@ class HistoriaTransakcji
     public function handle(TransakcjaZakonczona $event)
     {
         Transakcja::create([
-            'id_rachunku'             => $event->rachunek->id,
+            'nr_rachunku'             => $event->rachunek->nr_rachunku,
             'saldo_po_transakcji'     => $event->rachunek->saldo,
             'kwota'                   => $event->storedEvent->event_properties['kwota'],
             'data_zlecenia'           => $event->storedEvent->created_at,

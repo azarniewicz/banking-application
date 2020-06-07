@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             $rachunekA->wplac($this->faker->numberBetween(1000, 2000))->persist();
 
             \App\Transakcja::makeFrom([
-                'id_rachunku'             => $klientA->rachunek->id,
+                'nr_rachunku'             => $klientA->rachunek->nr_rachunku,
                 'nr_rachunku_powiazanego' => $rachunekB->nrRachunku,
                 'kwota'                   => $this->faker->numberBetween(1, 500),
                 'tytul'                   => $this->faker->word,
@@ -49,7 +49,7 @@ class UserSeeder extends Seeder
 
             $rachunekB->wplac($this->faker->numberBetween(1000, 2000))->persist();
             \App\Transakcja::makeFrom([
-                'id_rachunku'             => $klientB->rachunek->id,
+                'nr_rachunku'             => $klientB->rachunek->nr_rachunku,
                 'nr_rachunku_powiazanego' => $rachunekA->nrRachunku,
                 'kwota'                   => $this->faker->numberBetween(1, 500),
                 'tytul'                   => $this->faker->word,

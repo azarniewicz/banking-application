@@ -43,7 +43,7 @@ class TransakcjaController extends Controller
             $this->rachunekAggregateRoot->zablokujSrodki($request->get('kwota'))->persist();
 
             $transakcja = Transakcja::makeFrom([
-                'id_rachunku'             => auth()->user()->getRachunekKlienta()->id,
+                'nr_rachunku'             => $this->rachunekAggregateRoot->nrRachunku,
                 'nr_rachunku_powiazanego' => $request->get('numer_rachunku'),
                 'kwota'                   => $request->get('kwota'),
                 'tytul'                   => $request->get('tytul'),

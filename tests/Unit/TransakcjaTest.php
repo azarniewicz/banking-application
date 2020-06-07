@@ -34,7 +34,7 @@ class TransakcjaTest extends TestCase
         $this->assertEquals(1500, $rachunekA->transakcje()->latest('data_wykonania')->first()->saldo_po_transakcji);
 
         $transakcja = Transakcja::makeFrom([
-            'id_rachunku'             => $rachunekA->id,
+            'nr_rachunku'             => $rachunekA->nr_rachunku,
             'nr_rachunku_powiazanego' => $rachunekB->nr_rachunku,
             'kwota'                   => 1000,
             'tytul'                   => 'test',
@@ -58,7 +58,7 @@ class TransakcjaTest extends TestCase
         $this->assertEquals(1, $rachunek->transakcje()->count());
 
         tap($rachunek->transakcje()->first(), function ($transakcja) use ($rachunek) {
-            $this->assertEquals($rachunek->id, $transakcja->id_rachunku);
+            $this->assertEquals($rachunek->nr_rachunku, $transakcja->nr_rachunku);
             $this->assertEquals('Wpłata', $transakcja->typ);
             $this->assertNull($transakcja->tytul);
             $this->assertNull($transakcja->nr_rachunku_powiazanego);
@@ -79,7 +79,7 @@ class TransakcjaTest extends TestCase
         $agegatRachunku->wyplac(1000)->persist();
 
         tap($rachunek->transakcje()->latest('data_wykonania')->first(), function ($transakcja) use ($rachunek) {
-            $this->assertEquals($rachunek->id, $transakcja->id_rachunku);
+            $this->assertEquals($rachunek->nr_rachunku, $transakcja->nr_rachunku);
             $this->assertEquals('Wypłata', $transakcja->typ);
             $this->assertNull($transakcja->tytul);
             $this->assertNull($transakcja->nr_rachunku_powiazanego);
@@ -102,7 +102,7 @@ class TransakcjaTest extends TestCase
         sleep(1);
 
         $transakcja = Transakcja::makeFrom([
-            'id_rachunku'             => $rachunekA->id,
+            'nr_rachunku'             => $rachunekA->nr_rachunku,
             'nr_rachunku_powiazanego' => $rachunekB->nr_rachunku,
             'kwota'                   => 1000,
             'tytul'                   => 'test',
@@ -112,7 +112,7 @@ class TransakcjaTest extends TestCase
         $transakcja->wykonaj();
 
         tap($rachunekA->transakcje()->latest('data_wykonania')->first(), function ($transakcja) use ($rachunekA, $rachunekB) {
-            $this->assertEquals($rachunekA->id, $transakcja->id_rachunku);
+            $this->assertEquals($rachunekA->nr_rachunku, $transakcja->nr_rachunku);
             $this->assertEquals('Przelew wychodzący', $transakcja->typ);
             $this->assertEquals('test', $transakcja->tytul);
             $this->assertEquals($rachunekB->nr_rachunku, $transakcja->nr_rachunku_powiazanego);
@@ -121,7 +121,7 @@ class TransakcjaTest extends TestCase
         });
 
         tap($rachunekB->transakcje()->latest('data_wykonania')->first(), function ($transakcja) use ($rachunekA, $rachunekB) {
-            $this->assertEquals($rachunekB->id, $transakcja->id_rachunku);
+            $this->assertEquals($rachunekB->nr_rachunku, $transakcja->nr_rachunku);
             $this->assertEquals('Przelew przychodzący', $transakcja->typ);
             $this->assertEquals('test', $transakcja->tytul);
             $this->assertEquals($rachunekA->nr_rachunku, $transakcja->nr_rachunku_powiazanego);

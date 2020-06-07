@@ -222,9 +222,8 @@ class RachunekAggregateRoot extends AggregateRoot
      */
     public function przelewPrzychodzacy(Transakcja $transakcja): self
     {
-        $rachunek_zrodlowy = Rachunek::find($transakcja->id_rachunku);
         $this->recordThat(new PrzelewPrzychodzacy(
-            $rachunek_zrodlowy->nr_rachunku,
+            $transakcja->nr_rachunku,
             $transakcja->tytul,
             $transakcja->kwota
         ));

@@ -39,7 +39,7 @@ class WykonajTransakcje implements ShouldQueue
     public function handle()
     {
         $transakcja = new Transakcja($this->serialized);
-        $nadawca    = RachunekAggregateRoot::retrieve($transakcja->id_rachunku);
+        $nadawca    =  Rachunek::numer($transakcja->nr_rachunku)->getAggregate();
         $odbiorca   = Rachunek::numer($transakcja->nr_rachunku_powiazanego)->getAggregate();
 
         DB::beginTransaction();

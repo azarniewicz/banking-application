@@ -34,7 +34,7 @@ class Rachunek extends Model
      */
     public function transakcje()
     {
-        return $this->hasMany(Transakcja::class, 'id_rachunku');
+        return $this->hasMany(Transakcja::class, 'nr_rachunku', 'nr_rachunku');
     }
 
     /**

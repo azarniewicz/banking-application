@@ -41,43 +41,41 @@
                             <div class="col-md-12"
                                  style="margin:0 auto;"
                             >
-                                <form>
+                                Dane klienta
+                                <form action="{{ url('klient') }}"
+                                      method="POST"
+                                >
+                                    @csrf
                                     <div class="form-group">
                                         <input type="text"
-                                               name="nowydowod"
+                                               name="nr_dowodu"
                                                class="form-control"
                                                placeholder="Zmień numer dowodu osobistego"
                                         />
                                     </div>
                                     <div class="form-group">
                                         <input type="text"
-                                               name="nowytelefon"
+                                               name="nr_telefonu"
                                                class="form-control"
                                                placeholder="Zmień numer telefonu"
                                                value=""
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <input type="text"
-                                               name="nowyemail"
-                                               class="form-control"
-                                               placeholder="Zmień e-mail"
-                                               value=""
-                                        />
-                                    </div>
-                                    <div class="form-group">
                                         <input type="submit"
-                                               name="btnSubmit"
                                                class="btnContact"
                                                value="ZMIEŃ"
                                         />
                                     </div>
                                 </form>
                                 Zmień miejsce zamieszkania
-                                <form>
+                                <form action="{{ url('klient') }}"
+                                      method="POST"
+                                >
+                                    @csrf
                                     <div class="form-group">
                                         <input type="text"
-                                               name="nowemiasto"
+                                               name="miasto"
                                                class="form-control"
                                                placeholder="Miasto"
                                                value=""
@@ -85,23 +83,15 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="text"
-                                               name="nowaulica"
+                                               name="ulica_nr"
                                                class="form-control"
-                                               placeholder="Ulica "
+                                               placeholder="Ulica i numer domu"
                                                value=""
                                         />
                                     </div>
                                     <div class="form-group">
                                         <input type="text"
-                                               name="nowynumerdomu"
-                                               class="form-control"
-                                               placeholder="Numer domu"
-                                               value=""
-                                        />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text"
-                                               name="nowykodpocztowy"
+                                               name="kod_pocztowy"
                                                class="form-control"
                                                placeholder="Kod pocztowy"
                                                value=""
@@ -128,17 +118,21 @@
                             <div class="col-md-12"
                                  style="margin:0 auto;"
                             >
-                                <form>
+                                Limity
+                                <form action="{{ url('klient') }}"
+                                      method="POST"
+                                >
+                                    @csrf
                                     <div class="form-group">
-                                        <input type="text"
-                                               name="limitdzienny"
+                                        <input type="number"
+                                               name="limit_dzienny"
                                                class="form-control"
                                                placeholder="Ustaw limit dzienny"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <input type="text"
-                                               name="budzet"
+                                        <input type="number"
+                                               name="ustawienie_budzetu"
                                                class="form-control"
                                                placeholder="Ustaw budżet miesięczny"
                                                value=""
@@ -147,14 +141,14 @@
 
                                     <div class="form-group">
                                         <input type="submit"
-                                               name="btnSubmit"
                                                class="btnContact"
                                                value="ZMIEŃ"
                                         />
                                     </div>
 
                                 </form>
-
+                                Karta Kredytowa
+                                {{-- TODO po dodaniu karty --}}
                                 <form>
                                     <div class="form-group">
                                         <input type="text"
@@ -164,7 +158,6 @@
                                                value=""
                                         />
                                     </div>
-
                                     <div class="form-group">
                                         <input type="submit"
                                                name="btnSubmit"
@@ -185,17 +178,28 @@
                             <div class="col-md-12"
                                  style="margin:0 auto;"
                             >
-                                <form>
+                                Dane Logowania
+                                <form action="{{ url('klient\user') }}"
+                                      method="POST"
+                                >
+                                    @csrf
                                     <div class="form-group">
                                         <input type="text"
-                                               name="pinkonta"
+                                               name="email"
+                                               class="form-control"
+                                               placeholder="Ustaw nowy email"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password"
+                                               name="pin"
                                                class="form-control"
                                                placeholder="Ustaw nowy PIN"
                                         />
                                     </div>
                                     <div class="form-group">
-                                        <input type="text"
-                                               name="budzet"
+                                        <input type="password"
+                                               name="password"
                                                class="form-control"
                                                placeholder="Ustaw nowe hasło"
                                                value=""
@@ -204,7 +208,6 @@
 
                                     <div class="form-group">
                                         <input type="submit"
-                                               name="btnSubmit"
                                                class="btnContact"
                                                value="ZMIEŃ"
                                         />

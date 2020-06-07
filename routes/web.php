@@ -52,6 +52,10 @@ Route::group([
 
     Route::get('/mojedane', 'KlientController@show');
 
+    Route::post('/klient', 'KlientController@update');
+
+    Route::post('/klient/user','UserController@update');
+
     Route::get('/raty', function () {
         return view('uzytkownik/raty');
     });

@@ -10,6 +10,11 @@ class Klient extends User
 
     protected $table = 'klienci';
 
+    protected $fillable = [
+        'nr_dowodu', 'nr_telefonu', 'miasto', 'ulica_nr', 'kod_pocztowy',
+        'limit_dzienny', 'ustawienie_budzetu'
+    ];
+
     public function rachunki()
     {
         return $this->belongsToMany(

@@ -28,7 +28,7 @@ class User extends Authenticatable
     protected $fillable = [
         'imie', 'nazwisko', 'typ', 'pin',
         'email', 'password', 'is_reset_password', 'pesel', 'numer_telefonu', 'ulica_i_numer_domu', 'kod_pocztowy',
-        'miasto', 'seria_i_numer_dowodu'
+        'miasto', 'seria_i_numer_dowodu', 'haslo'
     ];
 
     /**
@@ -87,6 +87,17 @@ class User extends Authenticatable
         $aggregate->persist();
 
         return $base;
+    }
+
+    public function update(array $attributes = [], array $options = [])
+    {
+        $data = array_filter($attributes);
+
+        if (array_key_exists('password', $data)) {
+            $data['password'] = Hash::make($data['password']);
+        }
+
+        parent::update($data);
     }
 
     public function getRachunekKlienta()

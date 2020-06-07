@@ -5,6 +5,11 @@
             <div class="col-md-12 infobox">
                 MOJE DANE
 
+                <div class="dropdown-divider"></div>
+                <p class="inftext">Email:
+                    <span class="tresc">{{ $klient->uzytkownik->email  }}</span>
+                </p>
+                <div class="dropdown-divider"></div>
                 <p class="inftext">Imię i nazwisko:
                     <span class="tresc">{{ $klient->uzytkownik->pelneImie  }}</span>
                 </p>

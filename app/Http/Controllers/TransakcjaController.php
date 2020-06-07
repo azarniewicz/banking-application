@@ -56,7 +56,7 @@ class TransakcjaController extends Controller
     public function store(TransakcjaRequest $request)
     {
         try {
-//            $this->rachunekAggregateRoot->zablokujSrodki($request->get('kwota'))->persist();
+            $this->rachunekAggregateRoot->zablokujSrodki($request->get('kwota'))->persist();
 
             $transakcja = Transakcja::makeFrom([
                 'nr_rachunku'             => $this->rachunekAggregateRoot->nrRachunku,

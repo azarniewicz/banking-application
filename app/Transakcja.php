@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Events\PrzelewPrzychodzacy;
+use App\Events\PrzelewWychodzacy;
 use App\Events\WplataPieniedzy;
 use App\Events\WyplataPieniedzy;
 use App\Exceptions\NieznanyTypTransakcji;
@@ -35,6 +37,51 @@ class Transakcja extends Model
     public $timestamps = false;
 
     protected $guarded = ['id'];
+
+    protected $casts = [
+        'data_wykonania' => 'datetime'
+    ];
+
+    /**
+     * @param  string  $eventClassName
+     *
+     * @return string
+     */
+    public static function nazwaTransakcji(string $eventClassName): ?string
+    {
+        switch ($eventClassName) {
+            case PrzelewPrzychodzacy::class:
+                return 'Przelew przychodzący';
+            case PrzelewWychodzacy::class:
+                return 'Przelew wychodzący';
+            case WplataPieniedzy::class:
+                return 'Wpłata';
+            case WyplataPieniedzy::class:
+                return 'Wypłata';
+            default:
+                return $eventClassName;
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPrzelew()
+    {
+        return str_contains($this->typ, 'Przelew');
+    }
+
+    public function rachunek_platnika()
+    {
+        $foreign = $this->typ === 'Przelew wychodzący' ? 'nr_rachunku' :  'nr_rachunku_powiazanego';
+        return $this->belongsTo(Rachunek::class, $foreign, 'nr_rachunku');
+    }
+
+    public function rachunek_odbiorcy()
+    {
+        $foreign = $this->typ === 'Przelew wychodzący' ? 'nr_rachunku_powiazanego' : 'nr_rachunku' ;
+        return $this->belongsTo(Rachunek::class, $foreign, 'nr_rachunku');
+    }
 
     /**
      * @param  array   $attributes

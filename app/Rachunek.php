@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Rachunek extends Model
 {
@@ -38,11 +39,27 @@ class Rachunek extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function klienci()
     {
         return $this->belongsToMany(Klient::class, 'klient_rachunek', 'id_rachunku', 'id_uzytkownika');
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getKlientAttribute()
+    {
+        return $this->klienci()->first();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function uzytkownik()
+    {
+        return $this->klient->uzytkownik();
     }
 
     /**

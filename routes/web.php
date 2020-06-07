@@ -38,9 +38,8 @@ Route::group([
 
     Route::post('/przelew', 'TransakcjaController@store');
 
-    Route::get('/historia', function () {
-        return view('uzytkownik/historia');
-    });
+    Route::get('/historia', 'TransakcjaController@index');
+
     Route::get('/staliodbiorcy', function () {
         return view('uzytkownik/staliodbiorcy');
     });

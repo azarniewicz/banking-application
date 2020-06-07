@@ -25,8 +25,8 @@ class Klient extends User
         return $this->rachunki->first();
     }
 
-    public function klient()
+    public function uzytkownik()
     {
-        return $this->hasOne(Klient::class, 'id_uzytkownika');
+        return $this->hasOne(User::class, 'id', 'id_uzytkownika');
     }
 }

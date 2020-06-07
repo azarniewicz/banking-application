@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Exceptions\BrakWystarczajacychSrodkow;
 use App\Exceptions\NieznanyTypTransakcji;
 use App\Http\Requests\TransakcjaRequest;
-use App\Jobs\WykonajTransakcje;
-use App\Rachunek;
 use App\RachunekAggregateRoot;
 use App\Transakcja;
 use Auth;
@@ -30,6 +28,18 @@ class TransakcjaController extends Controller
             $this->rachunekAggregateRoot = $rachunekAggregateRoot::retrieve(auth()->user()->getRachunekKlienta()->id);
             return $next($request);
         });
+    }
+
+    public function index()
+    {
+        $transakcje = auth()->user()
+                            ->getRachunekKlienta()
+                            ->transakcje()
+                            ->orderBy('data_wykonania', 'desc')
+                            ->take(5)
+                            ->get();
+
+        return view('uzytkownik/historia', compact('transakcje'));
     }
 
     public function create()

@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'imie'              => $faker->name,
+        'imie'              => $faker->firstName,
         'nazwisko'          => $faker->lastName,
         'pin'               => $faker->numberBetween(1000, 9999),
         'typ'               => 'klient',

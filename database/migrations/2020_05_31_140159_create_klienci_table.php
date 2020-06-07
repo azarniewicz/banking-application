@@ -21,6 +21,7 @@ class CreateKlienciTable extends Migration
             $table->string('ulica_nr');
             $table->string('kod_pocztowy');
             $table->string('nr_telefonu');
+            $table->string('nr_dowodu');
             $table->float('limit_dzienny');
             $table->float('ustawienie_budzetu');
             $table->timestamps();

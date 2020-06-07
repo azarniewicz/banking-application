@@ -49,21 +49,18 @@ Route::group([
     Route::get('/kredyty', function () {
         return view('uzytkownik/kredyty');
     });
-    Route::get('/mojedane', function () {
-        return view('uzytkownik/mojedane');
-    });
+
+    Route::get('/mojedane', 'KlientController@show');
+
     Route::get('/raty', function () {
         return view('uzytkownik/raty');
     });
+
     Route::get('/ustawienia', function () {
         return view('uzytkownik/ustawienia');
     });
 
-
     Route::post('/wyloguj','\App\Http\Controllers\Auth\LoginController@wyloguj');
-
-
-
 });
 
 

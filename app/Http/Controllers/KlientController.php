@@ -21,4 +21,11 @@ class KlientController extends Controller
 
         return view('uzytkownik/start', compact(['rachunek', 'klient', 'ostatnieTransakcje']));
     }
+
+    public function show()
+    {
+        $klient = auth()->user()->klient;
+
+        return view('uzytkownik/mojedane', compact('klient'));
+    }
 }

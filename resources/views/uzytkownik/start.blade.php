@@ -27,8 +27,6 @@ Nr klienta: <span>123456</span> Ostatnie logowanie: <span>05/22/2020</span>Aktua
             <p class="inftext">Numer rachunku:<span class="tresc">{{ $rachunek->nr_rachunku }}</span></p>
             <div class="dropdown-divider"></div>
             <p class="inftext">Numer karty:<span class="tresc">00 000 00000 000000</span></p>
-            <div class="dropdown-divider"></div>
-            <p class="inftext">Limit dzienny:<span class="tresc">{{ $klient->limit_dzienny }}</span></p>
         </div>
         <div class="col-md-12 infobox">
             Ostatnie transakcje

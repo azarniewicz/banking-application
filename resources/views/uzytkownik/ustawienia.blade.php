@@ -1,80 +1,227 @@
 @extends('layouts.app')
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12 maine">
 
-Nr klienta: <span>123456</span> Ostatnie logowanie: <span>05/22/2020</span>Aktualna sesja: <span>01:50</span>
+    <div class="container">
+        <div class="row">
+            <section class="col-md-12 infobox">
+                USTAWIENIA
+                <ul class="nav nav-tabs navsset ">
 
-        </div>
-        <div class="col-md-12 maine">
+                    <li class="nav-item">
+                        <a class="nav-link active "
+                           data-toggle="tab"
+                           href="#ustawieniadanych"
+                           role="tab"
+                           aria-selected="true"
+                        >USTAWIENIA DANYCH</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link "
+                           data-toggle="tab"
+                           href="#ustawieniaogolne"
+                           aria-selected="false"
+                        >USTAWIENIA OGÓLNE</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link "
+                           data-toggle="tab"
+                           href="#danelogowania"
+                           aria-selected="false"
+                        >ZMIANA DANYCH LOGOWANIA</a>
+                    </li>
 
-            <span class="powitanie" >Witaj, <span style="color:#30333b;font-weight: bolder;">Mirosław Bonk</span></span>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active show"
+                         id="ustawieniadanych"
+                    >
+
+                        <div class="col-md-12 przelew-form">
+
+                            <div class="col-md-12"
+                                 style="margin:0 auto;"
+                            >
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text"
+                                               name="nowydowod"
+                                               class="form-control"
+                                               placeholder="Zmień numer dowodu osobistego"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text"
+                                               name="nowytelefon"
+                                               class="form-control"
+                                               placeholder="Zmień numer telefonu"
+                                               value=""
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text"
+                                               name="nowyemail"
+                                               class="form-control"
+                                               placeholder="Zmień e-mail"
+                                               value=""
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit"
+                                               name="btnSubmit"
+                                               class="btnContact"
+                                               value="ZMIEŃ"
+                                        />
+                                    </div>
+                                </form>
+                                Zmień miejsce zamieszkania
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text"
+                                               name="nowemiasto"
+                                               class="form-control"
+                                               placeholder="Miasto"
+                                               value=""
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text"
+                                               name="nowaulica"
+                                               class="form-control"
+                                               placeholder="Ulica "
+                                               value=""
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text"
+                                               name="nowynumerdomu"
+                                               class="form-control"
+                                               placeholder="Numer domu"
+                                               value=""
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text"
+                                               name="nowykodpocztowy"
+                                               class="form-control"
+                                               placeholder="Kod pocztowy"
+                                               value=""
+                                        />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="submit"
+                                               name="btnSubmit"
+                                               class="btnContact"
+                                               value="ZMIEŃ"
+                                        />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <span style="color:gray;margin-top:40px;font-size:12px;">W celu zmiany pozostałych danych należy skontaktować się z naszą infolinią lub odwiedzić osobiście siedzibę banku!</span>
+                    </div>
+                    <div class="tab-pane"
+                         id="ustawieniaogolne"
+                    >
+                        <div class="col-md-12 przelew-form">
+
+                            <div class="col-md-12"
+                                 style="margin:0 auto;"
+                            >
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text"
+                                               name="limitdzienny"
+                                               class="form-control"
+                                               placeholder="Ustaw limit dzienny"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text"
+                                               name="budzet"
+                                               class="form-control"
+                                               placeholder="Ustaw budżet miesięczny"
+                                               value=""
+                                        />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="submit"
+                                               name="btnSubmit"
+                                               class="btnContact"
+                                               value="ZMIEŃ"
+                                        />
+                                    </div>
+
+                                </form>
+
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text"
+                                               name="nowypinkarty"
+                                               class="form-control"
+                                               placeholder="Zmiana pinu karty"
+                                               value=""
+                                        />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="submit"
+                                               name="btnSubmit"
+                                               class="btnContact"
+                                               value="ZMIEŃ"
+                                        />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <span style="color:gray;margin-top:40px;font-size:12px;">Ustawienie maksymalnego limitu  dziennych oraz miesięcznych transakcji pozwoli Ci na lepsze zarządzanie pieniędzmi!</span>
+                    </div>
+                    <div class="tab-pane"
+                         id="danelogowania"
+                    >
+                        <div class="col-md-12 przelew-form">
+
+                            <div class="col-md-12"
+                                 style="margin:0 auto;"
+                            >
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text"
+                                               name="pinkonta"
+                                               class="form-control"
+                                               placeholder="Ustaw nowy PIN"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text"
+                                               name="budzet"
+                                               class="form-control"
+                                               placeholder="Ustaw nowe hasło"
+                                               value=""
+                                        />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="submit"
+                                               name="btnSubmit"
+                                               class="btnContact"
+                                               value="ZMIEŃ"
+                                        />
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        <span style="color:gray;margin-top:40px;font-size:12px;">Pamiętaj, aby hasło posiadało minimum 8 znaków w tym: duże oraz małe litery, liczby i znaki specjalne!</span>
+                        <br>
+                        <span style="color:gray;margin-top:40px;font-size:12px;">PIN pomaga wzmocnić zabezpieczenie TWOJEGO KONTA!</span>
+                    </div>
+                </div>
+
+            </section>
         </div>
     </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12 infobox">
-            Informacje o koncie
 
-            <p class="inftext">TYP RACHUNKU: <span class="tresc">STANDARD</span></p>
-            <div class="dropdown-divider"></div>
-            <p class="inftext">Saldo dostępne: <span class="tresc">55zł</span></p>
-            <div class="dropdown-divider"></div>
-            <p class="inftext">Saldo bieżące:<span class="tresc">225zł</span></p>
-            <div class="dropdown-divider"></div>
-            <p class="inftext">Numer rachunku:<span class="tresc">00 0000 0000 0000 0000 0000 0000 0000</span></p>
-            <div class="dropdown-divider"></div>
-            <p class="inftext">Numer karty:<span class="tresc">00 000 00000 000000</span></p>
-            <div class="dropdown-divider"></div>
-            <p class="inftext">Limit dzienny:<span class="tresc">500zł</span></p>
-            <div class="dropdown-divider"></div>
-            <p class="inftext">Limit miesięczny<span class="tresc">3000zł</span></p>
-
-        </div>
-        <div class="col-md-12 infobox">
-            Ostatnie transakcje
-            <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">DATA</th>
-                      <th scope="col">DANE</th>
-                      <th scope="col">KWOTA</th>
-                      <th scope="col">SALDO PO TRANSAKCJI</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">22/05/2020</th>
-                      <td>LOTTO SP. Z O.O</td>
-                      <td>+ 42zł</td>
-                      <td>55zł</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">21/05/2020</th>
-                      <td>LIDL POLSKA</td>
-                      <td>- 100,21zł</td>
-                      <td>13zł</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">19/05/2020</th>
-                      <td>MEBLE BOCIEK</td>
-                      <td>- 465,30zł</td>
-                      <td>141,21zł</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">18/05/2020</th>
-                      <td>Mirosław Szyper</td>
-                      <td>+ 50zł</td>
-                      <td>606,51zł</td>
-                    </tr>
-                  </tbody>
-             </table>
-            <a href="{{url('historia')}}"><button type="button" class="btn btn-dark">Zobacz więcej..</button></a>
-
-        </div>
-     </div>
-</div>
 @endsection
 

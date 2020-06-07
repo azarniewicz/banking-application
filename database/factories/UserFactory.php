@@ -39,6 +39,7 @@ $factory->define(Klient::class, function (Faker $faker) {
         'ulica_nr'           => $this->faker->streetAddress,
         'kod_pocztowy'       => $this->faker->postcode,
         'nr_telefonu'        => $this->faker->phoneNumber,
+        'nr_dowodu'          => Person::personalIdentityNumber(),
         'limit_dzienny'      => 0,
         'ustawienie_budzetu' => 0,
     ];

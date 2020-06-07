@@ -4,13 +4,14 @@
 namespace Tests\Unit;
 
 use App\Rachunek;
+use App\Transakcja;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\RefreshDatabaseWithViews;
 use Tests\TestCase;
 
 class TransakcjaTest extends TestCase
 {
-    use RefreshDatabaseWithViews;
+    use RefreshDatabase;
 
     /** @test */
     public function wplaty_sa_wyswietlane()
@@ -19,9 +20,9 @@ class TransakcjaTest extends TestCase
         $agegatRachunkuA = \RachunekFactory::createRachunekUsingAggregate($uuidA);
         $rachunekA       = Rachunek::find($uuidA);
 
-        $uuidB = $this->getNewUuid();
-        \RachunekFactory::createRachunekUsingAggregate($uuidB);
-        $rachunekB = Rachunek::find($uuidB);
+        $uuidB           = $this->getNewUuid();
+        $agegatRachunkuB = \RachunekFactory::createRachunekUsingAggregate($uuidB);
+        $rachunekB       = Rachunek::find($uuidB);
 
         $agegatRachunkuA->wplac(1000)->persist();
         $this->assertEquals(1, $rachunekA->transakcje()->count());
@@ -30,11 +31,19 @@ class TransakcjaTest extends TestCase
 
         $agegatRachunkuA->wplac(500)->persist();
 
-        $this->assertEquals(1500, $rachunekA->transakcje()->latest('data')->first()->saldo_po_transakcji);
+        $this->assertEquals(1500, $rachunekA->transakcje()->latest('data_wykonania')->first()->saldo_po_transakcji);
 
-        $agegatRachunkuA->przelej($rachunekB->nr_rachunku, 'test', 1000)->persist();
+        $transakcja = Transakcja::makeFrom([
+            'id_rachunku'             => $rachunekA->id,
+            'nr_rachunku_powiazanego' => $rachunekB->nr_rachunku,
+            'kwota'                   => 1000,
+            'tytul'                   => 'test',
+            'odbiorca'                => 'kowalski'
+        ], Transakcja::ekspres);
 
-        $this->assertEquals(1000, $rachunekB->transakcje()->latest('data')->first()->saldo_po_transakcji);
+        $transakcja->wykonaj();
+
+        $this->assertEquals(1000, $rachunekB->transakcje()->latest('data_wykonania')->first()->saldo_po_transakcji);
     }
 
     /** @test */
@@ -52,7 +61,7 @@ class TransakcjaTest extends TestCase
             $this->assertEquals($rachunek->id, $transakcja->id_rachunku);
             $this->assertEquals('Wpłata', $transakcja->typ);
             $this->assertNull($transakcja->tytul);
-            $this->assertNull($transakcja->id_rachunku_powiazanego);
+            $this->assertNull($transakcja->nr_rachunku_powiazanego);
             $this->assertEquals(1000, $transakcja->kwota);
             $this->assertEquals(1000, $transakcja->saldo_po_transakcji);
         });
@@ -69,22 +78,22 @@ class TransakcjaTest extends TestCase
 
         $agegatRachunku->wyplac(1000)->persist();
 
-        tap($rachunek->transakcje()->latest('data')->first(), function ($transakcja) use ($rachunek) {
+        tap($rachunek->transakcje()->latest('data_wykonania')->first(), function ($transakcja) use ($rachunek) {
             $this->assertEquals($rachunek->id, $transakcja->id_rachunku);
             $this->assertEquals('Wypłata', $transakcja->typ);
             $this->assertNull($transakcja->tytul);
-            $this->assertNull($transakcja->id_rachunku_powiazanego);
+            $this->assertNull($transakcja->nr_rachunku_powiazanego);
             $this->assertEquals(1000, $transakcja->kwota);
             $this->assertEquals(0, $transakcja->saldo_po_transakcji);
         });
     }
 
     /** @test */
-    public function przelewy_sa_wyswietlane_w_widoku_transakcji()
+    public function przelewy_sa_wyswietlane_w_tabeli_transakcji()
     {
-        $uuidA           = $this->getNewUuid();
-        $agegatRachunkuA = \RachunekFactory::createRachunekUsingAggregate($uuidA, 1000);
-        $rachunekA       = Rachunek::find($uuidA);
+        $uuidA = $this->getNewUuid();
+        \RachunekFactory::createRachunekUsingAggregate($uuidA, 1000);
+        $rachunekA = Rachunek::find($uuidA);
 
         $uuidB = $this->getNewUuid();
         \RachunekFactory::createRachunekUsingAggregate($uuidB);
@@ -92,22 +101,30 @@ class TransakcjaTest extends TestCase
 
         sleep(1);
 
-        $agegatRachunkuA->przelej($rachunekB->nr_rachunku, 'przelew testowy', 1000)->persist();
+        $transakcja = Transakcja::makeFrom([
+            'id_rachunku'             => $rachunekA->id,
+            'nr_rachunku_powiazanego' => $rachunekB->nr_rachunku,
+            'kwota'                   => 1000,
+            'tytul'                   => 'test',
+            'odbiorca'                => 'kowalski'
+        ], Transakcja::ekspres);
 
-        tap($rachunekA->transakcje()->latest('data')->first(), function ($transakcja) use ($rachunekA, $rachunekB) {
+        $transakcja->wykonaj();
+
+        tap($rachunekA->transakcje()->latest('data_wykonania')->first(), function ($transakcja) use ($rachunekA, $rachunekB) {
             $this->assertEquals($rachunekA->id, $transakcja->id_rachunku);
             $this->assertEquals('Przelew wychodzący', $transakcja->typ);
-            $this->assertEquals('przelew testowy', $transakcja->tytul);
-            $this->assertEquals($rachunekB->id, $transakcja->id_rachunku_powiazanego);
+            $this->assertEquals('test', $transakcja->tytul);
+            $this->assertEquals($rachunekB->nr_rachunku, $transakcja->nr_rachunku_powiazanego);
             $this->assertEquals(1000, $transakcja->kwota);
             $this->assertEquals(0, $transakcja->saldo_po_transakcji);
         });
 
-        tap($rachunekB->transakcje()->latest('data')->first(), function ($transakcja) use ($rachunekA, $rachunekB) {
+        tap($rachunekB->transakcje()->latest('data_wykonania')->first(), function ($transakcja) use ($rachunekA, $rachunekB) {
             $this->assertEquals($rachunekB->id, $transakcja->id_rachunku);
             $this->assertEquals('Przelew przychodzący', $transakcja->typ);
-            $this->assertEquals('przelew testowy', $transakcja->tytul);
-            $this->assertEquals($rachunekA->id, $transakcja->id_rachunku_powiazanego);
+            $this->assertEquals('test', $transakcja->tytul);
+            $this->assertEquals($rachunekA->nr_rachunku, $transakcja->nr_rachunku_powiazanego);
             $this->assertEquals(1000, $transakcja->kwota);
             $this->assertEquals(1000, $transakcja->saldo_po_transakcji);
         });

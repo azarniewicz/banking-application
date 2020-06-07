@@ -11,15 +11,16 @@ class TransakcjaZakonczona
      * @var StoredEvent
      */
     public $storedEvent;
+
     /**
      * @var Rachunek
      */
     public $rachunek;
+
     /**
      * @var Rachunek|null
      */
     public $rachunekDocelowy;
-
 
     /**
      * Create a new event instance.

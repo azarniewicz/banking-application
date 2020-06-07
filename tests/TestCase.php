@@ -22,8 +22,8 @@ abstract class TestCase extends BaseTestCase
     protected function setUpTraits()
     {
         $uses = parent::setUpTraits();
-        if (isset($uses[RefreshDatabaseWithViews::class])) {
-            $this->migrateFreshWithViews();
+        if (isset($uses[SeedDatabase::class])) {
+            $this->seedDatabase();
         }
     }
 

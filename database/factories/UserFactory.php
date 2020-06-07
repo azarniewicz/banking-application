@@ -22,20 +22,24 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'email' => $faker->unique()->safeEmail,
+        'imie'              => $faker->name,
+        'nazwisko'          => $faker->lastName,
+        'pin'               => $faker->numberBetween(1000, 9999),
+        'typ'               => 'klient',
+        'email'             => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
     ];
 });
 
 $factory->define(Klient::class, function (Faker $faker) {
     return [
-        'pesel' => Person::pesel(),
-        'miasto' => $this->faker->city,
-        'ulica_nr' => $this->faker->streetAddress,
-        'kod_pocztowy' => $this->faker->postcode,
-        'nr_telefonu' => $this->faker->phoneNumber,
-        'limit_dzienny' => 0,
+        'pesel'              => Person::pesel(),
+        'miasto'             => $this->faker->city,
+        'ulica_nr'           => $this->faker->streetAddress,
+        'kod_pocztowy'       => $this->faker->postcode,
+        'nr_telefonu'        => $this->faker->phoneNumber,
+        'limit_dzienny'      => 0,
         'ustawienie_budzetu' => 0,
     ];
 });

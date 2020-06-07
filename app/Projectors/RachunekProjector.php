@@ -3,6 +3,8 @@
 namespace App\Projectors;
 
 use App\Events\Przelew;
+use App\Events\PrzelewPrzychodzacy;
+use App\Events\PrzelewWychodzacy;
 use App\Events\StworzenieRachunku;
 use App\Events\TransakcjaZakonczona;
 use App\Events\WplataPieniedzy;
@@ -18,7 +20,6 @@ class RachunekProjector implements Projector
     use ProjectsEvents;
 
 
-
     /**
      * @param  StworzenieRachunku  $event
      * @param  string              $aggregateUuid
@@ -26,7 +27,7 @@ class RachunekProjector implements Projector
     public function onRachunekCreated(StworzenieRachunku $event, string $aggregateUuid): void
     {
         Rachunek::create([
-            'id'          => $aggregateUuid,
+            'id' => $aggregateUuid,
             'nr_rachunku' => $event->numerRachunku
         ])->klienci()->attach($event->idKlienta);
     }
@@ -60,22 +61,36 @@ class RachunekProjector implements Projector
     }
 
     /**
-     * @param  Przelew      $event
-     * @param  StoredEvent  $storedEvent
-     * @param  string       $aggregateUuid
+     * @param  PrzelewWychodzacy  $event
+     * @param  StoredEvent        $storedEvent
+     * @param  string             $aggregateUuid
      */
-    public function onPrzelew(Przelew $event, StoredEvent $storedEvent, string $aggregateUuid): void
+    public function onPrzelewWychodzacy(PrzelewWychodzacy $event, StoredEvent $storedEvent, string $aggregateUuid): void
     {
         $rachunek = Rachunek::find($aggregateUuid);
 
-        // TODO tylko przelewy wewnetrzne?
-        $rachunekDocelowy = Rachunek::numer($event->nrRachunkuDocelowego);
+        $rachunekPowiazany = Rachunek::numer($event->nrRachunkuPowiazanego);
 
-        DB::beginTransaction();
         $rachunek->odejmijZSalda($event->kwota);
-        $rachunekDocelowy->dodajDoSalda($event->kwota);
-        DB::commit();
 
-        event(new TransakcjaZakonczona($storedEvent, $rachunek, $rachunekDocelowy));
+        event(new TransakcjaZakonczona($storedEvent, $rachunek, $rachunekPowiazany));
+    }
+
+    /**
+     * @param  PrzelewPrzychodzacy  $event
+     * @param  StoredEvent          $storedEvent
+     * @param  string               $aggregateUuid
+     */
+    public function onPrzelewPrzychodzacy(PrzelewPrzychodzacy $event,
+                                          StoredEvent $storedEvent,
+                                          string $aggregateUuid): void
+    {
+        $rachunek = Rachunek::find($aggregateUuid);
+
+        $rachunekPowiazany = Rachunek::numer($event->nrRachunkuPowiazanego);
+
+        $rachunek->dodajDoSalda($event->kwota);
+
+        event(new TransakcjaZakonczona($storedEvent, $rachunek, $rachunekPowiazany));
     }
 }

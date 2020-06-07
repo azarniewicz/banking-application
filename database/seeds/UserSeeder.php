@@ -1,9 +1,5 @@
 <?php
 
-use App\Klient;
-use App\User;
-use App\UuidGenerator;
-use Faker\Provider\pl_PL\Person;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
@@ -21,44 +17,52 @@ class UserSeeder extends Seeder
     {
          $this->setUpFaker();
 
-        $userA = factory(User::class)->create([
-            'email'    => 'jan@kowalski.com',
-            'imie'     => 'Jan',
-            'nazwisko' => 'Kowalski',
-            'pin'      => '1234',
-            'password' => Hash::make('tajne'),
-            'typ'      => 'klient',
-        ])->klient()->save(factory(Klient::class)->make());
+        $klientA = \KlientFactory::create([
+            'email' => 'jan@kowalski.com',
+            'password' => Hash::make('tajne')
+        ]);
 
-        $userB = factory(User::class)->create([
-            'email'    => 'janina@kowalska.com',
-            'imie'     => 'Janina',
-            'nazwisko' => 'Kowalska',
-            'pin'      => '1234',
-            'password' => Hash::make('tajne'),
-            'typ'      => 'klient'
-        ])->klient()->save(factory(Klient::class)->make());
+        $klientB = \KlientFactory::create([
+            'email' => 'janina@kowalski.com',
+            'password' => Hash::make('tajne')
+        ]);
 
-        $rachunekA = RachunekFactory::createRachunekUsingAggregate(UuidGenerator::generuj(), 0, $userA->id);
-
-        $rachunekB = RachunekFactory::createRachunekUsingAggregate(UuidGenerator::generuj(), 0, $userB->id);
+        $rachunekA = $klientA->rachunek->getAggregate();
+        $rachunekB = $klientB->rachunek->getAggregate();
 
         $iterator = range(1, 10);
         $this->command->getOutput()->progressStart(count($iterator));
 
         foreach ($iterator as $i) {
             $this->command->getOutput()->progressAdvance();
-            $rachunekA->wplac($this->faker->numberBetween(1000, 2000));
-            $rachunekA->przelej($rachunekB->nrRachunku, $this->faker->word, $this->faker->numberBetween(1, 500));
-            $rachunekA->wyplac($this->faker->numberBetween(1, 500));
+            $rachunekA->wplac($this->faker->numberBetween(1000, 2000))->persist();
 
-            $rachunekB->wplac($this->faker->numberBetween(1000, 2000));
-            $rachunekB->przelej($rachunekA->nrRachunku, $this->faker->word, $this->faker->numberBetween(1, 500));
-            $rachunekB->wyplac($this->faker->numberBetween(1, 500));
+            \App\Transakcja::makeFrom([
+                'id_rachunku'             => $klientA->rachunek->id,
+                'nr_rachunku_powiazanego' => $rachunekB->nrRachunku,
+                'kwota'                   => $this->faker->numberBetween(1, 500),
+                'tytul'                   => $this->faker->word,
+                'odbiorca'                => $klientB->imie . ' ' . $klientB->nazwisko
+            ], \App\Transakcja::standard)->wykonaj();
+
+            $rachunekA->wyplac($this->faker->numberBetween(1, 500))->persist();
+
+            $rachunekB->wplac($this->faker->numberBetween(1000, 2000))->persist();
+            \App\Transakcja::makeFrom([
+                'id_rachunku'             => $klientB->rachunek->id,
+                'nr_rachunku_powiazanego' => $rachunekA->nrRachunku,
+                'kwota'                   => $this->faker->numberBetween(1, 500),
+                'tytul'                   => $this->faker->word,
+                'odbiorca'                => $klientA->imie . ' ' . $klientA->nazwisko
+            ], \App\Transakcja::standard)->wykonaj();
+            $rachunekB->wyplac($this->faker->numberBetween(1, 500))->persist();
+
         }
 
-        $rachunekA->persist();
-        $rachunekB->persist();
+        $this->command->getOutput()->newLine(2);
+        $this->command->info('Executing transactions...');
+        exec('php artisan queue:work --stop-when-empty');
+        $this->command->info('Transactions executed.');
 
         $this->command->getOutput()->progressFinish();
     }

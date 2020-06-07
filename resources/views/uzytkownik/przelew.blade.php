@@ -24,9 +24,9 @@
                                       style="width: 100%; height: 100px;">{{ old('odbiorca') }}</textarea>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" id="typprzelewu">
-                                <option>PRZELEW STANDARDOWY</option>
-                                <option>PRZELEW EKSPRESOWY</option>
+                            <select class="form-control" name="typ">
+                                <option value="{{ \App\Transakcja::standard  }}">PRZELEW STANDARDOWY</option>
+                                <option value="{{ \App\Transakcja::ekspres  }}">PRZELEW EKSPRESOWY</option>
                             </select>
                         </div>
                         <div class="form-group">

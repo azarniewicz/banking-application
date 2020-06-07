@@ -3,34 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\BrakWystarczajacychSrodkow;
-use App\Exceptions\PrzelewNaTenSamRachunek;
+use App\Exceptions\NieznanyTypTransakcji;
 use App\Http\Requests\TransakcjaRequest;
+use App\Jobs\WykonajTransakcje;
 use App\Rachunek;
 use App\RachunekAggregateRoot;
+use App\Transakcja;
 use Auth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TransakcjaController extends Controller
 {
-    /**
-     * @var Rachunek
-     */
-    private $rachunek;
+
+    use RefreshDatabase;
+
     /**
      * @var RachunekAggregateRoot
      */
     private $rachunekAggregateRoot;
 
-    public function __construct(Rachunek $rachunek, RachunekAggregateRoot $rachunekAggregateRoot)
+
+    public function __construct(RachunekAggregateRoot $rachunekAggregateRoot)
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) use ($rachunekAggregateRoot) {
             $this->rachunekAggregateRoot = $rachunekAggregateRoot::retrieve(auth()->user()->getRachunekKlienta()->id);
             return $next($request);
         });
-        $this->rachunek = $rachunek;
     }
 
-    public function index()
+    public function create()
     {
         return view('uzytkownik/przelew');
     }
@@ -38,17 +40,28 @@ class TransakcjaController extends Controller
     public function store(TransakcjaRequest $request)
     {
         try {
-            $this->rachunekAggregateRoot->przelej(
-                $request->get('numer_rachunku'),
-                $request->get('tytul'),
-                $request->get('kwota')
-            )->persist();
+            $this->rachunekAggregateRoot->zablokujSrodki($request->get('kwota'))->persist();
+
+            $transakcja = Transakcja::makeFrom([
+                'id_rachunku'             => auth()->user()->getRachunekKlienta()->id,
+                'nr_rachunku_powiazanego' => $request->get('numer_rachunku'),
+                'kwota'                   => $request->get('kwota'),
+                'tytul'                   => $request->get('tytul'),
+                'odbiorca'                => $request->get('odbiorca')
+            ], $request->get('typ'));
+
+            $transakcja->wykonaj();
+
         } catch (BrakWystarczajacychSrodkow $e) {
-            return redirect()->back()->withErrors(['kwota' => 'Brak wystarczających środków na koncie.']);
-        } catch (PrzelewNaTenSamRachunek $e) {
-            return redirect()->back()->withErrors(['numer_rachunku' => 'Nie możesz przelać pieniedzy na swoje konto.']);
+            return redirect()->back()->withErrors(['kwota' => $e->getMessage()]);
+        } catch (NieznanyTypTransakcji $e) {
+            $this->rachunekAggregateRoot->odblokujSrodki($request->get('kwota'), $e->getMessage())->persist();
+            return redirect()->back()->withErrors(['typ' => $e->getMessage()]);
+        } catch (\Exception $e) {
+            $this->rachunekAggregateRoot->odblokujSrodki($request->get('kwota'), $e->getMessage())->persist();
+            return redirect()->back()->withErrors(['Błąd podczas przetwarzania transakcji.']);
         }
 
-        return redirect()->back()->with('success', 'Przelew wykonany');
+        return redirect()->back()->with('success', 'Pomyślnie zlecono wykonanie transakcji.');
     }
 }

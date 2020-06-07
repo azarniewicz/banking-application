@@ -22,6 +22,14 @@ class Rachunek extends Model
     public $guarded = [];
 
     /**
+     * @return float
+     */
+    public function getDostepneSrodkiAttribute(): float
+    {
+        return $this->getAggregate()->dostepneSrodki();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function transakcje()
@@ -45,6 +53,16 @@ class Rachunek extends Model
     public static function uuid(string $uuid): self
     {
         return static::where('id', $uuid)->first();
+    }
+
+    /**
+     * Zwraca agregate rachunku
+     *
+     * @return RachunekAggregateRoot
+     */
+    public function getAggregate(): RachunekAggregateRoot
+    {
+        return RachunekAggregateRoot::retrieve($this->id);
     }
 
     /**
@@ -76,7 +94,7 @@ class Rachunek extends Model
     public function scopeDostepneDoPrzelewow()
     {
         return self::whereHas('klienci', function ($query) {
-            $query->where('klient_rachunek.id_uzytkownika', '<>', auth()->user()->id);
+            $query->where('klient_rachunek.id_uzytkownika', '!=', auth()->user()->id);
         });
     }
 }

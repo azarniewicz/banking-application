@@ -14,7 +14,7 @@ class CreateKlientRachunekTable extends Migration
     public function up()
     {
         Schema::create('klient_rachunek', function (Blueprint $table) {
-            $table->integer('id_rachunku');
+            $table->uuid('id_rachunku');
             $table->integer('id_uzytkownika');
         });
     }

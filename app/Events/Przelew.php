@@ -7,7 +7,7 @@ class Przelew extends WykonanieTransakcji
     /**
      * @var string
      */
-    public $nrRachunkuDocelowego;
+    public $nrRachunkuPowiazanego;
 
     /**
      * @var string
@@ -17,15 +17,15 @@ class Przelew extends WykonanieTransakcji
     /**
      * Create a new event instance.
      *
-     * @param  string  $nrRachunkuDocelowego
+     * @param  string  $nrRachunkuPowiazanego
      * @param  string  $tytul
      * @param  float   $kwota
      */
-    public function __construct(string $nrRachunkuDocelowego, string $tytul, float $kwota)
+    public function __construct(string $nrRachunkuPowiazanego, string $tytul, float $kwota)
     {
         parent::__construct($kwota);
-        $this->nrRachunkuDocelowego = $nrRachunkuDocelowego;
-        $this->tytul                = $tytul;
+        $this->nrRachunkuPowiazanego = $nrRachunkuPowiazanego;
+        $this->tytul                 = $tytul;
     }
 
 }

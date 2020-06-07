@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Transakcja;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TransakcjaRequest extends FormRequest
@@ -24,10 +25,19 @@ class TransakcjaRequest extends FormRequest
     public function rules()
     {
         return [
-            'numer_rachunku'=>'required|regex:$[A-Za-z]{2}[0-9]{26}\z$',
-            'kwota'=>'required|numeric',
-            'tytul'=>'required',
-            'odbiorca'=>'required'
+            'numer_rachunku' => [
+                'required',
+                'regex:$[A-Za-z]{2}[0-9]{26}\z$',
+                'exists:rachunki,nr_rachunku',
+                'not_in:' . auth()->user()->getRachunekKlienta()->nr_rachunku
+            ],
+            'kwota'          => 'required|numeric',
+            'tytul'          => 'required',
+            'odbiorca'       => 'required',
+            'typ'            => [
+                'in:' . Transakcja::ekspres . ',' . Transakcja::standard,
+                'required'
+            ]
         ];
     }
 }

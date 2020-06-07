@@ -20,7 +20,9 @@ Nr klienta: <span>123456</span> Ostatnie logowanie: <span>05/22/2020</span>Aktua
 
             <p class="inftext">TYP RACHUNKU: <span class="tresc">{{ $rachunek->typ }}</span></p>
             <div class="dropdown-divider"></div>
-            <p class="inftext">Saldo:<span class="tresc">{{ $rachunek->saldo }}</span></p>
+            <p class="inftext">Saldo:<span class="tresc">{{ $rachunek->saldo }} zł</span></p>
+            <div class="dropdown-divider"></div>
+            <p class="inftext">Dostępne środki:<span class="tresc">{{ $rachunek->dostepne_srodki }} zł</span></p>
             <div class="dropdown-divider"></div>
             <p class="inftext">Numer rachunku:<span class="tresc">{{ $rachunek->nr_rachunku }}</span></p>
             <div class="dropdown-divider"></div>
@@ -43,7 +45,7 @@ Nr klienta: <span>123456</span> Ostatnie logowanie: <span>05/22/2020</span>Aktua
                   <tbody>
                   @foreach($ostatnieTransakcje as $transakcja)
                     <tr>
-                      <th scope="row">{{ $transakcja->data }}</th>
+                      <th scope="row">{{ $transakcja->data_wykonania }}</th>
                       <th scope="row">{{ $transakcja->typ }}</th>
                       <td>{{ $transakcja->kwota }}zł</td>
                       <td>{{ $transakcja->saldo_po_transakcji }}zł</td>

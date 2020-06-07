@@ -34,7 +34,7 @@ Route::group([
 
     Route::get('/start', 'KlientController@index');
 
-    Route::get('/przelew', 'TransakcjaController@index');
+    Route::get('/przelew', 'TransakcjaController@create');
 
     Route::post('/przelew', 'TransakcjaController@store');
 

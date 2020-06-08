@@ -51,7 +51,8 @@ Nr klienta: <span>123456</span> Ostatnie logowanie: <span>05/22/2020</span>Aktua
                     </tr>
                   @endforeach
              </table>
-            <a href="{{url('historia')}}"><button type="button" class="btn btn-dark">Zobacz więcej..</button></a>
+
+            <a href="{{url('historia')}}"><button type="button" class="btn btn-dark mb-3">Zobacz więcej..</button></a>
 
         </div>
      </div>

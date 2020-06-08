@@ -14,7 +14,7 @@ class UserController extends Controller
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->middleware('auth:administrator')->except('update');
+        $this->middleware('auth:administrator');
     }
 
 public function resetPassword(){
@@ -67,17 +67,5 @@ public function resetPassword(){
 
         return redirect()
             ->back();
-    }
-
-    public function update(Request $request)
-    {
-        $request->validate([
-            'pin'   => 'numeric|nullable',
-            'email' => 'unique:uzytkownicy,email|nullable',
-        ]);
-
-        auth()->user()->update($request->all());
-
-        return redirect()->back()->with('success', 'Dane logowania pomyślnie zaktualizowane.');
     }
 }

@@ -161,17 +161,6 @@ class User extends Authenticatable
         return $base;
     }
 
-    public function update(array $attributes = [], array $options = [])
-    {
-        $data = array_filter($attributes);
-
-        if (array_key_exists('password', $data)) {
-            $data['password'] = Hash::make($data['password']);
-        }
-
-        parent::update($data);
-    }
-
     public function getRachunekKlienta()
     {
         return $this->klient->rachunek;

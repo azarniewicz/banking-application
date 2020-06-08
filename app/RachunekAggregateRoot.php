@@ -3,15 +3,17 @@
 
 namespace App;
 
-use App\Domain\Account\Events\AccountCreated;
 use App\Events\BlokadaSrodkow;
 use App\Events\OdblokowanieSrodkow;
 use App\Events\PrzelewPrzychodzacy;
 use App\Events\PrzelewWychodzacy;
 use App\Events\StworzenieRachunku;
 use App\Events\WplataPieniedzy;
+use App\Events\WykonanieTransakcji;
 use App\Events\WyplataPieniedzy;
 use App\Exceptions\BrakWystarczajacychSrodkow;
+use App\Exceptions\PrzekroczonoLimitDzienny;
+use App\Exceptions\PrzekroczonoLimitMiesieczny;
 use Spatie\EventSourcing\AggregateRoot;
 
 class RachunekAggregateRoot extends AggregateRoot
@@ -31,6 +33,16 @@ class RachunekAggregateRoot extends AggregateRoot
      * @var string
      */
     public $nrRachunku;
+
+    /**
+     * @var float
+     */
+    public $dzisiajWydano = .0;
+
+    /**
+     * @var float
+     */
+    public $wTymMiesiacuWydano = .0;
 
     public function __construct()
     {
@@ -65,6 +77,46 @@ class RachunekAggregateRoot extends AggregateRoot
         return Rachunek::numer($this->nrRachunku)->getAggregate();
     }
 
+
+    /**
+     * Dopisz kwote do wydatkow dziennych i miesiecznych
+     *
+     * @param  WykonanieTransakcji  $event
+     */
+    private function zarejestrujWydatek(WykonanieTransakcji $event): void
+    {
+        if ($event->getCreatedAt()->isToday()) {
+            $this->dzisiajWydano += $event->kwota;
+        }
+
+        if ($event->getCreatedAt()->isCurrentMonth()) {
+            $this->wTymMiesiacuWydano += $event->kwota;
+        }
+    }
+
+    /**
+     * @param  float  $kwota
+     *
+     * @throws BrakWystarczajacychSrodkow
+     * @throws PrzekroczonoLimitDzienny
+     */
+    private function sprawdzMozliwoscWykonaniaTransakcji(float $kwota): void
+    {
+        if (!$this->posiadaWiecejNiz($kwota)) {
+            throw new BrakWystarczajacychSrodkow("Dostępne środki: {$this->dostepneSrodki()} Kwota: $kwota");
+        }
+
+        if (auth()->check()) {
+            if (auth()->user()->klient->limit_dzienny <= ($this->dzisiajWydano + $kwota)) {
+                throw new PrzekroczonoLimitDzienny('Przekroczenie dziennego limitu wydatkow.');
+            }
+
+            if (auth()->user()->klient->ustawienie_budzetu <= ($this->wTymMiesiacuWydano  + $kwota)) {
+                throw new PrzekroczonoLimitMiesieczny('Przekroczenie miesiecznego limitu wydatkow.');
+            }
+        }
+    }
+
     /**
      * @param  string  $idKlienta
      * @param  string  $numerRachunku
@@ -90,15 +142,11 @@ class RachunekAggregateRoot extends AggregateRoot
      * @param  float  $kwota
      *
      * @return RachunekAggregateRoot
-     * @throws BrakWystarczajacychSrodkow
+     * @throws BrakWystarczajacychSrodkow|PrzekroczonoLimitDzienny
      */
     public function zablokujSrodki(float $kwota): self
     {
-        if (!$this->posiadaWiecejNiz($kwota)) {
-            throw new BrakWystarczajacychSrodkow(
-                'Dostępne środki: ' . $this->dostepneSrodki() . " Kwota do przelania: $kwota"
-            );
-        }
+        $this->sprawdzMozliwoscWykonaniaTransakcji($kwota);
 
         $this->recordThat(new BlokadaSrodkow($kwota));
 
@@ -162,12 +210,11 @@ class RachunekAggregateRoot extends AggregateRoot
      *
      * @return $this
      * @throws BrakWystarczajacychSrodkow
+     * @throws PrzekroczonoLimitDzienny
      */
     public function wyplac(float $kwota): self
     {
-        if (!$this->posiadaWiecejNiz($kwota)) {
-            throw new BrakWystarczajacychSrodkow("Saldo: $this->saldo Kwota do wyplaty: $kwota");
-        }
+        $this->sprawdzMozliwoscWykonaniaTransakcji($kwota);
 
         $this->recordThat(new WyplataPieniedzy($kwota));
 
@@ -180,6 +227,8 @@ class RachunekAggregateRoot extends AggregateRoot
     protected function applyWyplataPieniedzy(WyplataPieniedzy $event): void
     {
         $this->saldo -= $event->kwota;
+
+        $this->zarejestrujWydatek($event);
     }
 
     /**
@@ -190,10 +239,6 @@ class RachunekAggregateRoot extends AggregateRoot
      */
     public function przelewWychodzacy(Transakcja $transakcja): self
     {
-        if (!$this->posiadaWiecejNiz($transakcja->kwota)) {
-            throw new BrakWystarczajacychSrodkow("Saldo: $this->saldo Kwota do przelania: $transakcja->kwota");
-        }
-
         $this->recordThat(new PrzelewWychodzacy(
             $transakcja->nr_rachunku_powiazanego,
             $transakcja->tytul,
@@ -212,6 +257,8 @@ class RachunekAggregateRoot extends AggregateRoot
         $this->srodkiZablokowane = $this->srodkiZablokowane->reject(function ($kwota) use ($event) {
             return $event->kwota === $kwota;
         });
+
+        $this->zarejestrujWydatek($event);
     }
 
 

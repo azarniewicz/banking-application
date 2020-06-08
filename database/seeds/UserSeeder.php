@@ -15,15 +15,22 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-         $this->setUpFaker();
+        $date = \Carbon\Carbon::yesterday();
+        \Carbon\Carbon::setTestNow($date);
+
+        $this->setUpFaker();
 
         $klientA = \KlientFactory::create([
-            'email' => 'jan@kowalski.com',
+            'email'    => 'jan@kowalski.com',
+            'imie'     => 'Jan',
+            'nazwisko' => 'Kowalski',
             'password' => Hash::make('tajne')
         ]);
 
         $klientB = \KlientFactory::create([
-            'email' => 'janina@kowalska.com',
+            'email'    => 'janina@kowalska.com',
+            'imie'     => 'Janina',
+            'nazwisko' => 'Kowalska',
             'password' => Hash::make('tajne')
         ]);
 
@@ -31,11 +38,19 @@ class UserSeeder extends Seeder
         $rachunekB = $klientB->rachunek->getAggregate();
 
         $iterator = range(1, 10);
-        $this->command->getOutput()->progressStart(count($iterator));
+        $this->command->getOutput()->progressStart(count($iterator) * 2);
 
         foreach ($iterator as $i) {
-            $this->command->getOutput()->progressAdvance();
+            \Carbon\Carbon::setTestNow($date->subDays($i));
             $rachunekA->wplac($this->faker->numberBetween(1000, 2000))->persist();
+            $rachunekA->wyplac($this->faker->numberBetween(1, 500))->persist();
+            $rachunekB->wplac($this->faker->numberBetween(1000, 2000))->persist();
+            $rachunekB->wyplac($this->faker->numberBetween(1, 500))->persist();
+            $this->command->getOutput()->progressAdvance();
+        }
+
+        foreach ($iterator as $i) {
+            \Carbon\Carbon::setTestNow($date->subDays($i));
 
             \App\Transakcja::makeFrom([
                 'nr_rachunku'             => $klientA->rachunek->nr_rachunku,
@@ -43,26 +58,18 @@ class UserSeeder extends Seeder
                 'kwota'                   => $this->faker->numberBetween(1, 500),
                 'tytul'                   => $this->faker->word,
                 'odbiorca'                => $klientB->imie . ' ' . $klientB->nazwisko
-            ], \App\Transakcja::standard)->wykonaj();
+            ], \App\Transakcja::ekspres)->wykonaj();
 
-            $rachunekA->wyplac($this->faker->numberBetween(1, 500))->persist();
-
-            $rachunekB->wplac($this->faker->numberBetween(1000, 2000))->persist();
             \App\Transakcja::makeFrom([
                 'nr_rachunku'             => $klientB->rachunek->nr_rachunku,
                 'nr_rachunku_powiazanego' => $rachunekA->nrRachunku,
                 'kwota'                   => $this->faker->numberBetween(1, 500),
                 'tytul'                   => $this->faker->word,
                 'odbiorca'                => $klientA->imie . ' ' . $klientA->nazwisko
-            ], \App\Transakcja::standard)->wykonaj();
-            $rachunekB->wyplac($this->faker->numberBetween(1, 500))->persist();
+            ], \App\Transakcja::ekspres)->wykonaj();
 
+            $this->command->getOutput()->progressAdvance();
         }
-
-        $this->command->getOutput()->newLine(2);
-        $this->command->info('Executing transactions...');
-        exec('php artisan queue:work --stop-when-empty');
-        $this->command->info('Transactions executed.');
 
         $this->command->getOutput()->progressFinish();
     }

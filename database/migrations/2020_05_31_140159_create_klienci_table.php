@@ -22,8 +22,8 @@ class CreateKlienciTable extends Migration
             $table->string('kod_pocztowy');
             $table->string('nr_telefonu');
             $table->string('nr_dowodu');
-            $table->float('limit_dzienny');
-            $table->float('ustawienie_budzetu');
+            $table->float('limit_dzienny')->default(5000.);
+            $table->float('ustawienie_budzetu')->default(50000.);
             $table->timestamps();
         });
     }

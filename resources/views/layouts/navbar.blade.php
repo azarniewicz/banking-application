@@ -9,20 +9,19 @@
         <div class="collapse navbar-collapse" id="mainmenu">
 
             <ul class="navbar-nav mr-auto">
-
-                <li class="nav-item active">
+                <li class="nav-item  @active('start') active @endactive">
                     <a class="nav-link" href="/"><i class="fas fa-home"></i> Start </a>
                 </li>
 
-               <li class="nav-item">
+               <li class="nav-item @active('przelew') active @endactive">
                     <a class="nav-link" href="{{ url('przelew') }}"><i class="fas fa-coins"></i> Przelew </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item @active('historia') active @endactive">
                     <a class="nav-link" href="{{ url('historia') }}"><i class="fas fa-list"></i> Historia </a>
                 </li>
 
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown @active(['staliodbiorcy', 'planowanetransakcje', 'kredyty']) active @endactive">
                     <span class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true" id="submenu" aria-haspopup="true"><i class="fas fa-layer-group"></i> Usługi </span>
 
                     <div class="dropdown-menu submenu">
@@ -35,7 +34,7 @@
                     </div>
                 </li>
 
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown @active(['mojedane', 'raty', 'ustawienia']) active @endactive">
                     <span class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"><i class="far fa-user-circle"></i> Konto </span>
 
                     <div class="dropdown-menu submenu" aria-labelledby="submenu">

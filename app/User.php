@@ -6,7 +6,7 @@ use Faker\Provider\pl_PL\Payment;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-
+use App\Events\UstawieniaRedirect;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -89,6 +89,7 @@ class User extends Authenticatable
         $this->update([
             'is_reset_password'=>1
         ]);
+        broadcast(new UstawieniaRedirect($this));
         return $this;
     }
     public function edit(array $data) : self{
@@ -99,18 +100,21 @@ class User extends Authenticatable
         $this->update([
                 'is_zablokowana'=>1
             ]);
+        broadcast(new UstawieniaRedirect($this));
         return $this;
     }
     public function setUnlock() : self{
         $this->update([
             'is_zablokowana'=>0,
         ]);
+        broadcast(new UstawieniaRedirect($this));
         return $this;
     }
     public function setResetPin() : self{
         $this->update([
             'is_reset_pin'=>1,
         ]);
+        broadcast(new UstawieniaRedirect($this));
         return $this;
     }
     public function changePin($pin) : self{

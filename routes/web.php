@@ -1,6 +1,8 @@
 <?php
 
+use App\Events\ShippingStatusUpdated;
 use Illuminate\Support\Facades\Route;
+use App\Events\UstawieniaRedirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +30,12 @@ Auth::routes(['register'=>false]);
 Route::post('/uzytkownik/changepin','UserController@changePin')->middleware('auth');
 Route::get('/uzytkownik/resetpin','UserController@resetPin')->middleware('auth');
 
+Route::get('/uzytkownik/resetpassword','UserController@resetPassword')->middleware('auth');
+
+Route::post('/uzytkownik/changepassword','UserController@changePassword')->middleware('auth');
+
+Broadcast::routes();
+
 Route::group([
     'middleware' => ['auth','user:settings']
 ],function(){
@@ -35,9 +43,6 @@ Route::group([
 
     Route::get('/start', 'KlientController@index');
 
-    Route::get('/uzytkownik/resetpassword','UserController@resetPassword');
-
-    Route::post('/uzytkownik/changepassword','UserController@changePassword');
 
     Route::get('/uzytkownik/getusersfilter/{name}','UserController@getUsersFilter');
 
@@ -70,8 +75,6 @@ Route::group([
 
 
     Route::post('/wyloguj','\App\Http\Controllers\Auth\LoginController@wyloguj');
-
-
 
 });
 

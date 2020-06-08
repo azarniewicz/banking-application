@@ -22,8 +22,8 @@ use App\Events\UstawieniaRedirect;
 
 
 
-Auth::routes(['register'=>false]);
 
+Auth::routes(['register'=>false]);
 
 
 
@@ -33,6 +33,7 @@ Route::get('/uzytkownik/resetpin','UserController@resetPin')->middleware('auth')
 Route::get('/uzytkownik/resetpassword','UserController@resetPassword')->middleware('auth');
 
 Route::post('/uzytkownik/changepassword','UserController@changePassword')->middleware('auth');
+
 
 Broadcast::routes();
 
@@ -53,6 +54,9 @@ Route::group([
     Route::post('/przelew', 'TransakcjaController@store');
 
     Route::get('/historia', 'TransakcjaController@index');
+
+    Route::post('/kredyt/setwniosek','KredytController@setWniosek');
+
     Route::get('/staliodbiorcy', function () {
         return view('uzytkownik/staliodbiorcy');
     });

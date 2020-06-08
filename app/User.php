@@ -79,7 +79,6 @@ class User extends Authenticatable
             ->whereRaw("concat(imie,' ',nazwisko,' ',email) LIKE '%{$name}%'");
     }
     public function changePassword($password){
-
         $this->update([
             'is_reset_password'=>0,
             'password'=>Hash::make($password)
@@ -161,16 +160,15 @@ class User extends Authenticatable
         return $base;
     }
 
-    public function update(array $attributes = [], array $options = [])
-    {
-        $data = array_filter($attributes);
+    // public function update(array $attributes = [], array $options = [])
+    // {
+    //     $data = array_filter($attributes);
+    //     if (array_key_exists('password', $data)) {
+    //         $data['password'] = Hash::make($data['password']);
+    //     }
 
-        if (array_key_exists('password', $data)) {
-            $data['password'] = Hash::make($data['password']);
-        }
-
-        parent::update($data);
-    }
+    //     parent::update($data);
+    // }
 
     public function getRachunekKlienta()
     {

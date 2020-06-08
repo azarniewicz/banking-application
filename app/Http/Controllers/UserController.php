@@ -14,10 +14,10 @@ class UserController extends Controller
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->middleware('auth:administrator')->except('update');
+        // $this->middleware('auth:administrator')->except(['update']);
     }
 
-public function resetPassword(){
+    public function resetPassword(){
         return view('uzytkownik/resetpassword');
     }
     private function validatePassword($password,$repeatPassword){

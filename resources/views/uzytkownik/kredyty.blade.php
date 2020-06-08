@@ -4,61 +4,39 @@
     <div class="row">
         <div class="col-md-12 infobox przelew-form">
            Kredyty
-
-            <form>
+            <h6>Oprocentowanie: 5%</h6>
+        <form action="{{action('KredytController@setWniosek')}}" method="POST">
        <div class="row">
-
+                @csrf
             <div class="col-md-6 mgg">
 
                 <div class="form-group">
-<input type="text" name="name" class="form-control" placeholder="Imię" value="Jan"/>
-                </div>
-
-                <div class="form-group">
-<input type="text" name="surname" class="form-control" placeholder="Nazwisko" value="Kowalski"/>
-                </div>
-
-                <div class="form-group">
-<input type="text" name="pesel" class="form-control" placeholder="Pesel" value="00000000"/>
-                </div>
-                <div class="form-group">
-<input type="text" name="nrdowodu" class="form-control" placeholder="Seria i numer dowodu" value="AGF 000000"/>
-                </div>
-
-                <div class="form-group">
-<input type="text" name="nrtel" class="form-control" placeholder="Numer telefonu" value="555 555 555"/>
-                </div>
-
-                <div class="form-group">
-<input type="text" name="city" class="form-control" placeholder="Miasto" value="Jelenia Góra"/>
-                </div>
-
-                <div class="form-group">
-<input type="text" name="street" class="form-control" placeholder="Ulica i numer domu" value="Babia 6"/>
-                </div>
-
-                <div class="form-group">
-<input type="text" name="postalcode" class="form-control" placeholder="Kod pocztowy" value="44-333"/>
-                </div>
-
-                <div class="form-group">
-<input type="text" name="kwota" class="form-control" placeholder="Kwota kredytu" value=""/>
+<input required type="number" id="kwotaKredytu" onkeyup="getKwotaDoOddania()" name="kwota_kredytu" class="form-control" placeholder="Kwota kredytu" value=""/>
                 </div>
 
                                     <div class="form-group">
-                <select class="form-control" id="typprzelewu">
-                  <option>3 raty</option>
-                  <option>6 rat</option>
-                  <option>10 rat</option>
-                  <option>12 rat</option>
-                  <option>18 rat</option>
-                  <option>24 raty</option>
-                  <option>36 rat</option>
+                <select onchange="getKwotaDoOddania()" class="form-control" name="ilosc_rat" id="typprzelewu" value="3">
+                  <option value="3">3 raty</option>
+                  <option value="6">6 rat</option>
+                  <option value="10">10 rat</option>
+                  <option value="12">12 rat</option>
+                  <option value="18">18 rat</option>
+                  <option value="24">24 raty</option>
+                  <option value="36">36 rat</option>
                 </select>
               </div>
 
+              <div class="form-group">
+                <label for="kwotaDoOddania" style="font-size:12px;">Kwota do oddania</label>
+                <input  type="text" id="kwotaDoOddania" class="form-control" readonly value=""/>
+               </div>
+               <div class="form-group">
+                <label for="rataKredytu" style="font-size:12px;">Rata kredytu</label>
+                <input  type="text" id="rataKredytu" class="form-control" readonly value=""/>
+               </div>
+
                 <div class="form-group">
-                            <input type="submit" name="btnSubmit" class="btnContact" value="WYŚLIJ" />
+                <input type="submit" name="btnSubmit" class="btnContact" value="WYŚLIJ" />
                 </div>
             </div>
         </div>
@@ -97,4 +75,41 @@
         </div>
     </div>
 </div>
+<script>
+    function getKwotaDoOddania(){
+        let kredyt = new Kredyty();
+        kredyt.getKwotaDoOddania();
+    }
+    class Kredyty{
+        get kwotaKredytu(){ return parseFloat($("#kwotaKredytu").val());}
+        get iloscRat(){ return parseFloat($("#typprzelewu").val());}
+
+        getKwotaDoOddania(){
+            if(!isNaN(this.kwotaKredytu)){
+                let wynik = this.countKredyt();
+                $("#kwotaDoOddania").val((wynik * this.iloscRat).toFixed(2));
+                $("#rataKredytu").val(wynik);
+            }else{
+                $("#kwotaDoOddania").val("");
+                $("#rataKredytu").val("");
+            }
+        }
+        countKredyt(){
+            let kwotaKredytu = this.kwotaKredytu;
+            let iloscRat = this.iloscRat;
+            let rata = iloscRat;
+            if(iloscRat > 12){
+                rata = 12;
+            }
+
+            let wynikDolny = 0;
+
+            for(let i = 1; i <= iloscRat; i ++){
+                wynikDolny = wynikDolny + (1 / Math.pow((1 + (0.05 / 12)),i))
+            }
+
+            return (kwotaKredytu / wynikDolny).toFixed(2);
+        }
+    }
+</script>
 @endsection

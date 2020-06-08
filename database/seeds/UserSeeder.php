@@ -41,6 +41,7 @@ class UserSeeder extends Seeder
         $this->command->getOutput()->progressStart(count($iterator) * 2);
 
         foreach ($iterator as $i) {
+            \Carbon\Carbon::setTestNow();
             \Carbon\Carbon::setTestNow($date->subDays($i));
             $rachunekA->wplac($this->faker->numberBetween(1000, 2000))->persist();
             $rachunekA->wyplac($this->faker->numberBetween(1, 500))->persist();
@@ -49,9 +50,10 @@ class UserSeeder extends Seeder
             $this->command->getOutput()->progressAdvance();
         }
 
-        foreach ($iterator as $i) {
-            \Carbon\Carbon::setTestNow($date->subDays($i));
+        \Carbon\Carbon::setTestNow();
+        $date = \Carbon\Carbon::today();
 
+        foreach ($iterator as $i) {
             \App\Transakcja::makeFrom([
                 'nr_rachunku'             => $klientA->rachunek->nr_rachunku,
                 'nr_rachunku_powiazanego' => $rachunekB->nrRachunku,
@@ -67,6 +69,8 @@ class UserSeeder extends Seeder
                 'tytul'                   => $this->faker->word,
                 'odbiorca'                => $klientA->imie . ' ' . $klientA->nazwisko
             ], \App\Transakcja::ekspres)->wykonaj();
+
+            \Carbon\Carbon::setTestNow($date->subDays(random_int(0, 5)));
 
             $this->command->getOutput()->progressAdvance();
         }

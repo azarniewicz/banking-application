@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         ]);
 
         $klientB = \KlientFactory::create([
-            'email' => 'janina@kowalski.com',
+            'email' => 'janina@kowalska.com',
             'password' => Hash::make('tajne')
         ]);
 

@@ -10,42 +10,24 @@
 	<meta name="author" content="Żukowski, Żarniewicz, Męczyński">
 	<meta http-equiv="X-Ua-Compatible" content="IE=edge">
 
-	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="{{asset('css/app.css')}}">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
-	<link rel="stylesheet" href="css/f.css">
 
-	<script>
-	$( document ).ready( function () {
-		$( '.dropdown' ).on( 'click', function ( e ) {
-			var $el = $( this );
-			var $parent = $( this ).offsetParent( ".dropdown-menu" );
-			if ( !$( this ).next().hasClass( 'show' ) ) {
-				$( this ).parents( '.dropdown-menu' ).first().find( '.show' ).removeClass( "show" );
-			}
-			var $subMenu = $( this ).next( ".dropdown-menu" );
-			$subMenu.toggleClass( 'show' );
 
-			$( this ).parent( "li" ).toggleClass( 'show' );
-
-			$( this ).parents( 'li.nav-item.dropdown.show' ).on( 'hidden.bs.dropdown', function ( e ) {
-				$( '.dropdown-menu .show' ).removeClass( "show" );
-			} );
-
-			 if ( !$parent.parent().hasClass( 'navbar-nav' ) ) {
-				$el.next().css( { "top": $el[0].offsetTop, "left": $parent.outerWidth() - 4 } );
-			}
-
-			return false;
-		} );
-	} );
-	</script>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.js"></script>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/285fa7da50.js" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
 </head>
 
 <body>
@@ -108,7 +90,7 @@
                         </div>
 
 	                    <div class="form-group">
-    <input type="text" name="numer_telefonu" class="form-control" placeholder="Numer telefonu" />
+    <input type="text" name="nr_telefonu" class="form-control" placeholder="Numer telefonu" />
                         </div>
 
 	                    <div class="form-group">
@@ -116,7 +98,7 @@
                         </div>
 
 	                    <div class="form-group">
-    <input type="text" name="ulica_i_numer_domu" class="form-control" placeholder="Ulica i numer domu"/>
+    <input type="text" name="ulica_nr" class="form-control" placeholder="Ulica i numer domu"/>
                         </div>
 
 	                    <div class="form-group">
@@ -272,46 +254,63 @@
             </div>
                 <!-- UŻYTKOWNICY -->
             <div class="tab-pane" id="uzyt">
-                <div class="col-md-12 przelew-form">
+                <div class="col-md-8 przelew-form">
 
-                    <form>
 
                         <div class="form-group" style="margin-bottom:30px;">
-    <input type="search" name="name" class="form-control" placeholder="Wyszukaj użytkownika" value=""/>
+    <input type="search" name="name" id="wyszukajUzytkownika" class="form-control" placeholder="Wyszukaj użytkownika" value=""/>
 
                         </div>
 
-                    <div class="col-md-6 mgg">
+                    <div class="col-md-12 mgg">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Lp</th>
+                                <th scope="col">Imię</th>
+                                <th scope="col">Nazwisko</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Funkcja</th>
+                              </tr>
+                            </thead>
+                            <tbody class = 'table-body-uzytkownicy'>
 
-                        <div class="form-group">
-    <input type="text" name="name" class="form-control" placeholder="Imię" value="Jan"/>
-                        </div>
+                            </tbody>
+                          </table>
+                          <div class = 'edit-panel' style = "display:none;">
+                          <form action ='{{action('AdministratorController@editUser')}}' method='POST'>
+                            @csrf
+                                    <div class="form-group">
+                                <input type="text" id="imie" name="imie" class="form-control" placeholder="Imię" value="Jan"/>
+                                                    </div>
+                                <input hidden id="id" name = "id"/>
+                                                    <div class="form-group">
+                                <input type="text" id="nazwisko" name="nazwisko" class="form-control" placeholder="Nazwisko" value="Kowalski"/>
+                                                    </div>
 
-	                    <div class="form-group">
-    <input type="text" name="surname" class="form-control" placeholder="Nazwisko" value="Kowalski"/>
-                        </div>
-
-	                    <div class="form-group">
-    <input type="text" name="pesel" class="form-control" placeholder="Pesel" value="00000000"/>
-                        </div>
-                        <div class="form-group">
-    <input type="submit" name="btnSubmit" class="btnContact s" value="ZMIEŃ DANE" />
-                        </div>
-                        <div class="form-group">
-    <input type="submit" name="btnSubmit" class="btnContact s" value="ZABLOKUJ" />
-                        </div>
-                        <div class="form-group">
-    <input type="submit" name="btnSubmit" class="btnContact s" value="PONOWNA AKTYWACJA" />
-                        </div>
-                        <div class="form-group">
-    <input type="submit" name="btnSubmit" class="btnContact s" value="RESTART HASŁA" />
-                        </div>
-                         <div class="form-group">
-    <input type="submit" name="btnSubmit" class="btnContact s" value="RESTART PINU" />
-                        </div>
+                                                    <div class="form-group">
+                                <input type="text" id="email" name="email" class="form-control" placeholder="Email" value="00000000"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                <input type="submit" name="btnSubmit" class="btnContact s" value="ZMIEŃ DANE" />
+                                                    </div>
+                                                    <div class="form-group">
+                                <input type="submit" name="btnSubmit" class="btnContact s" value="ZABLOKUJ" />
+                                                    </div>
+                                                    <div class="form-group">
+                                <input type="submit" name="btnSubmit" class="btnContact s" value="PONOWNA AKTYWACJA" />
+                                                    </div>
+                                                    <div class="form-group">
+                                <input type="submit" name="btnSubmit" class="btnContact s" value="RESTART HASŁA" />
+                                                    </div>
+                                                    <div class="form-group">
+                                <input type="submit" name="btnSubmit" class="btnContact s" value="RESTART PINU" />
+                                                 </div>
+                            </form>
+                          </div>
                     </div>
 
-            </form>
+
         </div>
 
 
@@ -326,13 +325,56 @@
 </div>
 
 
-                <div class="container">
+            <div class="container">
             <div class="row">
                 <div class="col-md-12">
                 <span style="font-size:12px;color:gray;">Copyright © 2020 WSB - ŻMZ</span>
                 </div>
             </div>
         </div>
-	</main>
+    </main>
+    <script>
+
+            function editButton(el){
+                let tds = $(el).parents('tr').children();
+                $("#id").val(tds[0].getAttribute('data-id'));
+                $("#imie").val(tds[1].innerText);
+                $("#nazwisko").val(tds[2].innerText);
+                $("#email").val(tds[3].innerText);
+                let editPanel = $('.edit-panel').show();
+            }
+            function debounce(func, wait, immediate) {
+            var timeout;
+            return function() {
+                var context = this, args = arguments;
+                var later = function() {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        };
+
+        $(function(){
+            $("#wyszukajUzytkownika").on('keyup',debounce(function(e){
+
+                $.get(`/uzytkownik/getusersfilter/${e.currentTarget.value}`).then((data)=>{
+                    $('.table-body-uzytkownicy').children().remove();
+                    data.data.forEach((item,index)=>{
+                        $(`<tr>
+                            <td data-id='${item.id}'>${index + 1}</td>
+                            <td>${item.imie}</td>
+                            <td>${item.nazwisko}</td>
+                            <td>${item.email}</td>
+                            <td><button onclick='editButton(this)' class='btn btn-primary edit-button' class = 'btn btn-primary'>Edycja</button></td>
+                        </tr>`).appendTo('.table-body-uzytkownicy');
+                    });
+                });
+            },500))
+        })
+    </script>
 </body>
 </html>

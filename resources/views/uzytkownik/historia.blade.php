@@ -40,13 +40,12 @@
                                                 @if ($transakcja->isPrzelew())
                                                     <div class="col-md-4 danehist">
                                                         <p class="pelement">Dane płatnika</p>
-
+                                                        @if(isset($transakcja->rachunek_platnika->uzytkownik->nr_rachunku))
                                                         <p class="inftexthist">Nr rachunku:
                                                             <span class="next">
                                                             {{ $transakcja->rachunek_platnika->nr_rachunku  }}
                                                         </span>
                                                         </p>
-
                                                         <p class="inftexthist">Imię i nazwisko:
                                                             <span class="next">
                                                             {{ $transakcja->rachunek_platnika->uzytkownik->pelneImie }}
@@ -67,10 +66,17 @@
                                                             {{ $transakcja->rachunek_platnika->klient->miasto }}
                                                         </span>
                                                         </p>
-
+                                                        @else
+                                                        <p class="inftexthist">Typ:
+                                                            <span class="next">
+                                                                Kredyt
+                                                            </span>
+                                                        </p>
+                                                        @endif
                                                     </div>
 
                                                     <div class="col-md-4 danehist">
+                                                        @if(isset($transakcja->rachunek_platnika->uzytkownik->nr_rachunku))
                                                         <p class="pelement">Dane odbiorcy</p>
 
 
@@ -100,6 +106,13 @@
                                                             {{ $transakcja->rachunek_odbiorcy->klient->miasto }}
                                                         </span>
                                                         </p>
+                                                        @else
+                                                        <p class="pelement">Dane odbiorcy</p>
+                                                        <p class="inftexthist">TYP:
+                                                            <span class="next">
+                                                            BANK
+                                                        </span>
+                                                        @endif
                                                     </div>
                                                 @endif
 

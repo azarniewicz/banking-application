@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Rachunek extends Model
 {
+
+    const NR_RACHUNKU_BANKU = 'PL2132131231231231231';
     /**
      * @var string
      */

@@ -14,13 +14,14 @@ class CreateKredytyTable extends Migration
     public function up()
     {
         Schema::create('kredyty', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id_kredytu')->autoIncrement();
             $table->unsignedBigInteger('id_klienta');
             $table->dateTime('data_wniosku');
-            $table->dateTime('data_zakonczenia_wniosku');
+            $table->dateTime('data_zakonczenia_wniosku')->nullable();
             $table->float('kwota_kredytu');
             $table->float('oprocentowanie');
-            $table->string('zgoda_odmowa');
+            $table->string('zgoda_odmowa')->nullable();
+
             $table->tinyInteger('ilosc_rat');
             $table->timestamps();
         });

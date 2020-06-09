@@ -10,28 +10,31 @@
 	<meta name="author" content="Żukowski, Żarniewicz, Męczyński">
 	<meta http-equiv="X-Ua-Compatible" content="IE=edge">
 
-	<link rel="stylesheet" href="{{asset('css/app.css')}}">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
-
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.js"></script>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/285fa7da50.js" crossorigin="anonymous"></script>
-
-
-
-
-
-
-
-
-
+    <script src="{{asset('js/app.js')}}"> </script>
 </head>
 
 <body>
 	<main>
+    @if($errors->any())
+        <div class="alert alert-danger text-sm-center" role="alert">
+            @foreach($errors->all() as $error)
+                <span class="w-100">{{ $error }}</span>
+                <br>
+            @endforeach
+        </div>
+        @endif
+    @if(session()->has('success'))
+        <div class="alert alert-success text-sm-center" role="alert">
+            <span class="w-100">{{ session()->get('success') }}</span>
+        </div>
+    @endif
       <div class="container">
         <div class="row">
           <section class="col-md-12 infobox text-left">
@@ -128,11 +131,10 @@
             <div class="tab-pane" id="werkred">
 
                 <div class="row">
-
                 <div class="col-md-12">
-
                     <table class="table col-md-12">
                           <thead>
+                            @forEach($wnioski as $wniosek)
                             <tr>
                               <th scope="col">IMIĘ NAZWISKO</th>
                               <th scope="col">KWOTA</th>
@@ -142,45 +144,55 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td>Mirosław Witkowski</td>
-                              <td>4000zł</td>
-                              <td>03/06/2020</td>
+                              <td>{{$wniosek->imie." ".$wniosek->nazwisko}}</td>
+                              <td>{{$wniosek->kwota_kredytu}}</td>
+                              <td>{{$wniosek->data_wniosku}}</td>
                     <!-- ROZWIJANA OPCJA WIĘCEJ-->
                         <td>
-                    <a class="btn btn-success butths" data-toggle="collapse" href="#collapse1">
+                        <a class="btn btn-success"
+
+                        data-toggle="collapse" href="#collapse{{$wniosek->id_kredytu}}">
                                     SZCZEGÓŁY
                         </a>
 
-                            <tr>
+                            <tr style = "height:10px;">
                                <td colspan="5">
-                                   <div class="collapse" id="collapse1" >
+                                   <div class="collapse multi-collapse" id="collapse{{$wniosek->id_kredytu}}" >
                                         <div class="card card-body col-md-12" style="border:none">
                                             <div class="row">
                                     <div class="col-md-6 danehist">
                                         <p class="pelement">Dane osoby składającej wniosek</p>
 
 
-    <p class="inftexthist">Imię: <span class="next">00000000000000000</span></p>
-        <p class="inftexthist">Nazwisko: <span class="next">Jan Kowalski</span></p>
-        <p class="inftexthist">Pesel: <span class="next">840000000</span></p>
-        <p class="inftexthist">Seria i numer dowodu: <span class="next">ATF 33333</span></p>
-        <p class="inftexthist">Numer telefonu: <span class="next">+48  111 111 111</span></p>
-        <p class="inftexthist">Ulica, numer domu:<span class="next">Kasztanowa 3</span></p>
-        <p class="inftexthist">Kod pocztowy:<span class="next">66-115</span></p>
-        <p class="inftexthist">Miejscowość:<span class="next">Paczuszkowo</span></p>
+                                        <p class="inftexthist">Imię: <span class="next">{{$wniosek->imie}}</span></p>
+                                            <p class="inftexthist">Nazwisko: <span class="next">{{$wniosek->nazwisko}}</span></p>
+                                            <p class="inftexthist">Pesel: <span class="next">{{$wniosek->pesel}}</span></p>
+                                            <p class="inftexthist">Seria i numer dowodu: <span class="next">{{$wniosek->seria_i_numer_dowodu}}</span></p>
+                                            <p class="inftexthist">Numer telefonu: <span class="next">{{$wniosek->nr_telefonu}}</span></p>
+                                            <p class="inftexthist">Ulica, numer domu:<span class="next">{{$wniosek->ulica_nr}}</span></p>
+                                            <p class="inftexthist">Kod pocztowy:<span class="next">{{$wniosek->kod_pocztowy}}</span></p>
+                                            <p class="inftexthist">Miejscowość:<span class="next">{{$wniosek->miasto}}</span></p>
 
                                     </div>
                                     <div class="col-md-6 danehist przelew-form">
                                         <p class="pelement">INFORMACJE O KREDYCIE</p>
 
-    <p class="inftexthist">KWOTA:<span class="next">4000ZŁ</span></p>
-    <p class="inftexthist">Ilość rat: <span class="next">36</span></p>
-    <div class="form-group col-md-6">
-    <input type="submit" name="btnSubmit" class="btnContact odrz" value="ODRZUĆ" style="background-color:indianred;"/>
-    </div>
-    <div class="form-group col-md-6">
-    <input type="submit" name="btnSubmit" class="btnContact akct" value="ZAAKCEPTUJ" style="background-color:green;"/>
-    </div>
+                                            <p class="inftexthist">KWOTA:<span class="next">{{$wniosek->kwota_kredytu}} zł</span></p>
+                                            <p class="inftexthist">Ilość rat: <span class="next">{{$wniosek->ilosc_rat}}</span></p>
+                                            <div class="form-group col-md-6" style="margin-bottom:0;">
+                                            <form action="{{action('KredytController@odrzucWniosek',['id'=>$wniosek->id_kredytu])}}" method="POST">
+                                                 @csrf
+                                                <input type="submit" name="btnSubmit" class="btnContact odrz" value="ODRZUĆ" style="background-color:indianred;"/>
+                                            </form>
+
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                            <form action="{{action('KredytController@zaakceptujWniosek',['id'=>$wniosek->id_kredytu])}}" method="POST">
+                                                @csrf
+                                                <input type="submit" name="btnSubmit" class="btnContact akct" value="ZAAKCEPTUJ" style="background-color:green;"/>
+                                            </form>
+
+                                            </div>
 
                                     </div>
 
@@ -191,50 +203,8 @@
                             </tr>
                         </td>
                             </tr>
+                            @endforeach
 
-                              <!--DRUGI REKORD Z DANYMI DO KREDYTU -->
-                                <tr>
-                              <td>Mirosław Witkowski</td>
-                              <td>4000zł</td>
-                              <td>03/06/2020</td>
-                    <!-- ROZWIJANA OPCJA WIĘCEJ-->
-                        <td>
-                    <a class="btn btn-success butths" data-toggle="collapse" href="#collapse2">
-                                    SZCZEGÓŁY
-                        </a>
-
-                            <tr>
-                               <td colspan="5">
-                                   <div class="collapse" id="collapse2" >
-                                        <div class="card card-body col-md-12" style="border:none">
-                                            <div class="row">
-                                    <div class="col-md-6 danehist">
-                                        <p class="pelement">Dane osoby składającej wniosek</p>
-
-
-        <p class="inftexthist">Imię: <span class="next">00000000000000000</span></p>
-        <p class="inftexthist">Nazwisko: <span class="next">Jan Kowalski</span></p>
-        <p class="inftexthist">Pesel: <span class="next">840000000</span></p>
-        <p class="inftexthist">Seria i numer dowodu: <span class="next">ATF 33333</span></p>
-        <p class="inftexthist">Numer telefonu: <span class="next">+48  111 111 111</span></p>
-        <p class="inftexthist">Ulica, numer domu:<span class="next">Kasztanowa 3</span></p>
-        <p class="inftexthist">Kod pocztowy:<span class="next">66-115</span></p>
-        <p class="inftexthist">Miejscowość:<span class="next">Paczuszkowo</span></p>
-
-                                    </div>
-                                    <div class="col-md-6 danehist przelew-form">
-                                        <p class="pelement">INFORMACJE O KREDYCIE</p>
-
-    <p class="inftexthist">KWOTA:<span class="next">4000ZŁ</span></p>
-    <p class="inftexthist">Ilość rat: <span class="next">36</span></p>
-        <form>
-    <div class="form-group col-md-6">
-    <input type="submit" name="btnSubmit" class="btnContact odrz" value="ODRZUĆ" style="background-color:indianred;"/>
-    </div>
-    <div class="form-group col-md-6">
-    <input type="submit" name="btnSubmit" class="btnContact akct" value="ZAAKCEPTUJ" style="background-color:green;"/>
-    </div>
-        </form>
 
                                     </div>
 

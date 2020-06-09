@@ -57,6 +57,11 @@ Route::group([
 
     Route::post('/kredyt/setwniosek','KredytController@setWniosek');
 
+    Route::post('/kredyt/odrzuc/{id}','KredytController@odrzucWniosek');
+
+    Route::post('/kredyt/zaakceptuj/{id}','KredytController@zaakceptujWniosek');
+
+    Route::post('/kredyt/zaplac/{id}','RataController@zaplac');
     Route::get('/staliodbiorcy', function () {
         return view('uzytkownik/staliodbiorcy');
     });
@@ -73,9 +78,7 @@ Route::group([
 
     Route::post('/klient/user','UserController@update');
 
-    Route::get('/raty', function () {
-        return view('uzytkownik/raty');
-    });
+    Route::get('/raty','RataController@index');
 
     Route::get('/ustawienia', function () {
         return view('uzytkownik/ustawienia');

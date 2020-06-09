@@ -2,8 +2,10 @@
 
 namespace App;
 
+use Faker\Provider\pl_PL\Payment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Rachunek extends Model
 {
@@ -115,5 +117,21 @@ class Rachunek extends Model
         return self::whereHas('klienci', function ($query) {
             $query->where('klient_rachunek.id_uzytkownika', '!=', auth()->user()->id);
         });
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function karta_kredytowa()
+    {
+        return $this->hasOne(KartaKredytowa::class, 'id_rachunku', 'id');
+    }
+
+    /**
+     * Tworzy karte kredytową i przypisuje ją do użytkownika
+     */
+    public function dodajKarte()
+    {
+        return $this->karta_kredytowa()->create(['nr_karty' => Payment::creditCardNumber()]);
     }
 }

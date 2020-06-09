@@ -2,12 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\Przelew;
-use App\Events\PrzelewPrzychodzacy;
-use App\Events\PrzelewWychodzacy;
 use App\Events\TransakcjaZakonczona;
-use App\Events\WplataPieniedzy;
-use App\Events\WyplataPieniedzy;
 use App\Transakcja;
 
 class HistoriaTransakcji

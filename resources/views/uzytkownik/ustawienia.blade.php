@@ -22,14 +22,6 @@
                            aria-selected="false"
                         >USTAWIENIA OGÓLNE</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link "
-                           data-toggle="tab"
-                           href="#danelogowania"
-                           aria-selected="false"
-                        >ZMIANA DANYCH LOGOWANIA</a>
-                    </li>
-
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade active show"
@@ -169,56 +161,6 @@
                             </div>
                         </div>
                         <span style="color:gray;margin-top:40px;font-size:12px;">Ustawienie maksymalnego limitu  dziennych oraz miesięcznych transakcji pozwoli Ci na lepsze zarządzanie pieniędzmi!</span>
-                    </div>
-                    <div class="tab-pane"
-                         id="danelogowania"
-                    >
-                        <div class="col-md-12 przelew-form">
-
-                            <div class="col-md-12"
-                                 style="margin:0 auto;"
-                            >
-                                Dane Logowania
-                                <form action="{{ url('klient\user') }}"
-                                      method="POST"
-                                >
-                                    @csrf
-                                    <div class="form-group">
-                                        <input type="text"
-                                               name="email"
-                                               class="form-control"
-                                               placeholder="Ustaw nowy email"
-                                        />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password"
-                                               name="pin"
-                                               class="form-control"
-                                               placeholder="Ustaw nowy PIN"
-                                        />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password"
-                                               name="password"
-                                               class="form-control"
-                                               placeholder="Ustaw nowe hasło"
-                                               value=""
-                                        />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input type="submit"
-                                               class="btnContact"
-                                               value="ZMIEŃ"
-                                        />
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-                        <span style="color:gray;margin-top:40px;font-size:12px;">Pamiętaj, aby hasło posiadało minimum 8 znaków w tym: duże oraz małe litery, liczby i znaki specjalne!</span>
-                        <br>
-                        <span style="color:gray;margin-top:40px;font-size:12px;">PIN pomaga wzmocnić zabezpieczenie TWOJEGO KONTA!</span>
                     </div>
                 </div>
 

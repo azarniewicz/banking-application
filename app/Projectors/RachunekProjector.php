@@ -2,7 +2,6 @@
 
 namespace App\Projectors;
 
-use App\Events\Przelew;
 use App\Events\PrzelewPrzychodzacy;
 use App\Events\PrzelewWychodzacy;
 use App\Events\StworzenieRachunku;
@@ -10,7 +9,7 @@ use App\Events\TransakcjaZakonczona;
 use App\Events\WplataPieniedzy;
 use App\Events\WyplataPieniedzy;
 use App\Rachunek;
-use Illuminate\Support\Facades\DB;
+use App\Transakcja;
 use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
 use Spatie\EventSourcing\StoredEvent;
@@ -19,6 +18,14 @@ class RachunekProjector implements Projector
 {
     use ProjectsEvents;
 
+    /**
+     * Wywolywana przy starcie odtwarzania eventow
+     */
+    public function onStartingEventReplay()
+    {
+        Transakcja::truncate();
+        Rachunek::truncate();
+    }
 
     /**
      * @param  StworzenieRachunku  $event

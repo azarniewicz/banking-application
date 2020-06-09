@@ -40,8 +40,8 @@ $factory->define(Klient::class, function (Faker $faker) {
         'kod_pocztowy'       => $this->faker->postcode,
         'nr_telefonu'        => $this->faker->e164PhoneNumber,
         'nr_dowodu'          => Person::personalIdentityNumber(),
-        'limit_dzienny'      => 0,
-        'ustawienie_budzetu' => 0,
+        'limit_dzienny'      => 5000,
+        'ustawienie_budzetu' => 20000,
     ];
 });
 

@@ -22,9 +22,7 @@
               class="form-control"
               placeholder="Tytuł przelewu"
               style="width: 100%; height: 100px;"
-    >
-        {{ old('tytul') }}
-    </textarea>
+    >{{ old('tytul') }}</textarea>
 </div>
 
 <div class="form-group">
@@ -32,7 +30,5 @@
               class="form-control"
               placeholder="Nazwa i adres odbiorcy"
               style="width: 100%; height: 100px;"
-    >
-        {{ old('odbiorca') }}
-    </textarea>
+    >{{ old('odbiorca') }}</textarea>
 </div>

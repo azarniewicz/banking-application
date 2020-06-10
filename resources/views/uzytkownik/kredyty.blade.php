@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12 infobox przelew-form">
            Kredyty
-            <h6>Oprocentowanie: 5%</h6>
+        <h6>Oprocentowanie: {{$aktualneOprocentowanie * 100}}%</h6>
         <form action="{{action('KredytController@setWniosek')}}" method="POST">
        <div class="row">
                 @csrf
@@ -58,18 +58,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($historiaSkladanychWnioskow as $wniosek)
                                 <tr>
-                                    <td>22/05/2020</td>
-                                    <td>29/05/2020</td>
-                                    <td>5000zł</td>
-                                    <td>ODRZUCONO</td>
+                                    <td>{{$wniosek->data_wniosku}}</td>
+                                    <td>{{$wniosek->data_zakonczenia_wniosku}}</td>
+                                    <td>{{$wniosek->kwota_kredytu}}</td>
+                                    <td>{{$wniosek->zgoda_odmowa}}</td>
                                 </tr>
-                                <tr>
-                                    <td>22/05/2020</td>
-                                    <td>29/05/2020</td>
-                                    <td>5000zł</td>
-                                    <td>ODRZUCONO</td>
-                                </tr>
+                                @endforeach
                             </tbody>
                  </table>
         </div>
@@ -81,8 +77,15 @@
         kredyt.getKwotaDoOddania();
     }
     class Kredyty{
-        get kwotaKredytu(){ return parseFloat($("#kwotaKredytu").val());}
-        get iloscRat(){ return parseFloat($("#typprzelewu").val());}
+        get aktualneOprocentowanie() {
+            return {{$aktualneOprocentowanie}}
+        }
+        get kwotaKredytu(){
+            return parseFloat($("#kwotaKredytu").val());
+            }
+        get iloscRat(){
+            return parseFloat($("#typprzelewu").val());
+        }
 
         getKwotaDoOddania(){
             if(!isNaN(this.kwotaKredytu)){
@@ -105,7 +108,7 @@
             let wynikDolny = 0;
 
             for(let i = 1; i <= iloscRat; i ++){
-                wynikDolny = wynikDolny + (1 / Math.pow((1 + (0.05 / 12)),i))
+                wynikDolny = wynikDolny + (1 / Math.pow((1 + (this.aktualneOprocentowanie / 12)),i))
             }
 
             return (kwotaKredytu / wynikDolny).toFixed(2);

@@ -60,6 +60,10 @@ class Kredyt extends Model
 
         return $this;
     }
+    public function getHistoriaWnioskowOKredyt(int $idKlienta){
+        return $this->where('id_klienta',$idKlienta)
+        ->orderByDesc('created_at');
+    }
     public function setWniosek(array $data,int $idKlienta): self {
         $this->id_klienta = $idKlienta;
         $this->kwota_kredytu = $data['kwota_kredytu'];

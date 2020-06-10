@@ -48,6 +48,11 @@ class KredytController extends Controller
             'error'=>false
         ];
     }
+    public function index(){
+        return view('uzytkownik/kredyty')
+            ->with('aktualneOprocentowanie',$this->kredyt::AKTUALNE_OPROCENTOWANIE)
+            ->with('historiaSkladanychWnioskow',$this->kredyt->getHistoriaWnioskowOKredyt(auth()->user()->klient()->first()->id)->get());
+    }
     public function zaakceptujWniosek($id){
         $kredyt = $this->kredyt->findOrFail($id)->setZgoda();
         $rachunekAggregateRoot = $this->rachunekAggregateRoot::retrieve($this->user->findOrFail($kredyt->id_klienta)->getRachunekKlienta()->id);

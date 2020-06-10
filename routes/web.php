@@ -68,9 +68,7 @@ Route::group([
 
     Route::get('/planowanetransakcje', 'TransakcjaController@createPlanowana');
 
-    Route::get('/kredyty', function () {
-        return view('uzytkownik/kredyty');
-    });
+    Route::get('/kredyty','KredytController@index');
 
     Route::get('/mojedane', 'KlientController@show');
 

@@ -43,7 +43,8 @@ class AdministratorController extends Controller
             break;
         }
         return redirect()
-            ->back();
+            ->back()
+                ->with('success','Zmiany zostały zapisane pomyślnie');
 
     }
 

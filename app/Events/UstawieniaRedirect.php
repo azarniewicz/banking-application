@@ -31,6 +31,7 @@ class UstawieniaRedirect implements ShouldBroadcast
     public function __construct(User $user)
     {
         $this->user = $user;
+
     }
 
     /**

@@ -58,16 +58,13 @@
                <a class="nav-link " data-toggle="tab" href="#uzyt" aria-selected="false">UŻYTKOWNICY</a>
              </li>
            </ul>
-           @if($errors->any())
-              @include('/layouts/error',['errors'=>$errors->all()])
-           @endif
            <div class="tab-content">
 
                 <!-- REJESTRACJA UŻYTKOWNIKÓW -->
             <div class="tab-pane fade active show" id="rejkont">
                 <div class="col-md-12 przelew-form">
 
-                <form action="{{ action('UserController@store') }}"  method="post">
+                <form action="{{ action('AdministratorController@storeUzytkownik') }}"  method="post">
 
                     @csrf
                     <div class="col-md-6 mgg">
@@ -89,7 +86,7 @@
     <input type="text" name="pesel" class="form-control" placeholder="Pesel"/>
                         </div>
                         <div class="form-group">
-    <input type="text" name="seria_i_numer_dowodu" class="form-control" placeholder="Seria i numer dowodu"/>
+    <input type="text" name="nr_dowodu" class="form-control" placeholder="Seria i numer dowodu"/>
                         </div>
 
 	                    <div class="form-group">
@@ -224,7 +221,7 @@
             </div>
                 <!-- UŻYTKOWNICY -->
             <div class="tab-pane" id="uzyt">
-                <div class="col-md-8 przelew-form">
+                <div class="col-md-10 przelew-form">
 
 
                         <div class="form-group" style="margin-bottom:30px;">
@@ -243,24 +240,55 @@
                                 <th scope="col">Funkcja</th>
                               </tr>
                             </thead>
-                            <tbody class = 'table-body-uzytkownicy'>
+                            <tbody class = 'table-body-uzytkownicy' style="text-transform:none;">
 
                             </tbody>
                           </table>
                           <div class = 'edit-panel' style = "display:none;">
-                          <form action ='{{action('AdministratorController@editUser')}}' method='POST'>
+                          <form action ='{{action('AdministratorController@updateUzytkownik')}}' method='POST'>
                             @csrf
-                                    <div class="form-group">
-                                <input type="text" id="imie" name="imie" class="form-control" placeholder="Imię" value="Jan"/>
-                                                    </div>
+                            {{ method_field('PATCH') }}
                                 <input hidden id="id" name = "id"/>
                                                     <div class="form-group">
-                                <input type="text" id="nazwisko" name="nazwisko" class="form-control" placeholder="Nazwisko" value="Kowalski"/>
-                                                    </div>
 
-                                                    <div class="form-group">
-                                <input type="text" id="email" name="email" class="form-control" placeholder="Email" value="00000000"/>
-                                                    </div>
+                        <div class="form-group">
+    <input type="text" id="editimie" name="imie" class="form-control" placeholder="Imię"/>
+                        </div>
+
+	                    <div class="form-group">
+    <input type="text" id="editnazwisko" name="nazwisko" class="form-control" placeholder="Nazwisko"/>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="editemail" name="email" class="form-control" placeholder="Email"/>
+                                                </div>
+
+
+	                    <div class="form-group">
+    <input type="text" id="editpesel" name="pesel" class="form-control" placeholder="Pesel"/>
+                        </div>
+                        <div class="form-group">
+    <input type="text" id="editnr_dowodu" name="nr_dowodu" class="form-control" placeholder="Seria i numer dowodu"/>
+                        </div>
+
+	                    <div class="form-group">
+    <input type="text" id="editnr_telefonu" name="nr_telefonu" class="form-control" placeholder="Numer telefonu" />
+                        </div>
+
+	                    <div class="form-group">
+    <input type="text"  id="editmiasto" name="miasto" class="form-control" placeholder="Miasto"/>
+                        </div>
+
+	                    <div class="form-group">
+    <input type="text" id="editulica_nr" name="ulica_nr" class="form-control" placeholder="Ulica i numer domu"/>
+                        </div>
+
+	                    <div class="form-group">
+    <input type="text" id="editkod_pocztowy" name="kod_pocztowy" class="form-control" placeholder="Kod pocztowy" />
+                        </div>
+                       <div class="form-group">
+    <input type="text" id="editpassword" name="tymczasowe_haslo" class="form-control" placeholder="Tymczasowe hasło"/>
+                        </div>
                                                     <div class="form-group">
                                 <input type="submit" name="btnSubmit" class="btnContact s" value="ZMIEŃ DANE" />
                                                     </div>
@@ -307,10 +335,17 @@
 
             function editButton(el){
                 let tds = $(el).parents('tr').children();
+                console.log(tds);
                 $("#id").val(tds[0].getAttribute('data-id'));
-                $("#imie").val(tds[1].innerText);
-                $("#nazwisko").val(tds[2].innerText);
-                $("#email").val(tds[3].innerText);
+                $("#editimie").val(tds[1].innerText);
+                $("#editnazwisko").val(tds[2].innerText);
+                $("#editemail").val(tds[3].innerText);
+                $("#editpesel").val(tds[4].innerText);
+                $("#editnr_dowodu").val(tds[5].innerText);
+                $("#editnr_telefonu").val(tds[6].innerText);
+                $("#editmiasto").val(tds[7].innerText);
+                $("#editulica_nr").val(tds[8].innerText);
+                $("#editkod_pocztowy").val(tds[9].innerText);
                 let editPanel = $('.edit-panel').show();
             }
             function debounce(func, wait, immediate) {
@@ -339,6 +374,12 @@
                             <td>${item.imie}</td>
                             <td>${item.nazwisko}</td>
                             <td>${item.email}</td>
+                            <td style="display:none">${item.pesel}</td>
+                            <td style="display:none">${item.nr_dowodu}</td>
+                            <td style="display:none">${item.nr_telefonu}</td>
+                            <td style="display:none">${item.miasto}</td>
+                            <td style="display:none">${item.ulica_nr}</td>
+                            <td style="display:none">${item.kod_pocztowy}</td>
                             <td><button onclick='editButton(this)' class='btn btn-primary edit-button' class = 'btn btn-primary'>Edycja</button></td>
                         </tr>`).appendTo('.table-body-uzytkownicy');
                     });

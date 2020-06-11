@@ -62,13 +62,7 @@ class UserController extends Controller
     public function resetPin(){
         return view('/uzytkownik/resetpin');
     }
-    public function store(UserRequest $request)
-    {
-        $user = $this->user->store($request->all());
-        return redirect()
-            ->back()
-                ->with('success','Klient został wprowadzony pomyślnie');
-    }
+
     public function update(Request $request)
     {
         $request->validate([

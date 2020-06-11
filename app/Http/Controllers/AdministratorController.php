@@ -7,6 +7,7 @@ use Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Kredyt;
+use App\Http\Requests\UserRequest;
 class AdministratorController extends Controller
 {
     private $user;
@@ -22,12 +23,19 @@ class AdministratorController extends Controller
             ->with('administrator', auth()->user())
             ->with('wnioski',$this->kredyt->getWnioski()->get());
     }
-    public function editUser(Request $request){
+    public function storeUzytkownik(UserRequest $request)
+    {
+        $user = $this->user->store($request->all());
+        return redirect()
+            ->back()
+                ->with('success','Klient został wprowadzony pomyślnie');
+    }
+    public function updateUzytkownik(UserRequest $request){
         $btnSubmit = $request->btnSubmit;
         $user = $this->user->findOrFail($request->id);
         switch($btnSubmit){
             case "ZMIEŃ DANE":
-                $user->edit($request->only(['imie','nazwisko','email']));
+                $user->edit($request->all());
             break;
             case "ZABLOKUJ":
                 $user->setLock();

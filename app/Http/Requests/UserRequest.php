@@ -26,18 +26,23 @@ class UserRequest extends FormRequest
         return [
             'imie'=>'required',
             'nazwisko'=>'required',
-            'pin' => 'required|digits_between:4,6',
+            'pin' => 'sometimes|required|digits_between:4,6',
             'email'=>'required',
-            'password'=>'required',
+            'password'=>'sometimes|required|min:6|max:12',
             'pesel'=>'required',
-            'seria_i_numer_dowodu'=>'required',
+            'nr_dowodu'=>'required',
             'nr_telefonu'=>'required',
             'miasto'=>'required',
+            'tymczasowe_haslo'=>'nullable|min:6|max:12'
         ];
     }
 
     public function messages(){
         return [
+            'password.min'=>'Pole hasło nie może być krótsze niż 6',
+            'password.max'=>'Pole hasło nie może być dłuższe niż 12 znaków',
+            'tymczasowe_haslo.min'=>'Pole hasło nie może być krótsze niż 6',
+            'tymczasowe_haslo.max'=>'Pole hasło nie może być dłuższe niż 12 znaków',
             'pin.numeric'=>'Pole pin musi być liczbą',
             'pin.digits_between'=>'Pole pin nie może być krótsze niż 4 znaki i dłuższe niż 6 znaków',
             'imie.required' => 'Imię jest wymagane',
@@ -46,7 +51,7 @@ class UserRequest extends FormRequest
             'email.required'  => 'Email jest wymagane',
             'password.required'  => 'Hasło jest wymagane',
             'pesel.required'  => 'Pesel jest wymagane',
-            'seria_i_numer_dowodu.required'  => 'Seria i numer dowodu jest wymagane',
+            'nr_dowodu.required'  => 'Seria i numer dowodu jest wymagane',
             'nr_telefonu.required'  => 'Numer telefonu jest wymagany',
             'miasto.required'  => 'Miasto jest wymagane',
 

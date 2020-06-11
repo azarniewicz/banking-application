@@ -28,8 +28,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'imie', 'nazwisko', 'typ', 'pin',
-        'email', 'password', 'is_reset_password', 'pesel', 'nr_telefonu', 'ulica_nr', 'kod_pocztowy',
-        'miasto', 'seria_i_numer_dowodu','is_zablokowana','is_reset_pin'
+        'email', 'password', 'is_reset_password','is_zablokowana','is_reset_pin'
     ];
 
     /**
@@ -75,7 +74,7 @@ class User extends Authenticatable
         return $this->admin()->exists();
     }
     public function getUsersFilter($name){
-        return $this
+        return $this->join('klienci','uzytkownicy.id','=','klienci.id_uzytkownika')
             ->whereRaw("concat(imie,' ',nazwisko,' ',email) LIKE '%{$name}%'");
     }
     public function changePassword($password){
@@ -93,7 +92,12 @@ class User extends Authenticatable
         return $this;
     }
     public function edit(array $data) : self{
-        $this->update($data);
+        $this->imie = $data['imie'];
+        $this->nazwisko = $data['nazwisko'];
+        $this->email = $data['email'];
+        $this->password = $data['tymczasowe_haslo'] != null ? Hash::make($data['tymczasowe_haslo']) : $this->password;
+        $this->update();
+        $this->klient()->first()->update($data);
         return $this;
     }
     public function setLock() : self{
@@ -131,7 +135,6 @@ class User extends Authenticatable
             'nazwisko'=>$data['nazwisko'],
             'pin'=>$data['pin'],
             'email'=>$data['email'],
-            'password'=>$data['password'],
             'typ'=>'klient',
             'is_reset_password'=>1,
             'password'=>Hash::make($data['password'])

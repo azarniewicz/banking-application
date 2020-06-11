@@ -9,6 +9,9 @@
 
 `php artisan migrate:fresh --drop-views --seed`
 
+`php artisan serve`
+`php artisan queue:work - do websocketa`
+
 Użytkownicy:
 1. jan@kowalski.com
 2. janina@kowalska.com

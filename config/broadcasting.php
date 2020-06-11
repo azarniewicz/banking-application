@@ -50,7 +50,7 @@ return [
             'driver' => 'log',
         ],
 
-        'null' => [
+    'null' => [
             'driver' => 'null',
         ],
 

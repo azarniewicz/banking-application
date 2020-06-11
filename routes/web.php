@@ -47,8 +47,8 @@ Route::group([
 
     Route::get('/uzytkownik/getusersfilter/{name}','UserController@getUsersFilter');
 
-    Route::post('/administrator/edituser','AdministratorController@editUser');
-
+    Route::patch('/administrator/edituser','AdministratorController@updateUzytkownik');
+    Route::post('/administrator/storeuzytkownik','AdministratorController@storeUzytkownik');
     Route::get('/przelew', 'TransakcjaController@create');
 
     Route::post('/przelew', 'TransakcjaController@store');
@@ -84,13 +84,15 @@ Route::group([
 
     Route::post('/wyloguj','\App\Http\Controllers\Auth\LoginController@wyloguj');
 
+    Route::get('/adminpanel','AdministratorController@index');
+
+
 });
 
 
 Route::group([
     'middleware'=>'auth:administrator'
 ],function(){
-    Route::get('/adminpanel','AdministratorController@index');
-    Route::post('/user','UserController@store');
+
 });
 

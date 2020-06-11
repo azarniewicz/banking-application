@@ -13,6 +13,6 @@ use App\Broadcasting\OrderChannel;
 |
 */
 Broadcast::channel('ustawienia.{user_id}', function ($user) {
-    return Auth::check();
+    return \Auth::check();
 });
 

@@ -84,7 +84,7 @@ class Rata extends Model
             ->join('transakcje','raty.id_transakcji','=','transakcje.id')
             ->where('kredyty.id_klienta',$klientId)
             ->where('status','OPŁACONA')
-            ->orderBy('termin_zaplaty')
+            ->orderByDesc('termin_zaplaty')
             ->get();
     }
     public function store(float $kwota,int $iloscRat,int $idKredytu) : self{

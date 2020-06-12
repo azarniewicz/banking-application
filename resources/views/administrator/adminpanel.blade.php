@@ -70,42 +70,42 @@
                     <div class="col-md-6 mgg">
 
                         <div class="form-group">
-    <input type="text" name="imie" class="form-control" placeholder="Imię"/>
+    <input type="text" name="imie" class="form-control" value="{{ old('imie') }}" placeholder="Imię"/>
                         </div>
 
 	                    <div class="form-group">
-    <input type="text" name="nazwisko" class="form-control" placeholder="Nazwisko"/>
+    <input type="text" name="nazwisko" class="form-control"  value="{{ old('nazwisko') }}" placeholder="Nazwisko"/>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" name="email" class="form-control" placeholder="Email"/>
+                            <input type="text" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email"/>
                                                 </div>
 
 
 	                    <div class="form-group">
-    <input type="text" name="pesel" class="form-control" placeholder="Pesel"/>
+    <input type="text" name="pesel" class="form-control" value="{{ old('pesel') }}" placeholder="Pesel"/>
                         </div>
                         <div class="form-group">
-    <input type="text" name="nr_dowodu" class="form-control" placeholder="Seria i numer dowodu"/>
+    <input type="text" name="nr_dowodu" class="form-control" value="{{ old('nr_dowodu') }}" placeholder="Seria i numer dowodu"/>
                         </div>
 
 	                    <div class="form-group">
-    <input type="text" name="nr_telefonu" class="form-control" placeholder="Numer telefonu" />
+    <input type="text" name="nr_telefonu" class="form-control" value="{{ old('nr_telefonu') }}" placeholder="Numer telefonu" />
                         </div>
 
 	                    <div class="form-group">
-    <input type="text" name="miasto" class="form-control" placeholder="Miasto"/>
+    <input type="text" name="miasto" class="form-control" value="{{ old('miasto') }}" placeholder="Miasto"/>
                         </div>
 
 	                    <div class="form-group">
-    <input type="text" name="ulica_nr" class="form-control" placeholder="Ulica i numer domu"/>
+    <input type="text" name="ulica_nr" class="form-control" value="{{ old('ulica_nr') }}" placeholder="Ulica i numer domu"/>
                         </div>
 
 	                    <div class="form-group">
-    <input type="text" name="kod_pocztowy" class="form-control" placeholder="Kod pocztowy" />
+    <input type="text" name="kod_pocztowy" class="form-control" value="{{ old('kod_pocztowy') }}" placeholder="Kod pocztowy" />
                         </div>
                         <div class="form-group">
-    <input type="text" name="pin" class="form-control" placeholder="PIN do konta"/>
+    <input type="text" name="pin" class="form-control" value="{{ old('pin') }}" placeholder="PIN do konta"/>
                         </div>
                        <div class="form-group">
     <input type="text" name="password" class="form-control" placeholder="Tymczasowe hasło"/>

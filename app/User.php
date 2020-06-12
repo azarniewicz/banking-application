@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use App\Events\UstawieniaRedirect;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -28,7 +29,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'imie', 'nazwisko', 'typ', 'pin',
-        'email', 'password', 'is_reset_password','is_zablokowana','is_reset_pin'
+        'email', 'password', 'is_reset_password','is_zablokowana','is_reset_pin','ostatnie_logowanie'
     ];
 
     /**
@@ -48,7 +49,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
     public function getPelneImieAttribute()
     {
         return $this->imie . ' ' . $this->nazwisko;

@@ -25,6 +25,7 @@ class CreateUzytkownicyTable extends Migration
             $table->tinyInteger('is_zablokowana')->default(0);
             $table->tinyInteger('is_reset_pin')->default(0);
             $table->tinyInteger('is_reset_password');
+            $table->dateTime('ostatnie_logowanie');
 
             $table->timestamps();
         });

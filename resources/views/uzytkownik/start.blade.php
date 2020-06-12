@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12 maine">
 
-Nr klienta: <span>123456</span> Ostatnie logowanie: <span>05/22/2020</span>Aktualna sesja: <span>01:50</span>
+        Nr klienta: <span>{{$klient->id}}</span> Ostatnie logowanie: <span>{{$ostatnieLogowanie}}</span>Aktualna sesja: <span id="difftime">{{$diff->hours}}:{{$diff->minutes}}:{{$diff->seconds}}</span>
 
         </div>
         <div class="col-md-12 maine">

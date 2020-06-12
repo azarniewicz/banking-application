@@ -12,6 +12,9 @@
 `php artisan serve`
 `php artisan queue:work - do websocketa`
 
+Jezeli blad to 
+`php artisan key:generate`
+
 Użytkownicy:
 1. jan@kowalski.com
 2. janina@kowalska.com

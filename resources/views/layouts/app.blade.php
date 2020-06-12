@@ -17,7 +17,6 @@
 
     <script src="https://kit.fontawesome.com/285fa7da50.js" crossorigin="anonymous"></script>
     <script src="{{asset('js/app.js')}}"> </script>
-
 </head>
 <body>
 <div id="app">
@@ -41,7 +40,6 @@
     <footer>
         @include('layouts.footer')
     </footer>
-
 </div>
     <script>
      Echo.private('ustawienia.{{\Auth::user()->id}}')
@@ -51,6 +49,7 @@
                 window.location.href = "/";
             }
          });
+
     </script>
     @stack('scripts')
 </body>

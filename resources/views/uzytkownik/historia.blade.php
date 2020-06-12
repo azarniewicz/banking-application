@@ -40,7 +40,7 @@
                                                 @if ($transakcja->isPrzelew())
                                                     <div class="col-md-4 danehist">
                                                         <p class="pelement">Dane płatnika</p>
-                                                        @if(isset($transakcja->rachunek_platnika->uzytkownik->nr_rachunku))
+                                                        @if(isset($transakcja->rachunek_platnika->nr_rachunku))
                                                         <p class="inftexthist">Nr rachunku:
                                                             <span class="next">
                                                             {{ $transakcja->rachunek_platnika->nr_rachunku  }}
@@ -76,7 +76,7 @@
                                                     </div>
 
                                                     <div class="col-md-4 danehist">
-                                                        @if(isset($transakcja->rachunek_platnika->uzytkownik->nr_rachunku))
+                                                        @if(isset($transakcja->rachunek_odbiorcy->nr_rachunku))
                                                         <p class="pelement">Dane odbiorcy</p>
 
 

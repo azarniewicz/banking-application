@@ -62,9 +62,9 @@ Route::group([
     Route::post('/kredyt/zaakceptuj/{id}','KredytController@zaakceptujWniosek');
 
     Route::post('/kredyt/zaplac/{id}','RataController@zaplac');
-    Route::get('/staliodbiorcy', function () {
-        return view('uzytkownik/staliodbiorcy');
-    });
+    Route::get('/staliodbiorcy','StalyOdbiorcaController@index');
+    Route::post('/staliodbiorcy','StalyOdbiorcaController@store');
+    Route::delete('/staliodbiorcy/{id}','StalyOdbiorcaController@delete');
 
     Route::get('/planowanetransakcje', 'TransakcjaController@createPlanowana');
 
@@ -88,11 +88,3 @@ Route::group([
 
 
 });
-
-
-Route::group([
-    'middleware'=>'auth:administrator'
-],function(){
-
-});
-

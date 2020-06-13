@@ -17,6 +17,7 @@ class KredytController extends Controller
     private $rachunekAggregateRoot;
     private $user;
     private $vBiezaceKredyty;
+
     public function __construct(vBiezaceKredyty $vBiezaceKredyty,User $user,Kredyt $kredyt,Rata $rata,RachunekAggregateRoot $rachunekAggregateRoot)
     {
         $this->vBiezaceKredyty = $vBiezaceKredyty;

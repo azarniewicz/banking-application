@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\KredytRequest;
 use App\Kredyt;
 use App\User;
 use App\RachunekAggregateRoot;
@@ -62,7 +63,7 @@ class KredytController extends Controller
                 ->back()
                     ->with('success','Kredyt został zaakceptowany');
     }
-    public function setWniosek(Request $request){
+    public function setWniosek(KredytRequest $request){
         $idKlienta = auth()->user()->klient()->first()->id;
         $v = $this->validationSetWniosek($idKlienta);
         if(!$v['error']){

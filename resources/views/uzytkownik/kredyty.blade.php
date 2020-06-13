@@ -11,7 +11,7 @@
             <div class="col-md-6 mgg">
 
                 <div class="form-group">
-<input required type="number" id="kwotaKredytu" onkeyup="getKwotaDoOddania()" name="kwota_kredytu" class="form-control" placeholder="Kwota kredytu" value=""/>
+<input required type="number" min="0" id="kwotaKredytu" onkeyup="getKwotaDoOddania()" name="kwota_kredytu" class="form-control" placeholder="Kwota kredytu" value=""/>
                 </div>
 
                                     <div class="form-group">

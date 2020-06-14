@@ -1,11 +1,10 @@
 <div class="form-group">
-    {{-- Ustawienie domyślnego rachunku tylko dla testów --}}
     <input id="numerRachunku"
            type="text"
            name="numer_rachunku"
            class="form-control"
            placeholder="Numer rachunku"
-           value="{{ old('numer_rachunku') ?? \App\Rachunek::dostepneDoPrzelewow()->first()->nr_rachunku }}"
+           value="{{ old('numer_rachunku') }}"
     />
     <h6 id="nazwaBanku" class="text-sm-left p-1"></h6>
 </div>

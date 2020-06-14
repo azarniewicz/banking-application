@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\ShippingStatusUpdated;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Events\UstawieniaRedirect;
 
@@ -86,5 +87,12 @@ Route::group([
 
     Route::get('/adminpanel','AdministratorController@index');
 
+});
 
+Route::group([
+    'middleware'=>'auth:administrator'
+],function(){
+    Route::get('/wykonajtransakcje', function () {
+        Artisan::call('queue:work', ['--queue' => 'transakcje', '--stop-when-empty' => true]);
+    });
 });

@@ -29,6 +29,7 @@ class WykonajTransakcje implements ShouldQueue
     public function __construct(Transakcja $transakcja)
     {
         $this->serialized = $transakcja->jsonSerialize();
+        $this->queue      = 'transakcje';
     }
 
     /**
@@ -39,7 +40,7 @@ class WykonajTransakcje implements ShouldQueue
     public function handle()
     {
         $transakcja = new Transakcja($this->serialized);
-        $nadawca    =  Rachunek::numer($transakcja->nr_rachunku)->getAggregate();
+        $nadawca    = Rachunek::numer($transakcja->nr_rachunku)->getAggregate();
         $odbiorca   = Rachunek::numer($transakcja->nr_rachunku_powiazanego)->getAggregate();
 
         DB::beginTransaction();

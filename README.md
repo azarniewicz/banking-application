@@ -37,5 +37,7 @@ Przelewy ekspresowe są wykonywane synchronicznie. Przelewy standardowe, są kol
 W wypadku wystąpienia błędu, środki zostaną odblokowane eventem OdblokowanieSrodkow. Event będzie również zawierał informacje o błędzie.
 
 ## Event sourcing
-
+W projekcie została wykorzystana idea event sourcingu.
 Rekordy w tabeli `rachunki` oraz `transakcje` są tworzone na podstawie zarejestrowanych eventów w tabeli stored_event. Po usunięciu / zmianie zawartości obu tabel, mogą one zostać odtworzone komendą `php artisan event-sourcing:replay`.
+
+Do implementacji event sourcingu w aplikacji, skorzystaliśmy z pakietu: https://github.com/spatie/laravel-event-sourcing

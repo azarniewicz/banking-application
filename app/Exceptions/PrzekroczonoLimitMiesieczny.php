@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class PrzekroczonoLimitMiesieczny extends Exception
+class PrzekroczonoLimitMiesieczny extends Exception implements NiewystarczajaceSrodki
 {
     //
 }

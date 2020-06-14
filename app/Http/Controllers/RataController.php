@@ -24,8 +24,10 @@ class RataController extends Controller
             return redirect()
                 ->back()
                     ->with('success','Rata została opłacona pomyślnie');
-       }catch(BrakWystarczajacychSrodkow $e){
+       } catch(BrakWystarczajacychSrodkow $e){
             return redirect()->back()->withErrors(['kwota' => $e->getMessage()]);
+       } catch(\Exception $e){
+           return redirect()->back()->withErrors('Nie udało się wykonać transakcji.');
        }
     }
     public function index(){

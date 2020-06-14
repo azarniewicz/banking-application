@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\BrakWystarczajacychSrodkow;
+use App\Exceptions\NiewystarczajaceSrodki;
 use App\Exceptions\NieznanyTypTransakcji;
-use App\Exceptions\PrzekroczonoLimitDzienny;
-use App\Exceptions\PrzekroczonoLimitMiesieczny;
 use App\Http\Requests\TransakcjaRequest;
 use App\RachunekAggregateRoot;
 use App\Transakcja;
@@ -69,18 +67,12 @@ class TransakcjaController extends Controller
 
             $transakcja->wykonaj();
 
-        } catch (BrakWystarczajacychSrodkow $e) {
+        } catch (NiewystarczajaceSrodki $e) {
             return redirect()->back()->withErrors(['kwota' => $e->getMessage()]);
         } catch (NieznanyTypTransakcji $e) {
             $this->rachunekAggregateRoot->odblokujSrodki($request->get('kwota'), $e->getMessage())->persist();
             return redirect()->back()->withErrors(['typ' => $e->getMessage()]);
-        } catch (PrzekroczonoLimitDzienny $e) {
-            $this->rachunekAggregateRoot->odblokujSrodki($request->get('kwota'), $e->getMessage())->persist();
-            return redirect()->back()->withErrors(['kwota' => $e->getMessage()]);
-        }  catch (PrzekroczonoLimitMiesieczny $e) {
-            $this->rachunekAggregateRoot->odblokujSrodki($request->get('kwota'), $e->getMessage())->persist();
-            return redirect()->back()->withErrors(['kwota' => $e->getMessage()]);
-        }  catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->rachunekAggregateRoot->odblokujSrodki($request->get('kwota'), $e->getMessage())->persist();
             return redirect()->back()->withErrors(['Błąd podczas przetwarzania transakcji.']);
         }

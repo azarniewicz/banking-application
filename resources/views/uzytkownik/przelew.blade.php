@@ -1,12 +1,11 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 infobox przelew-form">
-                Wykonaj przelew
-                <div class="col-md-6"
-                     style="margin:0 auto;"
-                >
+    <div class="container row mx-auto">
+        <div class="infobox przelew-form col-12 mx-auto">
+            <h3>Wykonaj przelew</h3>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
                     <form action="{{ url('przelew')  }}"
                           method="POST"
                     >
@@ -28,6 +27,9 @@
                             />
                         </div>
                     </form>
+                </div>
+                <div class="col-md-3">
+                    @include('uzytkownik.lista-odbiorcow')
                 </div>
             </div>
         </div>

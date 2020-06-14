@@ -235,6 +235,13 @@ button
 .przelew-form .s {
     background-color:cadetblue;
 }
+
+.lista-odbiorcow {
+    font-size: 12px;
+    cursor: pointer;
+    max-height: 400px;
+    overflow-y: auto;
+}
 @charset "UTF-8";
 
 /*!

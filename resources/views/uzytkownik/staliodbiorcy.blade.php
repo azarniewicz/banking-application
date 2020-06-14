@@ -31,39 +31,41 @@
     </form>
         </div>
 
+        @if($staliOdbiorcy->count() > 0)
 
-        <div class="col-md-12 infobox">
-            Aktualni stali odbiorcy
-            <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Twoja nazwa odbiorcy</th>
-                      <th scope="col">NUMER RACHUNKU</th>
-                      <th scope="col">NAZWA I ADRES</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($staliOdbiorcy as $stalyOdbiorca)
-                    <tr>
-                    <th>{{$stalyOdbiorca->nazwa}}</th>
-                      <td>{{$stalyOdbiorca->nr_rachunku}}</td>
-                      <td>{{$stalyOdbiorca->nazwa_adres}}</td>
-                      <td>
-                        <form method="POST" action={{url("staliodbiorcy/$stalyOdbiorca->id_odbiorcy")}}>
-                            @csrf
-                            {{ method_field('DELETE') }}
-                            <button class="btn btn-danger butths" data-toggle="collapse" href="usun">
-                                USUŃ STAŁEGO ODBIORCE
-                            </button>
-                        </form>
+            <div class="col-md-12 infobox">
+                Aktualni stali odbiorcy
+                <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Twoja nazwa odbiorcy</th>
+                          <th scope="col">NUMER RACHUNKU</th>
+                          <th scope="col">NAZWA I ADRES</th>
+                          <th scope="col"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($staliOdbiorcy as $stalyOdbiorca)
+                        <tr>
+                        <th>{{$stalyOdbiorca->nazwa}}</th>
+                          <td>{{$stalyOdbiorca->nr_rachunku}}</td>
+                          <td>{{$stalyOdbiorca->nazwa_adres}}</td>
+                          <td>
+                            <form method="POST" action={{url("staliodbiorcy/$stalyOdbiorca->id_odbiorcy")}}>
+                                @csrf
+                                {{ method_field('DELETE') }}
+                                <button class="btn btn-danger butths" data-toggle="collapse" href="usun">
+                                    USUŃ STAŁEGO ODBIORCE
+                                </button>
+                            </form>
 
-                    </td>
-                    </tr>
-                    @endforeach
-                  </tbody>
-             </table>
-        </div>
+                        </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                 </table>
+            </div>
+        @endif
     </div>
 </div>
 @endsection

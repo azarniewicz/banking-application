@@ -4,17 +4,13 @@
 
 2. `composer install`
 
-3. `npm install`
+3. `php artisan key:generate`
 
-4. `npm run dev` - dla plików css i js
+4. `php artisan migrate:fresh --drop-views --seed`
 
-5. `php artisan key:generate`
+5. `php artisan serve`
 
-6. `php artisan migrate:fresh --drop-views --seed`
-
-7. `php artisan serve`
-
-8. `php artisan queue:work - do websocketa`
+6. `php artisan queue:work - do websocketa`
 
 Użytkownicy:
 1. jan@kowalski.com

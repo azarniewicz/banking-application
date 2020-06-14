@@ -15,9 +15,6 @@ class KredytyView extends Migration
     {
         \DB::statement("
             CREATE
-        ALGORITHM = UNDEFINED
-        DEFINER = `root`@`localhost`
-        SQL SECURITY DEFINER
     VIEW `v_biezace_kredyty` AS
         SELECT
             `kredyty`.`id_kredytu` AS `id_kredytu`,

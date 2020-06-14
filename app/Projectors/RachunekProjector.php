@@ -14,6 +14,13 @@ use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
 use Spatie\EventSourcing\StoredEvent;
 
+/**
+ * Class RachunekProjector
+ *
+ * Ta klasa zbiera wszystkie zdefiniowane eventy i wysyła odpowiednie zapytania do bazy.
+ * Type Hint eventu podpowiada który event ma "wpaść" w którą metodę.
+ *
+ */
 class RachunekProjector implements Projector
 {
     use ProjectsEvents;
@@ -23,6 +30,7 @@ class RachunekProjector implements Projector
      */
     public function onStartingEventReplay()
     {
+        // Przed odtowrzeniem wszystkich eventów i zrekonstruowania tabel, usuwamy z nich obecne dane
         Transakcja::truncate();
         Rachunek::truncate();
     }

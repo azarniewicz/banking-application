@@ -48,6 +48,8 @@ class WykonajTransakcje implements ShouldQueue
             $nadawca->przelewWychodzacy($transakcja)->persist();
             $odbiorca->przelewPrzychodzacy($transakcja)->persist();
         } catch (\Exception $e) {
+            // W razie wystąpienia błędu, cofamy wszystkie zmiany,
+            // oraz zwracamy uprzednio zablokowane środki na konto klienta
             DB::rollBack();
             $nadawca->fresh()
                     ->odblokujSrodki($transakcja->kwota, $e->getMessage())

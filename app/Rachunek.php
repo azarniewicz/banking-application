@@ -77,7 +77,7 @@ class Rachunek extends Model
     }
 
     /**
-     * Zwraca agregate rachunku
+     * Zwraca agregat eventów powiązanych z rachunkiem
      *
      * @return RachunekAggregateRoot
      */

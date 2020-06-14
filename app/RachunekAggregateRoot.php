@@ -16,6 +16,17 @@ use App\Exceptions\PrzekroczonoLimitDzienny;
 use App\Exceptions\PrzekroczonoLimitMiesieczny;
 use Spatie\EventSourcing\AggregateRoot;
 
+/**
+ * Class RachunekAggregateRoot
+ *
+ * Agregat rachunku. Przy wywołaniu metody "retrieve", zbiera wszystkie eventy
+ * przypisane do id (uuid) danego rachunku i wywołuje metody z prefixem apply odpowiadające każdemu z nich.
+ * W ten sposób atrybuty klasy są wypełniane wartościami i możemy z nich korzystać przy wykonywaniu kolejnych operacji.
+ *
+ * Ta klasa odpowiada również za wywołanie Eventów które następnie są przetwarzane przez RachunekProjector.php w celu
+ * uzupełnienia danych w odpowiednich tabelach.
+ *
+ */
 class RachunekAggregateRoot extends AggregateRoot
 {
 
@@ -98,7 +109,7 @@ class RachunekAggregateRoot extends AggregateRoot
      * @param  float  $kwota
      *
      * @throws BrakWystarczajacychSrodkow
-     * @throws PrzekroczonoLimitDzienny
+     * @throws PrzekroczonoLimitDzienny|PrzekroczonoLimitMiesieczny
      */
     private function sprawdzMozliwoscWykonaniaTransakcji(float $kwota): void
     {
@@ -142,7 +153,7 @@ class RachunekAggregateRoot extends AggregateRoot
      * @param  float  $kwota
      *
      * @return RachunekAggregateRoot
-     * @throws BrakWystarczajacychSrodkow|PrzekroczonoLimitDzienny
+     * @throws BrakWystarczajacychSrodkow|PrzekroczonoLimitDzienny|PrzekroczonoLimitMiesieczny
      */
     public function zablokujSrodki(float $kwota): self
     {
@@ -210,7 +221,7 @@ class RachunekAggregateRoot extends AggregateRoot
      *
      * @return $this
      * @throws BrakWystarczajacychSrodkow
-     * @throws PrzekroczonoLimitDzienny
+     * @throws PrzekroczonoLimitDzienny|PrzekroczonoLimitMiesieczny
      */
     public function wyplac(float $kwota): self
     {

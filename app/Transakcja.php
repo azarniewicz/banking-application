@@ -10,6 +10,7 @@ use App\Exceptions\NieznanyTypTransakcji;
 use App\Jobs\WykonajTransakcje;
 use Hashids\Hashids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -73,6 +74,8 @@ class Transakcja extends Model
     }
 
     /**
+     * Zwraca czytelną dla użytkownika nazwę eventu.
+     *
      * @param  string  $eventClassName
      *
      * @return string
@@ -94,6 +97,8 @@ class Transakcja extends Model
     }
 
     /**
+     * Zwraca true jeżeli transakcja była przelewem środków
+     *
      * @return bool
      */
     public function isPrzelew()
@@ -111,12 +116,23 @@ class Transakcja extends Model
         return $this->hashid->encode($this->id);
     }
 
+    /**
+     * Zwraca rachunek płatnika transakcji
+     *
+     * @return BelongsTo
+     */
     public function rachunek_platnika()
     {
         $foreign = $this->typ === 'Przelew wychodzący' ? 'nr_rachunku' : 'nr_rachunku_powiazanego';
         return $this->belongsTo(Rachunek::class, $foreign, 'nr_rachunku');
     }
 
+    /**
+     *
+     * Zwraca rachunek odbiorcy transakcji
+     *
+     * @return BelongsTo
+     */
     public function rachunek_odbiorcy()
     {
         $foreign = $this->typ === 'Przelew wychodzący' ? 'nr_rachunku_powiazanego' : 'nr_rachunku';

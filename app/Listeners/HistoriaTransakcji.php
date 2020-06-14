@@ -9,7 +9,7 @@ class HistoriaTransakcji
 {
 
     /**
-     * Handle the event.
+     * Tworzy wpis do tabeli `transakcje` na podstawie eventu TransakcjaZakonczona
      *
      * @param  TransakcjaZakonczona  $event
      *

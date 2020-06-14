@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
             'pin' => 'sometimes|required|digits_between:4,6',
             'email'=>'sometimes|required|email|unique:uzytkownicy,email,'.(int) $this->id,
             'password'=>'sometimes|required|min:6|max:12',
-            'pesel'=>'required|digits_between:11,11',
+            'pesel'=>'required|digits:11',
             'nr_dowodu'=>'required',
             'nr_telefonu'=>'required',
             'miasto'=>'required',

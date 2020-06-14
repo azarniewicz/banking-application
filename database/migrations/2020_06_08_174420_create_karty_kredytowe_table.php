@@ -15,7 +15,7 @@ class CreateKartyKredytoweTable extends Migration
     {
         Schema::create('karty_kredytowe', function (Blueprint $table) {
             $table->id();
-            $table->uuid('id_rachunku');
+            $table->uuid('id_rachunku')->references('id')->on('rachunki');
             $table->string('nr_karty');
             $table->timestamps();
         });

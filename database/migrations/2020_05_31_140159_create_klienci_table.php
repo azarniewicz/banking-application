@@ -15,7 +15,7 @@ class CreateKlienciTable extends Migration
     {
         Schema::create('klienci', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_uzytkownika');
+            $table->unsignedBigInteger('id_uzytkownika')->references('id')->on('uzytkownicy');
             $table->string('pesel');
             $table->string('miasto');
             $table->string('ulica_nr');

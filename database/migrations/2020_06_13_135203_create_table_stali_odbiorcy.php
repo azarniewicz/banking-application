@@ -18,7 +18,7 @@ class CreateTableStaliOdbiorcy extends Migration
             $table->string('nazwa');
             $table->string('nr_rachunku');
             $table->string('nazwa_adres');
-            $table->integer('id_klienta');
+            $table->integer('id_klienta')->references('id')->on('klienci');
             $table->timestamps();
         });
     }

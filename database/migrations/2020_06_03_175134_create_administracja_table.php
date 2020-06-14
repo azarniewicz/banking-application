@@ -14,7 +14,7 @@ class CreateAdministracjaTable extends Migration
     public function up()
     {
         Schema::create('administracja', function (Blueprint $table) {
-            $table->increments('id_uzytkownika');
+            $table->unsignedBigInteger('id_uzytkownika')->references('id')->on('uzytkownicy');
             $table->string('stanowisko');
         });
     }

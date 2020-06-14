@@ -21,13 +21,7 @@ class CreateRatyTable extends Migration
             $table->unsignedBigInteger('id_transakcji')->references('id_transakcji')->on('transakcje');
             $table->unsignedBigInteger('id_kredytu')->references('id_kredytu')->on('kredyty');
             $table->timestamps();
-            // $table->foreign('id_transakcji')->references('id_transakcji')->on('transakcje')->onDelete('cascade');;
-            // $table->foreign('id_kredytu')->references('id_kredytu')->on('kredyty')->onDelete('cascade');;
         });
-
-        // Schema::table('raty', function (Blueprint $table) {
-
-        // });
     }
 
     /**

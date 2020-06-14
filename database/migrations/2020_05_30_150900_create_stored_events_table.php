@@ -10,7 +10,7 @@ class CreateStoredEventsTable extends Migration
     {
         Schema::create('stored_events', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('aggregate_uuid')->nullable();
+            $table->string('aggregate_uuid')->references('id')->on('rachunki');
             $table->unsignedBigInteger('aggregate_version')->nullable();
             $table->string('event_class');
             $table->string('event_properties');

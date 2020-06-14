@@ -5,6 +5,7 @@
            class="form-control"
            placeholder="Numer rachunku"
            value="{{ old('numer_rachunku') }}"
+           required
     />
     <h6 id="nazwaBanku" class="text-sm-left p-1"></h6>
 </div>
@@ -15,6 +16,7 @@
            class="form-control"
            placeholder="Kwota przelewu"
            value="{{ old('kwota') }}"
+           required
     />
 </div>
 
@@ -23,6 +25,7 @@
               class="form-control"
               placeholder="Tytuł przelewu"
               style="width: 100%; height: 100px;"
+              required
     >{{ old('tytul') }}</textarea>
 </div>
 
@@ -31,6 +34,7 @@
               class="form-control"
               placeholder="Nazwa i adres odbiorcy"
               style="width: 100%; height: 100px;"
+              required
     >{{ old('odbiorca') }}</textarea>
 </div>
 

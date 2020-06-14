@@ -21,7 +21,6 @@
                         </div>
                         <div class="form-group">
                             <input type="submit"
-                                   name="btnSubmit"
                                    class="btnContact"
                                    value="Wykonaj przelew"
                             />

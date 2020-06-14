@@ -13,6 +13,7 @@
                         <input type="hidden"
                                name="typ"
                                value="{{ \App\Transakcja::planowana }}"
+                               required
                         />
 
                         @include('uzytkownik.przelew-form')
@@ -21,6 +22,7 @@
                                    name="data_wykonania"
                                    class="form-control"
                                    placeholder="data"
+                                   required
                             />
                         </div>
                         <div class="form-group">
@@ -28,6 +30,7 @@
                                    name="btnSubmit"
                                    class="btnContact"
                                    value="ZAPLANUJ"
+                                   required
                             />
                         </div>
                     </form>

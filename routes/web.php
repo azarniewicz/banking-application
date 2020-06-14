@@ -87,20 +87,17 @@ Route::group([
 
 Route::group([
     'middleware'=>'auth:administrator'
-],function(){
-    Route::get('/adminpanel','AdministratorController@index');
+],function() {
+    Route::get('/adminpanel', 'AdministratorController@index');
 
-    Route::patch('/administrator/edituser','AdministratorController@updateUzytkownik');
+    Route::patch('/administrator/edituser', 'AdministratorController@updateUzytkownik');
 
-    Route::post('/administrator/storeuzytkownik','AdministratorController@storeUzytkownik');
+    Route::post('/administrator/storeuzytkownik', 'AdministratorController@storeUzytkownik');
 
-    Route::post('/kredyt/odrzuc/{id}','KredytController@odrzucWniosek');
+    Route::post('/kredyt/odrzuc/{id}', 'KredytController@odrzucWniosek');
 
-    Route::post('/kredyt/zaakceptuj/{id}','KredytController@zaakceptujWniosek');
+    Route::post('/kredyt/zaakceptuj/{id}', 'KredytController@zaakceptujWniosek');
 
-Route::group([
-    'middleware'=>'auth:administrator'
-],function(){
     Route::get('/wykonajtransakcje', function () {
         Artisan::call('queue:work', ['--queue' => 'transakcje', '--stop-when-empty' => true]);
     });

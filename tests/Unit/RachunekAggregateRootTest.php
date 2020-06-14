@@ -9,12 +9,12 @@ use App\Exceptions\PrzekroczonoLimitDzienny;
 use App\Exceptions\PrzekroczonoLimitMiesieczny;
 use App\Rachunek;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\RefreshDatabaseWithViews;
 use Tests\TestCase;
 
 class RachunekAggregateRootTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabaseWithViews;
 
     /** @test */
     public function tworzy_rachunek()

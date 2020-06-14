@@ -10,4 +10,6 @@ class KartaKredytowa extends Model
      * @var string
      */
     protected $table = 'karty_kredytowe';
+
+    protected $guarded = ['id'];
 }

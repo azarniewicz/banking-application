@@ -4,20 +4,15 @@
 namespace Tests\Feature;
 
 
-use App\Exceptions\PrzelewNaTenSamRachunek;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Transakcja;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-use Spatie\EventSourcing\StoredEvent;
+use Tests\RefreshDatabaseWithViews;
 use Tests\TestCase;
 
 class TransakcjaTest extends TestCase
 {
-    use DatabaseMigrations;
-
+    use RefreshDatabaseWithViews;
 
     /** @test */
     public function przelew()

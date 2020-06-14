@@ -25,6 +25,9 @@ abstract class TestCase extends BaseTestCase
         if (isset($uses[SeedDatabase::class])) {
             $this->seedDatabase();
         }
+        if (isset($uses[RefreshDatabaseWithViews::class])) {
+            $this->migrateFreshWithViews();
+        }
     }
 
 }

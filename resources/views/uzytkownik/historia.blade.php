@@ -142,7 +142,7 @@
                                                     </p>
                                                     <p class="inftexthist">Numer transakcji:
                                                         <span class="next">
-                                                            {{ $transakcja->id }}
+                                                            {{ $transakcja->nr_transakcji }}
                                                         </span>
                                                     </p>
                                                 </div>

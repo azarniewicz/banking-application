@@ -8,13 +8,13 @@ use App\Events\WplataPieniedzy;
 use App\Events\WyplataPieniedzy;
 use App\Exceptions\NieznanyTypTransakcji;
 use App\Jobs\WykonajTransakcje;
+use Hashids\Hashids;
 use Illuminate\Database\Eloquent\Model;
-use App\Events\Przelew;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Carbon;
 
 /**
  *
+ * @property int    $id
  * @property string $nr_rachunku
  * @property string $typ
  * @property string $nr_rachunku_powiazanego
@@ -37,13 +37,40 @@ class Transakcja extends Model
      */
     protected $table = 'transakcje';
 
+    /**
+     * @var bool
+     */
     public $timestamps = false;
 
+    /**
+     * @var string[]
+     */
     protected $guarded = ['id'];
 
+    /**
+     * @var string[]
+     */
     protected $casts = [
         'data_wykonania' => 'datetime'
     ];
+
+    /**
+     * Instancja głównej klasy biblioteki przekształcającej liczby na hashe
+     *
+     * @var Hashids
+     */
+    private $hashid;
+
+    /**
+     * Transakcja constructor.
+     *
+     * @param  array  $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        $this->hashid = new Hashids(config('app.salt'), 4);
+        parent::__construct($attributes);
+    }
 
     /**
      * @param  string  $eventClassName
@@ -74,19 +101,32 @@ class Transakcja extends Model
         return str_contains($this->typ, 'Przelew');
     }
 
+    /**
+     * Zwraca id transakcji w formie hasha
+     *
+     * @return string
+     */
+    public function getNrTransakcjiAttribute()
+    {
+        return $this->hashid->encode($this->id);
+    }
+
     public function rachunek_platnika()
     {
-        $foreign = $this->typ === 'Przelew wychodzący' ? 'nr_rachunku' :  'nr_rachunku_powiazanego';
+        $foreign = $this->typ === 'Przelew wychodzący' ? 'nr_rachunku' : 'nr_rachunku_powiazanego';
         return $this->belongsTo(Rachunek::class, $foreign, 'nr_rachunku');
     }
 
     public function rachunek_odbiorcy()
     {
-        $foreign = $this->typ === 'Przelew wychodzący' ? 'nr_rachunku_powiazanego' : 'nr_rachunku' ;
+        $foreign = $this->typ === 'Przelew wychodzący' ? 'nr_rachunku_powiazanego' : 'nr_rachunku';
         return $this->belongsTo(Rachunek::class, $foreign, 'nr_rachunku');
     }
 
     /**
+     * Metoda wytworcza ( factory method ) dla transakcji.
+     * Zwraca odpowiednia klase z podanymi atrybutami bazując na podanym typie transakcji
+     *
      * @param  array   $attributes
      * @param  string  $typ
      *

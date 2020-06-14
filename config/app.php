@@ -229,4 +229,5 @@ return [
 
     ],
 
+    'salt' => env('SALT')
 ];

@@ -41,7 +41,7 @@ class KlientController extends Controller
 
     public function update(KlientRequest $request)
     {
-        auth()->user()->klient->fill(array_filter($request->all()))->save();
+        auth()->user()->klient->fill(array_filter($request->validated()))->save();
 
         return redirect()->back()->with('success', 'Dane pomyślnie zaktualizowane.');
     }

@@ -24,7 +24,6 @@ class KlientRequest extends FormRequest
     public function rules()
     {
         return [
-            'kod_pocztowy'       => 'regex:$\d{2}-\d{3}$',
             'limit_dzienny'      => 'numeric|min:0|not_in:0',
             'ustawienie_budzetu' => 'numeric|min:0|not_in:0'
         ];

@@ -28,6 +28,7 @@ Auth::routes(['register'=>false]);
 
 
 Route::post('/uzytkownik/changepin','UserController@changePin')->middleware('auth');
+
 Route::get('/uzytkownik/resetpin','UserController@resetPin')->middleware('auth');
 
 Route::get('/uzytkownik/resetpassword','UserController@resetPassword')->middleware('auth');
@@ -47,8 +48,7 @@ Route::group([
 
     Route::get('/uzytkownik/getusersfilter/{name}','UserController@getUsersFilter');
 
-    Route::patch('/administrator/edituser','AdministratorController@updateUzytkownik');
-    Route::post('/administrator/storeuzytkownik','AdministratorController@storeUzytkownik');
+
     Route::get('/przelew', 'TransakcjaController@create');
 
     Route::post('/przelew', 'TransakcjaController@store');
@@ -57,13 +57,12 @@ Route::group([
 
     Route::post('/kredyt/setwniosek','KredytController@setWniosek');
 
-    Route::post('/kredyt/odrzuc/{id}','KredytController@odrzucWniosek');
-
-    Route::post('/kredyt/zaakceptuj/{id}','KredytController@zaakceptujWniosek');
-
     Route::post('/kredyt/zaplac/{id}','RataController@zaplac');
+
     Route::get('/staliodbiorcy','StalyOdbiorcaController@index');
+
     Route::post('/staliodbiorcy','StalyOdbiorcaController@store');
+
     Route::delete('/staliodbiorcy/{id}','StalyOdbiorcaController@delete');
 
     Route::get('/planowanetransakcje', 'TransakcjaController@createPlanowana');
@@ -83,8 +82,19 @@ Route::group([
     });
 
     Route::post('/wyloguj','\App\Http\Controllers\Auth\LoginController@wyloguj');
+});
 
+Route::group([
+    'middleware'=>'auth:administrator'
+],function(){
     Route::get('/adminpanel','AdministratorController@index');
 
+    Route::patch('/administrator/edituser','AdministratorController@updateUzytkownik');
+
+    Route::post('/administrator/storeuzytkownik','AdministratorController@storeUzytkownik');
+
+    Route::post('/kredyt/odrzuc/{id}','KredytController@odrzucWniosek');
+
+    Route::post('/kredyt/zaakceptuj/{id}','KredytController@zaakceptujWniosek');
 
 });

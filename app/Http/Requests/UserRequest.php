@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\User;
 class UserRequest extends FormRequest
 {
     /**
@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
             'imie'=>'required',
             'nazwisko'=>'required',
             'pin' => 'sometimes|required|digits_between:4,6',
-            'email'=>'sometimes|required|email|unique:uzytkownicy,email,'.$this->id,
+            'email'=>'sometimes|required|email|unique:uzytkownicy,email,'.(int) $this->id,
             'password'=>'sometimes|required|min:6|max:12',
             'pesel'=>'required|digits_between:11,11',
             'nr_dowodu'=>'required',

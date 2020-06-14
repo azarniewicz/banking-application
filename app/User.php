@@ -148,6 +148,7 @@ class User extends Authenticatable
             'ulica_nr'=>$data['ulica_nr'],
             'kod_pocztowy'=>$data['kod_pocztowy'],
             'nr_telefonu'=>$data['nr_telefonu'],
+            'nr_dowodu'=>$data['nr_dowodu'],
             'limit_dzienny'=>0,
             'ustawienie_budzetu'=>0]);
 

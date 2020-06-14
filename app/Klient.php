@@ -22,7 +22,7 @@ class Klient extends User
      */
     protected $fillable = [
         'nr_dowodu', 'nr_telefonu', 'miasto', 'ulica_nr', 'kod_pocztowy',
-        'limit_dzienny', 'ustawienie_budzetu'
+        'limit_dzienny', 'ustawienie_budzetu','pesel'
     ];
 
     /**

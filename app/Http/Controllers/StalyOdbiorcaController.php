@@ -13,6 +13,8 @@ class StalyOdbiorcaController extends Controller
     {
         $this->stalyOdbiorca = $stalyOdbiorca;
     }
+
+    // Funkcja dodająca stałego odbiorcę
     public function store(Request $request){
         $idKlienta = auth()->user()->klient()->first()->id;
         $this->stalyOdbiorca->create(array_merge($request->all(),['id_klienta'=>$idKlienta]));
@@ -20,12 +22,14 @@ class StalyOdbiorcaController extends Controller
             ->back()
                 ->with('success','Stały odbiorca został dodany');
     }
+     // Funkcja usuwająca stałego odbiorcę
     public function delete($id){
         $this->stalyOdbiorca->findOrFail($id)->delete();
         return redirect()
             ->back()
                 ->with('success','Stały odbiorca został usunięty');
     }
+      // Funkcja która zwraca widok, i stałych odbiorców przypisanych do klienta
     public function index(){
         $idKlienta = auth()->user()->klient()->first()->id;
         $data = $this->stalyOdbiorca->where('id_klienta',$idKlienta)->get();

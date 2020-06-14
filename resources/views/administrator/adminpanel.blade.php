@@ -370,7 +370,7 @@
                     $('.table-body-uzytkownicy').children().remove();
                     data.data.forEach((item,index)=>{
                         $(`<tr>
-                            <td data-id='${item.id}'>${index + 1}</td>
+                            <td data-id='${item.id_uzytkownika}'>${index + 1}</td>
                             <td>${item.imie}</td>
                             <td>${item.nazwisko}</td>
                             <td>${item.email}</td>

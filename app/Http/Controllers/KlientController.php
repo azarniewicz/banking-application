@@ -14,14 +14,12 @@ class KlientController extends Controller
         $this->middleware('auth');
     }
 
-
     public function index()
     {
         abort_if((!auth()->user()->isKlient()), 403);
 
         $klient             = auth()->user()->klient;
         $rachunek           = $klient->rachunek;
-
         $ostatnieTransakcje = $rachunek->transakcje()->orderBy('data_wykonania', 'desc')->take(5)->get();
 
         $carbon = Carbon::parse(auth()->user()->ostatnie_logowanie);

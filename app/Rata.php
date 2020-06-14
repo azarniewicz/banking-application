@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Rata extends Model
 {
@@ -41,6 +42,7 @@ class Rata extends Model
         return $data;
     }
     public function zaplac($rachunekAggregateRoot){
+        DB::beginTransaction();
         $base = $rachunekAggregateRoot->przelewWychodzacy(new Transakcja([
             'kwota' => $this->cena,
             'nr_rachunku_powiazanego'=>Rachunek::NR_RACHUNKU_BANKU,
@@ -50,6 +52,7 @@ class Rata extends Model
         $this->status = 'OPŁACONA';
         $this->id_transakcji = Transakcja::orderByDesc('id')->first()->id;
         $this->save();
+        DB::commit();
         return $this;
     }
     public function kredyt(){

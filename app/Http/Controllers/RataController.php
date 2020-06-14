@@ -30,7 +30,7 @@ class RataController extends Controller
     }
     public function index(){
         $klientId = auth()->user()->klient()->first()->id;
-        return view('uzytkownik\raty')
+        return view('uzytkownik.raty')
             ->with('pozostaloRat',$this->rata->getPozostaloRat($klientId))
             ->with('pozostalaKwota',$this->rata->getPozostalaKwota($klientId))
             ->with('aktualnaRata',$this->rata->getAktualnaRata($klientId))

@@ -21,9 +21,7 @@
                     >
                         <div class="col-md-12 przelew-form">
 
-                            <div class="col-md-12"
-                                 style="margin:0 auto;"
-                            >
+                            <div class="col-md-12 mx-auto">
                                 Limity
                                 <form action="{{ url('klient') }}"
                                       method="POST"
@@ -55,8 +53,8 @@
                                 </form>
                             </div>
                         </div>
-                        <p style="color:gray;margin-top:40px;font-size:12px;">Ustawienie maksymalnego limitu  dziennych oraz miesięcznych transakcji pozwoli Ci na lepsze zarządzanie pieniędzmi!</span>
-                        <p style="color:red;margin-top:40px;font-size:12px;">W celu zmiany innych danych skontaktuj się z administratorem.</span>
+                        <p style="color:gray;margin-top:40px;font-size:12px;">Ustawienie maksymalnego limitu  dziennych oraz miesięcznych transakcji pozwoli Ci na lepsze zarządzanie pieniędzmi!</p>
+                        <p style="color:red;margin-top:40px;font-size:12px;">W celu zmiany innych danych skontaktuj się z administratorem.</p>
 
                     </div>
                 </div>

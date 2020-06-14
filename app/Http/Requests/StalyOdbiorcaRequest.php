@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class KlientRequest extends FormRequest
+class StalyOdbiorcaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,14 @@ class KlientRequest extends FormRequest
     public function rules()
     {
         return [
-            'limit_dzienny'      => 'numeric|min:0|not_in:0',
-            'ustawienie_budzetu' => 'numeric|min:0|not_in:0'
+            'nr_rachunku' => [
+                'required',
+                'regex:$[A-Za-z]{2}[0-9]{26}\z$',
+                'exists:rachunki,nr_rachunku',
+                'not_in:' . auth()->user()->getRachunekKlienta()->nr_rachunku
+            ],
+            'nazwa' => 'required',
+            'nazwa_adres' => 'required'
         ];
     }
 }

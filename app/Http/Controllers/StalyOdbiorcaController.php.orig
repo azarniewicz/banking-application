@@ -13,8 +13,13 @@ class StalyOdbiorcaController extends Controller
     {
         $this->stalyOdbiorca = $stalyOdbiorca;
     }
-    public function store(StalyOdbiorcaRequest $request){
+<<<<<<< HEAD
+
     // Funkcja dodająca stałego odbiorcę
+    public function store(Request $request){
+=======
+    public function store(StalyOdbiorcaRequest $request){
+>>>>>>> 4ef2651e2e0c17cb1da392895dc1537a85743eca
         $idKlienta = auth()->user()->klient()->first()->id;
         $this->stalyOdbiorca->create(array_merge($request->all(),['id_klienta'=>$idKlienta]));
         return redirect()

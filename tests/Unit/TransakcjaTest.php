@@ -5,13 +5,12 @@ namespace Tests\Unit;
 
 use App\Rachunek;
 use App\Transakcja;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\RefreshDatabaseWithViews;
 use Tests\TestCase;
 
 class TransakcjaTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabaseWithViews;
 
     /** @test */
     public function wplaty_sa_wyswietlane()

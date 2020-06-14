@@ -90,6 +90,7 @@ Route::group([
 ],function(){
     Route::get('/adminpanel','AdministratorController@index');
 
+<<<<<<< HEAD
     Route::patch('/administrator/edituser','AdministratorController@updateUzytkownik');
 
     Route::post('/administrator/storeuzytkownik','AdministratorController@storeUzytkownik');
@@ -97,6 +98,9 @@ Route::group([
     Route::post('/kredyt/odrzuc/{id}','KredytController@odrzucWniosek');
 
     Route::post('/kredyt/zaakceptuj/{id}','KredytController@zaakceptujWniosek');
+=======
+});
+>>>>>>> 4ef2651e2e0c17cb1da392895dc1537a85743eca
 
 Route::group([
     'middleware'=>'auth:administrator'

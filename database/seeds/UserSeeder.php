@@ -34,6 +34,18 @@ class UserSeeder extends Seeder
             'password' => Hash::make('tajne')
         ]);
 
+        $klientC = \KlientFactory::create([
+            'email'    => 'brajan@kowalski.com',
+            'imie'     => 'Brajan',
+            'nazwisko' => 'Kowalski',
+            'password' => Hash::make('tajne')
+        ]);
+
+        $this->dodajStalegoOdbiorceDoKlient($klientA, $klientB, 'Żona');
+        $this->dodajStalegoOdbiorceDoKlient($klientA, $klientC, 'Syn');
+        $this->dodajStalegoOdbiorceDoKlient($klientB, $klientA, 'Mąż');
+        $this->dodajStalegoOdbiorceDoKlient($klientB, $klientC, 'Syn');
+
         $rachunekA = $klientA->rachunek->getAggregate();
         $rachunekB = $klientB->rachunek->getAggregate();
 
@@ -76,5 +88,18 @@ class UserSeeder extends Seeder
         }
 
         $this->command->getOutput()->progressFinish();
+    }
+
+    /**
+     * @param  \App\Klient  $klientA
+     * @param  \App\Klient  $klientB
+     */
+    private function dodajStalegoOdbiorceDoKlient(\App\Klient $klientA, \App\Klient $klientB, $nazwa)
+    {
+        $klientA->stali_odbiorcy()->create([
+            'nazwa' => $nazwa,
+            'nr_rachunku' => $klientB->rachunek->nr_rachunku,
+            'nazwa_adres' => $klientB->uzytkownik->pelne_imie . ' ' . $klientB->ulica_nr
+        ]);
     }
 }

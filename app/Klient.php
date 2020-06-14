@@ -53,4 +53,12 @@ class Klient extends User
     {
         return $this->hasOne(User::class, 'id', 'id_uzytkownika');
     }
+
+    /**
+     * @return HasMany
+     */
+    public function stali_odbiorcy()
+    {
+        return $this->hasMany(StalyOdbiorca::class, 'id_klienta', 'id');
+    }
 }

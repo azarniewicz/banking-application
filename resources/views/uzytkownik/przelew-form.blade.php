@@ -1,11 +1,10 @@
 <div class="form-group">
-    {{-- Ustawienie domyślnego rachunku tylko dla testów --}}
     <input id="numerRachunku"
            type="text"
            name="numer_rachunku"
            class="form-control"
            placeholder="Numer rachunku"
-           value="{{ old('numer_rachunku') ?? \App\Rachunek::dostepneDoPrzelewow()->first()->nr_rachunku }}"
+           value="{{ old('numer_rachunku') }}"
     />
     <h6 id="nazwaBanku" class="text-sm-left p-1"></h6>
 </div>
@@ -76,12 +75,13 @@
             2490 : 'Alior Bank, T-Mobile Usługi Bankowe'
         };
 
-        document.getElementById('numerRachunku').addEventListener('keyup', (e) => {
-            const value = document.getElementById('numerRachunku').value.substring(0, 4);
+        $('#numerRachunku').keyup(function () {
+            const value = $(this).val().substring(0, 4);
             if(value.length > 3 && numery_bankow.hasOwnProperty(value)) {
-                document.getElementById('nazwaBanku').innerHTML = numery_bankow[value];
+                console.log($('#nazwaBanku'));
+                $('#nazwaBanku').text(numery_bankow[value]);
             } else {
-                document.getElementById('nazwaBanku').innerHTML = ''
+                $('#nazwaBanku').text('');
             }
         });
     </script>

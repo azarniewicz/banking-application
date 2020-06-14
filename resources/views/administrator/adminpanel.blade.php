@@ -230,7 +230,7 @@
                         </div>
 
                     <div class="col-md-12 mgg">
-                        <table class="table">
+                        <table class="table d-none" id="lista-uzytkownikow">
                             <thead>
                               <tr>
                                 <th scope="col">Lp</th>
@@ -383,6 +383,8 @@
                             <td><button onclick='editButton(this)' class='btn btn-primary edit-button' class = 'btn btn-primary'>Edycja</button></td>
                         </tr>`).appendTo('.table-body-uzytkownicy');
                     });
+
+                    $('#lista-uzytkownikow').removeClass('d-none');
                 });
             },500))
         })

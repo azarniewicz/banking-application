@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
+         $this->middleware('auth');
     }
 
     /**
@@ -31,13 +31,5 @@ class HomeController extends Controller
         }
 
         return redirect('start');
-    }
-
-    public function test(){
-        User::create([
-            'email'=>'milosz981998@gmail.com',
-            'password'=>Hash::make('123456'),
-            'name'=>'Miłosz Męczyński'
-        ]);
     }
 }

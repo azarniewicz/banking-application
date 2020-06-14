@@ -34,12 +34,10 @@ class TransakcjaController extends Controller
 
     public function index()
     {
-        // TODO paginacja?
         $transakcje = auth()->user()
                             ->getRachunekKlienta()
                             ->transakcje()
                             ->orderBy('data_wykonania', 'desc')
-                            ->take(5)
                             ->get();
 
         return view('uzytkownik/historia', compact('transakcje'));

@@ -10,6 +10,7 @@ use App\Events\WplataPieniedzy;
 use App\Events\WyplataPieniedzy;
 use App\Rachunek;
 use App\Transakcja;
+use Illuminate\Support\Facades\Schema;
 use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
 use Spatie\EventSourcing\StoredEvent;
@@ -30,6 +31,7 @@ class RachunekProjector implements Projector
      */
     public function onStartingEventReplay()
     {
+        Schema::disableForeignKeyConstraints();
         // Przed odtowrzeniem wszystkich eventów i zrekonstruowania tabel, usuwamy z nich obecne dane
         Transakcja::truncate();
         Rachunek::truncate();

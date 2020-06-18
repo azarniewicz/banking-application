@@ -26,7 +26,7 @@
             <div class="dropdown-divider"></div>
             <p class="inftext">Numer rachunku:<span class="tresc">{{ $rachunek->nr_rachunku }}</span></p>
             <div class="dropdown-divider"></div>
-            <p class="inftext">Numer karty:<span class="tresc">{{ $rachunek->karta_kredytowa->nr_karty }}</span></p>
+            <p class="inftext">Numer karty:<span class="tresc">{{ $rachunek->karta_kredytowa->nr_karty ?? 'brak karty' }}</span></p>
         </div>
         <div class="col-md-12 infobox">
             Ostatnie transakcje
